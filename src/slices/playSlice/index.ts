@@ -30,8 +30,6 @@ const initialState: PlayState = {
       firewall: false,
       language: "",
       code: "",
-      consoleResult: "",
-      testResults: "",
     },
   ],
 };

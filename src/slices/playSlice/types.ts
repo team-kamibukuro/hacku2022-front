@@ -16,9 +16,20 @@ export interface User {
   testResults: string;
 }
 
+export interface Player {
+  id: string;
+  name: string;
+  heart: number;
+  isMaster: boolean;
+  finished: boolean;
+  firewall: boolean;
+  language: string;
+  code: string;
+}
+
 export interface PlayState {
   room: Room;
   question: string;
   currentUser: User;
-  players: User[];
+  players: Player[];
 }
