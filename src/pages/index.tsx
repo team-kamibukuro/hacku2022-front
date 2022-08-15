@@ -1,7 +1,13 @@
+import React from "react";
 import type { NextPage } from "next";
+import { Auth } from "@/features/auth";
 
 const Home: NextPage = () => {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <div>
+      <Auth />
+    </div>
+  );
 };
 
 export default Home;
