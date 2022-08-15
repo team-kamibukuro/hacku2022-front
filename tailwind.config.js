@@ -6,7 +6,13 @@ module.exports = {
     "./src/features/**/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        press: ["'Press Start 2P'"],
+        courier: ["'Courier Prime'"],
+        dot: ["'DotGothic16'"],
+      },
+    },
   },
   plugins: [],
 };
