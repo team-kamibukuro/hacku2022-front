@@ -1,0 +1,3 @@
+.label__span::before {
+  top: 3px !important;
+}
