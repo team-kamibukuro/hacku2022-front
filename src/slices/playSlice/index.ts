@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
-import { PlayState, Room, User } from "./types";
+import { Player, PlayState, Room, User } from "./types";
 
 const initialState: PlayState = {
   room: {
@@ -30,10 +30,9 @@ const initialState: PlayState = {
       firewall: false,
       language: "",
       code: "",
-      consoleResult: "",
-      testResults: "",
     },
   ],
+  clock: null,
 };
 
 export const playSlice = createSlice({
@@ -46,14 +45,19 @@ export const playSlice = createSlice({
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
     },
+    editPlayerCode(state, action: PayloadAction<Player>) {},
+    setClock(state, action: PayloadAction<any>) {
+      state.clock = action.payload;
+    },
     reset(): PlayState {
       return initialState;
     },
   },
 });
 
-export const { editCurrentUser, editRoom } = playSlice.actions;
+export const { editCurrentUser, editRoom, setClock } = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
 export const selectRoom = (state: RootState) => state.play.room;
+export const selectClock = (state: any) => state.play.clock;
 
 export default playSlice.reducer;
