@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        "editor-back": "#4a5158bf",
+      },
       fontFamily: {
         press: ["'Press Start 2P'"],
         courier: ["'Courier Prime'"],
