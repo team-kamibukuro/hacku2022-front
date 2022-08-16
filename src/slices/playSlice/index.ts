@@ -57,7 +57,8 @@ export const playSlice = createSlice({
 
 export const { editCurrentUser, editRoom, setClock } = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
+export const selectPlayers = (state: RootState) => state.play.players;
 export const selectRoom = (state: RootState) => state.play.room;
-export const selectClock = (state: any) => state.play.clock;
+export const selectClock = (state: RootState) => state.play.clock;
 
 export default playSlice.reducer;
