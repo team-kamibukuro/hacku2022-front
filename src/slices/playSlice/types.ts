@@ -32,4 +32,5 @@ export interface PlayState {
   question: string;
   currentUser: User;
   players: Player[];
+  clock: any;
 }
