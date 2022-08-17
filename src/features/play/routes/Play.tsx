@@ -10,12 +10,28 @@ import useTabVal from "../hooks/useTabVal";
 import TerminalWindow from "../components/TerminalWindow";
 import { useSelector } from "react-redux";
 import { selectPlayers } from "@/slices/playSlice";
+import DontCloseDialog from "@/components/layouts/DontCloseDialog";
+import useDialog from "../hooks/useDialog";
+import MatchingWaiting from "../components/dialogContents/MatchingWaiting";
+import StartGame from "../components/dialogContents/StartGame";
+import ServerError from "../components/dialogContents/ServerError";
+import Finish from "../components/dialogContents/Finish";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
-  const tabValue = ["問題", "相手のエディタ"];
   const value = `console.log("test");`;
   const players = useSelector(selectPlayers);
+
+  const { dialog, handleClick } = useDialog();
+  const contentComponents = {
+    0: MatchingWaiting,
+    1: StartGame,
+    2: ServerError,
+    3: Finish,
+    4: MatchingWaiting,
+  };
+  console.log(dialog);
+  const Content = contentComponents[dialog.event];
 
   return (
     <Layout>
@@ -29,7 +45,7 @@ export const Play = () => {
                 <RadioTab
                   name={"tab"}
                   state={tabVal}
-                  value={tabValue}
+                  value={["問題", "相手のエディタ"]}
                   onChange={handleTabChange}
                 />
               </div>
@@ -75,6 +91,16 @@ export const Play = () => {
             </div>
           </div>
         </div>
+        <DontCloseDialog
+          handleClick={handleClick}
+          open={dialog.open}
+          dialogTitle={dialog.title}
+          submitTitle={dialog.submitTitle}
+          button={dialog.button}
+          isNomal={dialog.isNomal}
+        >
+          <Content />
+        </DontCloseDialog>
       </div>
     </Layout>
   );
