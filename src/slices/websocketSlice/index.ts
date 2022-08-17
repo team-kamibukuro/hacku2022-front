@@ -18,7 +18,6 @@ export const websocketSlice = createSlice({
       });
       state.socket.addEventListener("close", () => {
         console.log("disconnecting...");
-        state.socket = null;
       });
       state.socket.addEventListener("error", (err) => {
         console.log("connection error:", err);
@@ -26,7 +25,6 @@ export const websocketSlice = createSlice({
     },
     closeWebsocket(state) {
       state.socket.close();
-      state.socket = null;
     },
   },
 });
