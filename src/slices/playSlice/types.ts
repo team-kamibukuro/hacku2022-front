@@ -1,3 +1,5 @@
+import { DialogEventType } from "@/features/play/types";
+
 export interface Room {
   id: string;
   name: string;
@@ -27,10 +29,20 @@ export interface Player {
   code: string;
 }
 
+export interface Dialog {
+  open: boolean;
+  event: DialogEventType;
+  title: string;
+  submitTitle: string;
+  button: boolean;
+  isNomal: boolean;
+}
+
 export interface PlayState {
   room: Room;
   question: string;
   currentUser: User;
   players: Player[];
   clock: any;
+  dialog: Dialog;
 }

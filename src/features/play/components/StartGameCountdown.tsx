@@ -1,5 +1,8 @@
 import SimpleCountdown from "@/features/play/components/SimpleCountdown";
+import { resetDialog, selectClock, selectDialog } from "@/slices/playSlice";
 import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface Props {
   hours: number;
@@ -8,26 +11,39 @@ interface Props {
   completed: boolean;
 }
 const Renderer: React.FC<Props> = ({ hours, minutes, seconds, completed }) => {
-  if (completed) {
-    alert();
-    return null;
+  if (!completed) {
+    return <p className="font-press text-4xl">{seconds}</p>;
   } else {
-    return <span className="font-press">{seconds}</span>;
+    return <p></p>;
   }
 };
 
 const StartGameCountdown = () => {
   const clockRef = useRef();
+
+  const dispatch = useDispatch();
+  const clock = useSelector(selectClock);
+  const dialog = useSelector(selectDialog);
+
   const start = () => clockRef.current.start();
-  const pause = () => clockRef.current.pause();
 
   useEffect(() => {
     start();
   }, []);
 
+  const onComplete = () => {
+    dispatch(resetDialog());
+    clock.start();
+  };
+
   return (
     <div>
-      <SimpleCountdown time={5000} renderer={Renderer} ref={clockRef} />
+      <SimpleCountdown
+        time={5000}
+        renderer={Renderer}
+        ref={clockRef}
+        onComplete={onComplete}
+      />
     </div>
   );
 };
