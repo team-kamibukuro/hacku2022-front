@@ -1,6 +1,11 @@
+import { fetchAsyncLogin, fetchAsyncRegister } from "@/slices/authSlice";
+import { AppDispatch } from "@/store";
 import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const useAuth = () => {
+  const dispatch: AppDispatch = useDispatch();
+
   const [isLogin, setIsLogin] = useState(true);
   const [credential, setCredential] = useState({
     nickname: "",
@@ -21,8 +26,21 @@ const useAuth = () => {
     []
   );
 
-  const authUser = useCallback(() => {
-    console.log();
+  const authUser = useCallback(async () => {
+    if (isLogin) {
+      const params = {
+        userEmail: credential.email,
+        userPassword: credential.password,
+      };
+      await dispatch(fetchAsyncLogin(params));
+    } else {
+      const params = {
+        userEmail: credential.email,
+        userPassword: credential.password,
+        userName: credential.nickname,
+      };
+      await dispatch(fetchAsyncRegister(params));
+    }
   }, []);
 
   return { isLogin, changeMode, handleInputChange, authUser };
