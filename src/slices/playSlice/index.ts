@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import { Dialog, Player, PlayState, Room, User } from "./types";
-import { DialogEvent } from "@/features/play/types";
+import { DialogEvent, DialogEventType } from "@/features/play/types";
 
 const initialState: PlayState = {
   room: {
@@ -58,10 +58,10 @@ export const playSlice = createSlice({
     setClock(state, action: PayloadAction<any>) {
       state.clock = action.payload;
     },
-    setDialog(state, action: PayloadAction<Dialog>) {
-      state.dialog.event = action.payload.event;
+    setDialog(state, action: PayloadAction<DialogEventType>) {
+      state.dialog.event = action.payload;
       state.dialog.open = true;
-      switch (action.payload.event) {
+      switch (action.payload) {
         case DialogEvent.MatchingWaiting:
           state.dialog.title = "Matching waiting...";
           state.dialog.submitTitle = "Cancel";
@@ -116,5 +116,6 @@ export const selectPlayers = (state: RootState) => state.play.players;
 export const selectRoom = (state: RootState) => state.play.room;
 export const selectClock = (state: RootState) => state.play.clock;
 export const selectDialog = (state: RootState) => state.play.dialog;
+export const selectQuestion = (state: RootState) => state.play.question;
 
 export default playSlice.reducer;
