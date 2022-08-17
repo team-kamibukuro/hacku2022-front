@@ -3,11 +3,13 @@ import storage from "redux-persist/lib/storage";
 import { persistStore, persistReducer } from "redux-persist";
 import { playSlice } from "@/slices/playSlice";
 import { authSlice } from "@/slices/authSlice";
+import { websocketSlice } from "@/slices/websocketSlice";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
   play: playSlice.reducer,
   auth: authSlice.reducer,
+  websocket: websocketSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -16,6 +18,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["websocket"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
