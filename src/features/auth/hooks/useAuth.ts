@@ -4,7 +4,7 @@ import {
   selectAuth,
   switchIsLoginView,
 } from "@/slices/authSlice";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
@@ -19,6 +19,10 @@ const useAuth = () => {
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    localStorage.removeItem("localJWT");
+  }, []);
 
   const changeMode = useCallback(() => {
     dispatch(switchIsLoginView());
