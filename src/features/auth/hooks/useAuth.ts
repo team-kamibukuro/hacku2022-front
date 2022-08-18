@@ -4,13 +4,12 @@ import {
   selectAuth,
   switchIsLoginView,
 } from "@/slices/authSlice";
-import { AppDispatch } from "@/store";
 import React, { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const useAuth = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const auth = useSelector(selectAuth);
   const isLoginView = auth.isLoginView;
