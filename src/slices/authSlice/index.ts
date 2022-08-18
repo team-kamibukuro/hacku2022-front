@@ -21,13 +21,14 @@ export const fetchAsyncLogin = createAsyncThunk(
 export const fetchAsyncRegister = createAsyncThunk(
   "auth/register",
   async (auth: RegisterRequest) => {
-    const res = await client.post<RegisterResponse>("auth/signup", auth);
+    const res = await client.post<RegisterResponse>("/signup", auth);
     return res;
   }
 );
 
 const initialState: AuthState = {
   isAuthChecking: true,
+  isLoginView: true,
   currentUser: {
     id: "",
     name: "",
@@ -37,19 +38,24 @@ const initialState: AuthState = {
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    switchIsLoginView(state) {
+      state.isLoginView = !state.isLoginView;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncLogin.fulfilled,
       (state, action: PayloadAction<AxiosResponse<LoginResponse>>) => {
         localStorage.setItem(
           "localJWT",
-          action.payload.headers["Authorization"]
+          action.payload.headers["authorization"]
         );
         state.isAuthChecking = false;
         state.currentUser.id = action.payload.data.userId;
         state.currentUser.name = action.payload.data.userName;
-        window.location.href = "/entrance";
+
+        window.location.replace("/entrance");
       }
     );
     builder.addCase(fetchAsyncLogin.rejected, (e) => {
@@ -60,12 +66,13 @@ export const authSlice = createSlice({
       (state, action: PayloadAction<AxiosResponse<RegisterResponse>>) => {
         localStorage.setItem(
           "localJWT",
-          action.payload.headers["Authorization"]
+          action.payload.headers["authorization"]
         );
         state.isAuthChecking = false;
         state.currentUser.id = action.payload.data.userId;
         state.currentUser.name = action.payload.data.userName;
-        window.location.href = "/entrance";
+
+        window.location.replace("/entrance");
       }
     );
     builder.addCase(fetchAsyncRegister.rejected, (e) => {
@@ -74,7 +81,7 @@ export const authSlice = createSlice({
   },
 });
 
-// export const { editCurrentUser, editRoom } = authSlice.actions;
+export const { switchIsLoginView } = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default authSlice.reducer;

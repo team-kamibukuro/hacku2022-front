@@ -6,6 +6,7 @@ export interface User {
 export interface AuthState {
   isAuthChecking: boolean;
   currentUser: User;
+  isLoginView: boolean;
 }
 
 export interface LoginRequest {
