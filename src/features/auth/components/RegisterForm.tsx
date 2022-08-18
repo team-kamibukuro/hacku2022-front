@@ -1,17 +1,19 @@
+import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import InputForm from "@/components/ui-elements/InputForm";
 import React from "react";
 import useAuth from "../hooks/useAuth";
 
 const RegisterForm = () => {
-  const { handleInputChange } = useAuth();
+  const { credential, handleInputChange, authUser } = useAuth();
 
   return (
-    <div>
+    <div className="flex flex-col">
       <div className="mb-5">
         <InputForm
           label={"nickname"}
           handleChange={handleInputChange}
           isInline={false}
+          value={credential.nickname}
         />
       </div>
       <div className="mb-5">
@@ -20,6 +22,7 @@ const RegisterForm = () => {
           handleChange={handleInputChange}
           type="email"
           isInline={false}
+          value={credential.email}
         />
       </div>
       <div className="mb-10">
@@ -28,8 +31,12 @@ const RegisterForm = () => {
           handleChange={handleInputChange}
           type="password"
           isInline={false}
+          value={credential.password}
         />
       </div>
+      <Button buttonStyle={ButtonStyle.isPrimary} onClick={authUser}>
+        {"Sign up"}
+      </Button>
     </div>
   );
 };

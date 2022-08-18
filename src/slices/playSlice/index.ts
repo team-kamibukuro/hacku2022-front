@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "@/store";
+import store, { RootState } from "@/store";
 import { Dialog, Player, PlayState, Room, User } from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
+import { fetchAsyncAuthRoom, fetchAsyncCreateRoom } from "./api";
+import { AuthRoomResponse, CreateRoomResponse } from "./api/types";
 
 const initialState: PlayState = {
   room: {
@@ -106,6 +108,26 @@ export const playSlice = createSlice({
     reset(): PlayState {
       return initialState;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchAsyncCreateRoom.fulfilled,
+      (state, action: PayloadAction<CreateRoomResponse>) => {
+        state.room.id = action.payload.roomId;
+        state.room.name = action.payload.roomName;
+        state.currentUser.isMaster = true;
+      }
+    );
+    builder.addCase(
+      fetchAsyncAuthRoom.fulfilled,
+      (state, action: PayloadAction<AuthRoomResponse>) => {
+        state.room.id = action.payload.roomId;
+        state.room.name = action.payload.roomName;
+        const reduxStore = store.getState();
+        state.currentUser.isMaster =
+          reduxStore.auth.currentUser.id === action.payload.masterUserId;
+      }
+    );
   },
 });
 

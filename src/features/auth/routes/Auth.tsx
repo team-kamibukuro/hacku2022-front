@@ -1,14 +1,12 @@
 import Layout from "@/components/layouts/Layout";
 import StainedGlass from "@/components/layouts/StainedGlass";
-import Button, { ButtonStyle } from "@/components/ui-elements/Button";
-import InputForm from "@/components/ui-elements/InputForm";
 import React from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import useAuth from "../hooks/useAuth";
 
 export const Auth = () => {
-  const { isLogin, changeMode, authUser } = useAuth();
+  const { isLoginView, changeMode } = useAuth();
 
   return (
     <div>
@@ -22,21 +20,20 @@ export const Auth = () => {
             <div className="p-10">
               <div className="flex flex-col">
                 <p className="text-lg text-center mb-8">
-                  {isLogin ? "Sign in to your account" : "Create your account"}
+                  {isLoginView
+                    ? "Sign in to your account"
+                    : "Create your account"}
                 </p>
-                {isLogin ? <LoginForm /> : <RegisterForm />}
-                <Button buttonStyle={ButtonStyle.isPrimary} onClick={authUser}>
-                  {isLogin ? "Sign in" : "Sign up"}
-                </Button>
+                {isLoginView ? <LoginForm /> : <RegisterForm />}
                 <p className="text-xs text-center text-gray-300 mt-10">
-                  {isLogin
+                  {isLoginView
                     ? "Don't have an account?"
                     : "Already have an account?"}
                   <span
                     onClick={changeMode}
                     className="text-yellow-500 hover:text-yellow-400"
                   >
-                    {isLogin ? " Sign up" : " Sign in"}
+                    {isLoginView ? " Sign up" : " Sign in"}
                   </span>
                 </p>
               </div>
