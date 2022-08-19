@@ -19,7 +19,7 @@ const Header = () => {
               <div>
                 <p className="font-dot text-white mr-10 flex">
                   制限時間 残り
-                  <CustomCountdown time={5000} />
+                  <CustomCountdown time={1200000} />
                 </p>
               </div>
               <Button
