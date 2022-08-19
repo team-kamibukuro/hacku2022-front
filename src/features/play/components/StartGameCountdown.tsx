@@ -3,6 +3,7 @@ import { resetDialog, selectClock, selectDialog } from "@/slices/playSlice";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import useRandomAttack from "../hooks/useRandomAttack";
 
 interface Props {
   hours: number;
@@ -24,6 +25,7 @@ const StartGameCountdown = () => {
   const dispatch = useDispatch();
   const clock = useSelector(selectClock);
   const dialog = useSelector(selectDialog);
+  const { callAttack } = useRandomAttack();
 
   const start = () => clockRef.current.start();
 
@@ -34,6 +36,7 @@ const StartGameCountdown = () => {
   const onComplete = () => {
     dispatch(resetDialog());
     clock.start();
+    callAttack();
   };
 
   return (
