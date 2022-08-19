@@ -1,26 +1,26 @@
 import {
+  editCode,
+  editCurrentUser,
   selectCurrentUser,
+  selectPlayers,
   selectQuestion,
   selectRoom,
   setDialog,
   setPlayer,
   setQuestion,
 } from "@/slices/playSlice";
-import {
-  selectWebsocket,
-  sendWebsocket,
-  setWebsocket,
-} from "@/slices/websocketSlice";
+import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { DialogEvent, Event } from "../types";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 const useSockets = () => {
   const dispatch = useDispatch();
-  const sock = useSelector(selectWebsocket);
   const currentUser = useSelector(selectCurrentUser);
+  const players = useSelector(selectPlayers);
   const room = useSelector(selectRoom);
   const question = useSelector(selectQuestion);
   const refFirstRef = useRef(true);
@@ -56,6 +56,8 @@ const useSockets = () => {
         case Event.READY:
           READY(data);
           break;
+        case Event.UPDATE_CODE:
+          UPDATE_CODE(data);
         default:
       }
     });
@@ -73,7 +75,25 @@ const useSockets = () => {
     dispatch(setDialog(DialogEvent.StartGame));
   };
 
-  return {};
+  const UPDATE_CODE = (data) => {
+    dispatch(editCode({ id: data.playerId, code: data.code }));
+  };
+
+  function handleEditorChange(
+    value: string,
+    event: monaco.editor.IModelContentChangedEvent
+  ) {
+    dispatch(editCurrentUser({ ...currentUser, code: value }));
+    dispatch(
+      sendWebsocket({
+        event: Event.UPDATE_CODE,
+        playerId: currentUser.id,
+        code: currentUser.code,
+      })
+    );
+  }
+
+  return { currentUser, players, question, handleEditorChange };
 };
 
 export default useSockets;
