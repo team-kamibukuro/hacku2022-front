@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
-import { Dialog, Player, PlayState, Room, User } from "./types";
+import { NewPlayer, Player, PlayState, Question, Room, User } from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
 import { fetchAsyncAuthRoom, fetchAsyncCreateRoom } from "./api";
 import { AuthRoomResponse, CreateRoomResponse } from "./api/types";
@@ -10,7 +10,11 @@ const initialState: PlayState = {
     id: "",
     name: "",
   },
-  question: "",
+  question: {
+    id: "",
+    name: "",
+    context: "",
+  },
   currentUser: {
     id: "",
     name: "",
@@ -56,7 +60,37 @@ export const playSlice = createSlice({
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
     },
-    editPlayerCode(state, action: PayloadAction<Player>) {},
+    setQuestion(state, action: PayloadAction<Question>) {
+      state.question = action.payload;
+    },
+    editPlayer(state, action: PayloadAction<Player>) {
+      const player = state.players.find(
+        (player) => player.id === action.payload.id
+      );
+      const findIndex = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      if (!player) {
+        return;
+      }
+      state.players[findIndex] = { ...player, ...action.payload };
+    },
+    setPlayer(state, action: PayloadAction<NewPlayer[]>) {
+      const users = action.payload.map((player) => {
+        return {
+          id: player.id,
+          name: player.name,
+          heart: 0,
+          isMaster: player.isMaster,
+          finished: false,
+          firewall: false,
+          language: player.language,
+          code: "",
+        };
+      });
+      const players = users.filter((user) => user.id !== state.currentUser.id);
+      state.players = players;
+    },
     setClock(state, action: PayloadAction<any>) {
       state.clock = action.payload;
     },
@@ -139,6 +173,9 @@ export const playSlice = createSlice({
 export const {
   editCurrentUser,
   editRoom,
+  editPlayer,
+  setPlayer,
+  setQuestion,
   setClock,
   setDialog,
   resetDialog,

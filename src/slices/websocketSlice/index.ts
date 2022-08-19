@@ -24,10 +24,7 @@ export const websocketSlice = createSlice({
       });
     },
     sendWebsocket(state, action: PayloadAction<Object>) {
-      console.log(action.payload);
-      state.socket.addEventListener("add", (ev) => {
-        state.socket.send(JSON.stringify(action.payload));
-      });
+      state.socket.send(JSON.stringify(action.payload));
     },
     closeWebsocket(state) {
       state.socket.close();

@@ -29,6 +29,13 @@ export interface Player {
   code: string;
 }
 
+export interface NewPlayer {
+  id: string;
+  name: string;
+  isMaster: boolean;
+  language: string;
+}
+
 export interface Dialog {
   open: boolean;
   event: DialogEventType;
@@ -38,9 +45,15 @@ export interface Dialog {
   isNomal: boolean;
 }
 
+export interface Question {
+  id: string;
+  name: string;
+  context: string;
+}
+
 export interface PlayState {
   room: Room;
-  question: string;
+  question: Question;
   currentUser: User;
   players: Player[];
   clock: any;
