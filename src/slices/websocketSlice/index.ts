@@ -10,8 +10,8 @@ export const websocketSlice = createSlice({
   name: "websocket",
   initialState,
   reducers: {
-    setWebsocket(state) {
-      state.socket = new WebSocket("ws://127.0.0.1:5001");
+    setWebsocket(state, action: PayloadAction<WebSocket>) {
+      state.socket = action.payload;
 
       state.socket.addEventListener("open", () => {
         console.log("connected");
