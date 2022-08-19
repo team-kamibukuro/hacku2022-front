@@ -21,9 +21,6 @@ import OtherEditor from "../components/OtherEditor";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
-  const value = `\ndef is_prime(n):\n    if n < 2:\n  # コメントインジェクション！！！      return False\n    for k in range(2, int(n/2)+1):\n        if n % k == 0:\n            return False\n    return True\n`;
-  const players = useSelector(selectPlayers);
-  const question = useSelector(selectQuestion);
 
   const { dialog, handleClick } = useDialog();
   const contentComponents = {
@@ -35,7 +32,7 @@ export const Play = () => {
   };
   const Content = contentComponents[dialog.event];
 
-  useSockets();
+  const { currentUser, players, question, handleEditorChange } = useSockets();
 
   return (
     <Layout>
@@ -89,8 +86,9 @@ export const Play = () => {
                 <OwnEditor
                   height="100%"
                   theme="hc-black"
-                  language="python"
-                  value={value}
+                  language={currentUser.language}
+                  value={currentUser.code}
+                  onChange={handleEditorChange}
                 />
               </div>
               <div className="flex-grow py-5">

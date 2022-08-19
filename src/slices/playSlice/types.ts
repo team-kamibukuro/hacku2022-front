@@ -59,3 +59,8 @@ export interface PlayState {
   clock: any;
   dialog: Dialog;
 }
+
+export interface EditCode {
+  id: string;
+  code: string;
+}

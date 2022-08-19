@@ -1,6 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
-import { NewPlayer, Player, PlayState, Question, Room, User } from "./types";
+import {
+  EditCode,
+  NewPlayer,
+  Player,
+  PlayState,
+  Question,
+  Room,
+  User,
+} from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
 import { fetchAsyncAuthRoom, fetchAsyncCreateRoom } from "./api";
 import { AuthRoomResponse, CreateRoomResponse } from "./api/types";
@@ -63,17 +71,11 @@ export const playSlice = createSlice({
     setQuestion(state, action: PayloadAction<Question>) {
       state.question = action.payload;
     },
-    editPlayer(state, action: PayloadAction<Player>) {
-      const player = state.players.find(
-        (player) => player.id === action.payload.id
-      );
+    editCode(state, action: PayloadAction<EditCode>) {
       const findIndex = state.players.findIndex(
         (player) => player.id === action.payload.id
       );
-      if (!player) {
-        return;
-      }
-      state.players[findIndex] = { ...player, ...action.payload };
+      state.players[findIndex].code = action.payload.code;
     },
     setPlayer(state, action: PayloadAction<NewPlayer[]>) {
       const users = action.payload.map((player) => {
@@ -173,7 +175,7 @@ export const playSlice = createSlice({
 export const {
   editCurrentUser,
   editRoom,
-  editPlayer,
+  editCode,
   setPlayer,
   setQuestion,
   setClock,
