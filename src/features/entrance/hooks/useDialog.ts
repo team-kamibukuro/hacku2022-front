@@ -1,6 +1,6 @@
+import { selectAuth } from "@/slices/authSlice";
 import {
   editCurrentUser,
-  editRoom,
   reset,
   selectCurrentUser,
   selectRoom,
@@ -18,6 +18,7 @@ const useDialog = () => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector(selectCurrentUser);
+  const auth = useSelector(selectAuth);
   const room = useSelector(selectRoom);
 
   const [open, setOpen] = useState(false);
@@ -26,15 +27,27 @@ const useDialog = () => {
 
   useEffect(() => {
     dispatch(reset());
-  }, []);
+    dispatch(
+      editCurrentUser({
+        ...currentUser,
+        id: auth.currentUser.id,
+        name: auth.currentUser.name,
+      })
+    );
+  }, [dispatch]);
 
   const handleClickClose = useCallback(() => {
     setOpen(false);
-    dispatch(editCurrentUser({ ...currentUser, language: "" }));
-    dispatch(editRoom({ ...room, name: "" }));
-
     dispatch(reset());
-  }, []);
+
+    dispatch(
+      editCurrentUser({
+        ...currentUser,
+        id: auth.currentUser.id,
+        name: auth.currentUser.name,
+      })
+    );
+  }, [dispatch]);
 
   const input = useCallback(() => {
     setOpen(true);
@@ -54,25 +67,24 @@ const useDialog = () => {
     setdialogTitle("Matching");
   }, []);
 
-  const handleClick = useCallback(async () => {
+  const handleClick = async () => {
     switch (access) {
       case Access.Create:
         const createRoomParams = {
-          masterUserId: currentUser.id,
+          masterUserId: auth.currentUser.id,
           roomName: room.name,
         };
         await dispatch(fetchAsyncCreateRoom(createRoomParams));
         break;
       case Access.Input:
         const authRoomParams = {
-          masterUserId: currentUser.id,
           roomName: room.name,
         };
         await dispatch(fetchAsyncAuthRoom(authRoomParams));
         break;
       default:
     }
-  }, []);
+  };
 
   return {
     open,
