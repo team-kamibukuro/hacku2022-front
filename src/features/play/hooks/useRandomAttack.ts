@@ -26,11 +26,12 @@ const useRandomAttack = () => {
 
   const randomAttack = () => {
     const attackIndex = Math.floor(Math.random() * 3);
-    const userIndex = Math.floor(Math.random() * 4);
+    // ! const userIndex = Math.floor(Math.random() * 4); に変える
+    const userIndex = Math.floor(Math.random() * 2);
     socket.send(
       JSON.stringify({
         event: Event.ATTACK,
-        attackTypes: attackTypes[attackIndex],
+        attackType: attackTypes[attackIndex],
         playerId: users[userIndex].id,
         name: users[userIndex].name,
         language: users[userIndex].language,
