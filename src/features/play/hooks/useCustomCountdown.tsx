@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 const useCustomCountdown = (time) => {
-  const renderer = ({ hours, minutes, seconds, completed }) => {
+  const renderer = ({ formatted, completed }) => {
     if (completed) {
       return null;
     } else {
       return (
         <span className="font-dot">
-          {hours}:{minutes}:{seconds}
+          {formatted.hours}:{formatted.minutes}:{formatted.seconds}
         </span>
       );
     }
