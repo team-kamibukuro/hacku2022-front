@@ -1,10 +1,14 @@
 import {
   editCurrentUser,
   editRoom,
+  reset,
   selectCurrentUser,
   selectRoom,
 } from "@/slices/playSlice";
-import { persistor } from "@/store";
+import {
+  fetchAsyncAuthRoom,
+  fetchAsyncCreateRoom,
+} from "@/slices/playSlice/api";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -20,26 +24,16 @@ const useDialog = () => {
   const [access, setAccess] = useState<AccessType>(Access.Input);
   const [dialogTitle, setdialogTitle] = useState("");
 
-  const purge = () => {
-    persistor
-      .purge()
-      .then(() => {
-        return persistor.flush();
-      })
-      .then(() => {
-        persistor.pause();
-      });
-  };
-
   useEffect(() => {
-    purge();
+    dispatch(reset());
   }, []);
 
   const handleClickClose = useCallback(() => {
     setOpen(false);
     dispatch(editCurrentUser({ ...currentUser, language: "" }));
     dispatch(editRoom({ ...room, name: "" }));
-    purge();
+
+    dispatch(reset());
   }, []);
 
   const input = useCallback(() => {
@@ -60,7 +54,25 @@ const useDialog = () => {
     setdialogTitle("Matching");
   }, []);
 
-  const handleClick = useCallback(() => {}, []);
+  const handleClick = useCallback(async () => {
+    switch (access) {
+      case Access.Create:
+        const createRoomParams = {
+          masterUserId: currentUser.id,
+          roomName: room.name,
+        };
+        await dispatch(fetchAsyncCreateRoom(createRoomParams));
+        break;
+      case Access.Input:
+        const authRoomParams = {
+          masterUserId: currentUser.id,
+          roomName: room.name,
+        };
+        await dispatch(fetchAsyncAuthRoom(authRoomParams));
+        break;
+      default:
+    }
+  }, []);
 
   return {
     open,
