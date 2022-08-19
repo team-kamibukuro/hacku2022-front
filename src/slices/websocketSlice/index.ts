@@ -23,13 +23,20 @@ export const websocketSlice = createSlice({
         console.log("connection error:", err);
       });
     },
+    sendWebsocket(state, action: PayloadAction<Object>) {
+      console.log(action.payload);
+      state.socket.addEventListener("add", (ev) => {
+        state.socket.send(JSON.stringify(action.payload));
+      });
+    },
     closeWebsocket(state) {
       state.socket.close();
     },
   },
 });
 
-export const { setWebsocket, closeWebsocket } = websocketSlice.actions;
+export const { setWebsocket, sendWebsocket, closeWebsocket } =
+  websocketSlice.actions;
 export const selectWebsocket = (state: RootState) => state.websocket.socket;
 
 export default websocketSlice.reducer;
