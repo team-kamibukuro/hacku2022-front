@@ -106,16 +106,20 @@ export const playSlice = createSlice({
       state.dialog.isNomal = false;
     },
     reset(): PlayState {
-      return initialState;
+      return {
+        ...initialState,
+      };
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchAsyncCreateRoom.fulfilled,
       (state, action: PayloadAction<CreateRoomResponse>) => {
-        state.room.id = action.payload.roomId;
-        state.room.name = action.payload.roomName;
         state.currentUser.isMaster = true;
+        state.room.id = action.payload.id;
+        state.room.name = action.payload.roomName;
+
+        window.location.replace("/play");
       }
     );
     builder.addCase(
@@ -123,16 +127,23 @@ export const playSlice = createSlice({
       (state, action: PayloadAction<AuthRoomResponse>) => {
         state.room.id = action.payload.roomId;
         state.room.name = action.payload.roomName;
-        const reduxStore = store.getState();
         state.currentUser.isMaster =
-          reduxStore.auth.currentUser.id === action.payload.masterUserId;
+          state.currentUser.id === action.payload.masterUserId;
+
+        window.location.replace("/play");
       }
     );
   },
 });
 
-export const { editCurrentUser, editRoom, setClock, setDialog, resetDialog } =
-  playSlice.actions;
+export const {
+  editCurrentUser,
+  editRoom,
+  setClock,
+  setDialog,
+  resetDialog,
+  reset,
+} = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
 export const selectPlayers = (state: RootState) => state.play.players;
 export const selectRoom = (state: RootState) => state.play.room;

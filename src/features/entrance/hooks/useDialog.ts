@@ -1,10 +1,14 @@
+import { selectAuth } from "@/slices/authSlice";
 import {
   editCurrentUser,
-  editRoom,
+  reset,
   selectCurrentUser,
   selectRoom,
 } from "@/slices/playSlice";
-import { persistor } from "@/store";
+import {
+  fetchAsyncAuthRoom,
+  fetchAsyncCreateRoom,
+} from "@/slices/playSlice/api";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -14,33 +18,36 @@ const useDialog = () => {
   const dispatch = useDispatch();
 
   const currentUser = useSelector(selectCurrentUser);
+  const auth = useSelector(selectAuth);
   const room = useSelector(selectRoom);
 
   const [open, setOpen] = useState(false);
   const [access, setAccess] = useState<AccessType>(Access.Input);
   const [dialogTitle, setdialogTitle] = useState("");
 
-  const purge = () => {
-    persistor
-      .purge()
-      .then(() => {
-        return persistor.flush();
-      })
-      .then(() => {
-        persistor.pause();
-      });
-  };
-
   useEffect(() => {
-    purge();
-  }, []);
+    dispatch(reset());
+    dispatch(
+      editCurrentUser({
+        ...currentUser,
+        id: auth.currentUser.id,
+        name: auth.currentUser.name,
+      })
+    );
+  }, [dispatch]);
 
   const handleClickClose = useCallback(() => {
     setOpen(false);
-    dispatch(editCurrentUser({ ...currentUser, language: "" }));
-    dispatch(editRoom({ ...room, name: "" }));
-    purge();
-  }, []);
+    dispatch(reset());
+
+    dispatch(
+      editCurrentUser({
+        ...currentUser,
+        id: auth.currentUser.id,
+        name: auth.currentUser.name,
+      })
+    );
+  }, [dispatch]);
 
   const input = useCallback(() => {
     setOpen(true);
@@ -60,7 +67,24 @@ const useDialog = () => {
     setdialogTitle("Matching");
   }, []);
 
-  const handleClick = useCallback(() => {}, []);
+  const handleClick = async () => {
+    switch (access) {
+      case Access.Create:
+        const createRoomParams = {
+          masterUserId: auth.currentUser.id,
+          roomName: room.name,
+        };
+        await dispatch(fetchAsyncCreateRoom(createRoomParams));
+        break;
+      case Access.Input:
+        const authRoomParams = {
+          roomName: room.name,
+        };
+        await dispatch(fetchAsyncAuthRoom(authRoomParams));
+        break;
+      default:
+    }
+  };
 
   return {
     open,
