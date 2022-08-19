@@ -88,7 +88,7 @@ const useSockets = () => {
       sendWebsocket({
         event: Event.UPDATE_CODE,
         playerId: currentUser.id,
-        code: currentUser.code,
+        code: value,
       })
     );
   }
