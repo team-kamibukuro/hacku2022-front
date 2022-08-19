@@ -4,9 +4,9 @@ export interface CreateRoomRequest {
 }
 
 export interface CreateRoomResponse {
-  roomId: string;
-  roomName: string;
+  id: string;
   masterUserId: string;
+  roomName: string;
 }
 
 export interface AuthRoomRequest {
