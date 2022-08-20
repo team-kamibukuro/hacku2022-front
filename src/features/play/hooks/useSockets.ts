@@ -14,8 +14,11 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { DialogEvent, Event } from "../types";
+import { Attack, DialogEvent, Event } from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import Ghost from "@/common/icons/yurei_01.svg";
+import UFO from "@/common/icons/ufo_04.svg";
+import Portion from "@/common/icons/portion_purple_01.svg";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -25,7 +28,10 @@ const useSockets = () => {
   const question = useSelector(selectQuestion);
   const refFirstRef = useRef(true);
 
-  const notify = (message: string) => toast.dark(message);
+  const notify = (message: string, icon: any) =>
+    toast.dark(message, {
+      icon: icon,
+    });
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
@@ -50,14 +56,18 @@ const useSockets = () => {
     socket.addEventListener("message", function (e) {
       const data = JSON.parse(e.data);
       console.log("Message from server ", data);
-      // notify("攻撃された!!");
       console.log(data.event);
+
       switch (data.event) {
         case Event.READY:
           READY(data);
           break;
         case Event.UPDATE_CODE:
           UPDATE_CODE(data);
+          break;
+        case Event.ATTACK:
+          ATTACK(data);
+          break;
         default:
       }
     });
@@ -77,6 +87,29 @@ const useSockets = () => {
 
   const UPDATE_CODE = (data) => {
     dispatch(editCode({ id: data.playerId, code: data.code }));
+  };
+
+  const ATTACK = (data) => {
+    if (data.playerId === currentUser.id) {
+      dispatch(editCurrentUser({ ...currentUser, code: data.code }));
+    } else {
+      dispatch(editCode({ id: data.playerId, code: data.code }));
+    }
+    switch (data.attackType) {
+      case Attack.INDENT_INJECTION:
+        notify(`${data.name}がインデントインジェクション攻撃を受けた!!`, Ghost);
+        break;
+      case Attack.COMMENTOUT_INJECTION:
+        notify(
+          `${data.name}がコメントアウトインジェクション攻撃を受けた!!`,
+          UFO
+        );
+        break;
+      case Attack.TBC_POISONING:
+        notify(`${data.name}がTBCポイズニング攻撃を受けた!!`, Portion);
+        break;
+      default:
+    }
   };
 
   function handleEditorChange(
