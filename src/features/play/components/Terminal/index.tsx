@@ -2,15 +2,14 @@ import React from "react";
 import styles from "./style.module.css";
 
 interface Props {
-  value: string;
+  result: string;
 }
-const Terminal: React.FC<Props> = ({ value }) => {
+const Terminal: React.FC<Props> = ({ result }) => {
   return (
     <textarea
       className={styles.terminal__textarea}
       spellCheck="false"
-      value={value}
-      disabled
+      value={result}
     ></textarea>
   );
 };
