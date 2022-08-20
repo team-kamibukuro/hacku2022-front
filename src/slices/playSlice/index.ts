@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
 import {
   EditCode,
+  EditHeart,
   InitUser,
   NewPlayer,
   Player,
@@ -93,6 +94,12 @@ export const playSlice = createSlice({
         (player) => player.id === action.payload.id
       );
       state.players[findIndex].code = action.payload.code;
+    },
+    editHeart(state, action: PayloadAction<EditHeart>) {
+      const findIndex = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      state.players[findIndex].heart = action.payload.heart;
     },
     setPlayer(state, action: PayloadAction<NewPlayer[]>) {
       const users = action.payload.map((player) => {
@@ -207,6 +214,7 @@ export const playSlice = createSlice({
         console.log(action.payload);
         if (!action.payload.isClearTestCases) {
           state.currentUser.heart = state.currentUser.heart - 1;
+          state.currentUser.testResults = "error!!";
         } else {
           state.currentUser.testResults = "clear!!";
         }
@@ -220,6 +228,7 @@ export const {
   editCurrentUser,
   editRoom,
   editCode,
+  editHeart,
   setPlayer,
   setQuestion,
   setClock,
