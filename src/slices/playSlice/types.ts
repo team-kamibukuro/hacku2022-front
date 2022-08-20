@@ -5,6 +5,18 @@ export interface Room {
   name: string;
 }
 
+export interface TestCase {
+  testCaseId: string;
+  isCompileError: boolean;
+  compilerError: string;
+  isClearTestCase: boolean;
+}
+export interface TestResult {
+  isClearTestCases: boolean;
+  testCaseTotal: number;
+  testCaseClearTotal: number;
+  testCases: TestCase[];
+}
 export interface User {
   id: string;
   name: string;
@@ -15,7 +27,7 @@ export interface User {
   language: string;
   code: string;
   consoleResult: string;
-  testResults: string;
+  testResult: TestResult;
 }
 
 export interface Player {

@@ -5,7 +5,6 @@ import {
   EditHeart,
   InitUser,
   NewPlayer,
-  Player,
   PlayState,
   Question,
   Room,
@@ -45,7 +44,19 @@ const initialState: PlayState = {
     language: "",
     code: "",
     consoleResult: "",
-    testResults: "",
+    testResult: {
+      isClearTestCases: false,
+      testCaseTotal: 0,
+      testCaseClearTotal: 0,
+      testCases: [
+        {
+          testCaseId: "",
+          isCompileError: false,
+          compilerError: "",
+          isClearTestCase: false,
+        },
+      ],
+    },
   },
   players: [
     {
