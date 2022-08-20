@@ -45,6 +45,7 @@ const initialState: PlayState = {
     code: "",
     consoleResult: "",
     testResult: {
+      status: 0,
       isClearTestCases: false,
       testCaseTotal: 0,
       testCaseClearTotal: 0,
@@ -222,12 +223,9 @@ export const playSlice = createSlice({
     builder.addCase(
       fetchAsyncRunTestCase.fulfilled,
       (state, action: PayloadAction<RunTestCaseResponse>) => {
-        console.log(action.payload);
+        state.currentUser.testResult = action.payload;
         if (!action.payload.isClearTestCases) {
           state.currentUser.heart = state.currentUser.heart - 1;
-          state.currentUser.testResults = "error!!";
-        } else {
-          state.currentUser.testResults = "clear!!";
         }
       }
     );
