@@ -1,5 +1,11 @@
 import SimpleCountdown from "@/features/play/components/SimpleCountdown";
-import { resetDialog, selectClock, selectDialog } from "@/slices/playSlice";
+import {
+  resetDialog,
+  selectClock,
+  selectCurrentUser,
+  selectDialog,
+  switchAttackIsRunning,
+} from "@/slices/playSlice";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -25,7 +31,7 @@ const StartGameCountdown = () => {
   const dispatch = useDispatch();
   const clock = useSelector(selectClock);
   const dialog = useSelector(selectDialog);
-  const { callAttack } = useRandomAttack();
+  const currentUser = useSelector(selectCurrentUser);
 
   const start = () => clockRef.current.start();
 
@@ -35,8 +41,8 @@ const StartGameCountdown = () => {
 
   const onComplete = () => {
     dispatch(resetDialog());
+    currentUser.isMaster && dispatch(switchAttackIsRunning());
     clock.start();
-    callAttack();
   };
 
   return (
