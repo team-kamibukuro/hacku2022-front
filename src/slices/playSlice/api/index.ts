@@ -5,6 +5,10 @@ import {
   AuthRoomResponse,
   CreateRoomRequest,
   CreateRoomResponse,
+  RunConsoleRequest,
+  RunConsoleResponse,
+  RunTestCaseRequest,
+  RunTestCaseResponse,
 } from "./types";
 
 export const fetchAsyncCreateRoom = createAsyncThunk(
@@ -27,6 +31,31 @@ export const fetchAsyncAuthRoom = createAsyncThunk(
         Authorization: `${localStorage.localJWT}`,
       },
     });
+    return res.data;
+  }
+);
+
+export const fetchAsyncRunConsole = createAsyncThunk(
+  "play/runConsole",
+  async (req: RunConsoleRequest) => {
+    const res = await client.post<RunConsoleResponse>("/console", req, {
+      headers: {
+        Authorization: `${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  }
+);
+
+export const fetchAsyncRunTestCase = createAsyncThunk(
+  "play/runTestCase",
+  async (req: RunTestCaseRequest) => {
+    const res = await client.post<RunTestCaseResponse>("/testcase", req, {
+      headers: {
+        Authorization: `${localStorage.localJWT}`,
+      },
+    });
+    console.log(res.data);
     return res.data;
   }
 );
