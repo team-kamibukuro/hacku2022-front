@@ -1,6 +1,7 @@
 import {
   editCode,
   editCurrentUser,
+  editHeart,
   selectCurrentUser,
   selectPlayers,
   selectQuestion,
@@ -65,6 +66,9 @@ const useSockets = () => {
         case Event.UPDATE_CODE:
           UPDATE_CODE(data);
           break;
+        case Event.UPDATE_HEART:
+          UPDATE_HEART(data);
+          break;
         case Event.ATTACK:
           ATTACK(data);
           break;
@@ -87,6 +91,10 @@ const useSockets = () => {
 
   const UPDATE_CODE = (data) => {
     dispatch(editCode({ id: data.playerId, code: data.code }));
+  };
+
+  const UPDATE_HEART = (data) => {
+    dispatch(editHeart({ id: data.playerId, heart: data.heart }));
   };
 
   const ATTACK = (data) => {

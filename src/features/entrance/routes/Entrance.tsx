@@ -77,41 +77,15 @@ export const Entrance = () => {
           </div>
           <Link href="/mypage">
             <div className="flex mt-10 group">
-              <span className="font-press text-lg -mt-0.5 text-white group-hover:text-yellow-400">
+              <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
                 Mypage
               </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-white text-lg group-hover:text-yellow-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 5l7 7-7 7M5 5l7 7-7 7"
-                />
-              </svg>
             </div>
           </Link>
           <div className="flex mt-10 group">
-            <span className="font-press text-lg -mt-0.5 text-white group-hover:text-yellow-400">
+            <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
               Logout
             </span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-white group-hover:text-yellow-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                clipRule="evenodd"
-              />
-            </svg>
           </div>
         </div>
       </div>

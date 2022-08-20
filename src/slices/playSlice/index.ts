@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
 import {
   EditCode,
+  EditHeart,
   InitUser,
   NewPlayer,
   Player,
@@ -11,8 +12,18 @@ import {
   User,
 } from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
-import { fetchAsyncAuthRoom, fetchAsyncCreateRoom } from "./api";
-import { AuthRoomResponse, CreateRoomResponse } from "./api/types";
+import {
+  fetchAsyncAuthRoom,
+  fetchAsyncCreateRoom,
+  fetchAsyncRunConsole,
+  fetchAsyncRunTestCase,
+} from "./api";
+import {
+  AuthRoomResponse,
+  CreateRoomResponse,
+  RunConsoleResponse,
+  RunTestCaseResponse,
+} from "./api/types";
 
 const initialState: PlayState = {
   room: {
@@ -83,6 +94,12 @@ export const playSlice = createSlice({
         (player) => player.id === action.payload.id
       );
       state.players[findIndex].code = action.payload.code;
+    },
+    editHeart(state, action: PayloadAction<EditHeart>) {
+      const findIndex = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      state.players[findIndex].heart = action.payload.heart;
     },
     setPlayer(state, action: PayloadAction<NewPlayer[]>) {
       const users = action.payload.map((player) => {
@@ -179,6 +196,30 @@ export const playSlice = createSlice({
         window.location.replace("/play");
       }
     );
+    builder.addCase(
+      fetchAsyncRunConsole.fulfilled,
+      (state, action: PayloadAction<RunConsoleResponse>) => {
+        console.log(action.payload);
+        if (action.payload.isError) {
+          state.currentUser.consoleResult = action.payload.programError;
+          state.currentUser.heart = state.currentUser.heart - 1;
+        } else {
+          state.currentUser.consoleResult = action.payload.programOutput;
+        }
+      }
+    );
+    builder.addCase(
+      fetchAsyncRunTestCase.fulfilled,
+      (state, action: PayloadAction<RunTestCaseResponse>) => {
+        console.log(action.payload);
+        if (!action.payload.isClearTestCases) {
+          state.currentUser.heart = state.currentUser.heart - 1;
+          state.currentUser.testResults = "error!!";
+        } else {
+          state.currentUser.testResults = "clear!!";
+        }
+      }
+    );
   },
 });
 
@@ -187,6 +228,7 @@ export const {
   editCurrentUser,
   editRoom,
   editCode,
+  editHeart,
   setPlayer,
   setQuestion,
   setClock,

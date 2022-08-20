@@ -5,7 +5,7 @@ import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import useTerminalWindow from "../hooks/useTerminalWindow";
 
 const TerminalWindow = () => {
-  const { tab, result, handleChange, submitConsole, submitTest } =
+  const { tab, currentUser, handleChange, submitConsole, submitTest } =
     useTerminalWindow();
   const tabValue = ["コンソール", "テスト結果"];
 
@@ -22,7 +22,13 @@ const TerminalWindow = () => {
         </div>
       </div>
       <div className="h-4/5 mb-1">
-        <Terminal value={result} />
+        <Terminal
+          value={
+            tab === "コンソール"
+              ? currentUser.consoleResult
+              : currentUser.testResults
+          }
+        />
       </div>
       <div className="absolute right-0 flex">
         <div className="mr-5">
