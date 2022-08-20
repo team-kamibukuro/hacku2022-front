@@ -58,9 +58,15 @@ export interface PlayState {
   players: Player[];
   clock: any;
   dialog: Dialog;
+  attackIsRunning: boolean;
 }
 
 export interface EditCode {
   id: string;
   code: string;
+}
+
+export interface InitUser {
+  id: string;
+  name: string;
 }

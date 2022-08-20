@@ -1,6 +1,7 @@
 import { selectAuth } from "@/slices/authSlice";
 import {
   editCurrentUser,
+  initCurrentUser,
   reset,
   selectCurrentUser,
   selectRoom,
@@ -28,8 +29,7 @@ const useDialog = () => {
   useEffect(() => {
     dispatch(reset());
     dispatch(
-      editCurrentUser({
-        ...currentUser,
+      initCurrentUser({
         id: auth.currentUser.id,
         name: auth.currentUser.name,
       })
@@ -41,8 +41,7 @@ const useDialog = () => {
     dispatch(reset());
 
     dispatch(
-      editCurrentUser({
-        ...currentUser,
+      initCurrentUser({
         id: auth.currentUser.id,
         name: auth.currentUser.name,
       })

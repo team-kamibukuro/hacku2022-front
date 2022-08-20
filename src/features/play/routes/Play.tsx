@@ -18,6 +18,7 @@ import Finish from "../components/dialogContents/Finish";
 import useSockets from "../hooks/useSockets";
 import Toast from "@/components/ui-elements/Toast";
 import OtherEditor from "../components/OtherEditor";
+import useRandomAttack from "../hooks/useRandomAttack";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
@@ -33,6 +34,7 @@ export const Play = () => {
   const Content = contentComponents[dialog.event];
 
   const { currentUser, players, question, handleEditorChange } = useSockets();
+  useRandomAttack();
 
   return (
     <Layout>
@@ -79,7 +81,10 @@ export const Play = () => {
             <p className="font-dot text-white mb-[0.6em]">あなたのエディタ</p>
             <div className="h-[calc(100%_-_33.5px)] border-solid border-white bg-editor-back border-2 px-3 pt-3 flex flex-col">
               <div>
-                <UserInfo name={"かずき"} heartbeat={3} />
+                <UserInfo
+                  name={currentUser.name}
+                  heartbeat={currentUser.heart}
+                />
               </div>
               <div className="h-80">
                 <OwnEditor
@@ -96,16 +101,18 @@ export const Play = () => {
             </div>
           </div>
         </div>
-        <DontCloseDialog
-          handleClick={handleClick}
-          open={dialog.open}
-          dialogTitle={dialog.title}
-          submitTitle={dialog.submitTitle}
-          button={dialog.button}
-          isNomal={dialog.isNomal}
-        >
-          <Content />
-        </DontCloseDialog>
+        {dialog.open && (
+          <DontCloseDialog
+            handleClick={handleClick}
+            open={dialog.open}
+            dialogTitle={dialog.title}
+            submitTitle={dialog.submitTitle}
+            button={dialog.button}
+            isNomal={dialog.isNomal}
+          >
+            <Content />
+          </DontCloseDialog>
+        )}
       </div>
     </Layout>
   );
