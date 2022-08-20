@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import RadioTab from "@/components/ui-elements/RadioTab";
 import Terminal from "@/features/play/components/Terminal";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import useTerminalWindow from "../hooks/useTerminalWindow";
 
 const TerminalWindow = () => {
-  const { tab, currentUser, handleChange, submitConsole, submitTest } =
-    useTerminalWindow();
+  const {
+    tab,
+    consoleResult,
+    testResult,
+    handleChange,
+    submitConsole,
+    submitTest,
+  } = useTerminalWindow();
   const tabValue = ["コンソール", "テスト結果"];
 
   return (
@@ -22,13 +28,7 @@ const TerminalWindow = () => {
         </div>
       </div>
       <div className="h-4/5 mb-1">
-        <Terminal
-          value={
-            tab === "コンソール"
-              ? currentUser.consoleResult
-              : currentUser.testResults
-          }
-        />
+        <Terminal result={tab === "コンソール" ? consoleResult : testResult} />
       </div>
       <div className="absolute right-0 flex">
         <div className="mr-5">
