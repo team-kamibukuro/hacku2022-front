@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
 import {
   EditCode,
+  InitUser,
   NewPlayer,
   Player,
   PlayState,
@@ -56,12 +57,18 @@ const initialState: PlayState = {
     button: true,
     isNomal: true,
   },
+  attackIsRunning: false,
 };
 
 export const playSlice = createSlice({
   name: "play",
   initialState,
   reducers: {
+    initCurrentUser(state, action: PayloadAction<InitUser>) {
+      state.currentUser = { ...initialState.currentUser };
+      state.currentUser.id = action.payload.id;
+      state.currentUser.name = action.payload.name;
+    },
     editCurrentUser(state, action: PayloadAction<User>) {
       state.currentUser = action.payload;
     },
@@ -141,6 +148,9 @@ export const playSlice = createSlice({
       state.dialog.button = false;
       state.dialog.isNomal = false;
     },
+    switchAttackIsRunning(state) {
+      state.attackIsRunning = !state.attackIsRunning;
+    },
     reset(): PlayState {
       return {
         ...initialState,
@@ -173,6 +183,7 @@ export const playSlice = createSlice({
 });
 
 export const {
+  initCurrentUser,
   editCurrentUser,
   editRoom,
   editCode,
@@ -181,6 +192,7 @@ export const {
   setClock,
   setDialog,
   resetDialog,
+  switchAttackIsRunning,
   reset,
 } = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
@@ -189,5 +201,7 @@ export const selectRoom = (state: RootState) => state.play.room;
 export const selectClock = (state: RootState) => state.play.clock;
 export const selectDialog = (state: RootState) => state.play.dialog;
 export const selectQuestion = (state: RootState) => state.play.question;
+export const selectAttackIsRunning = (state: RootState) =>
+  state.play.attackIsRunning;
 
 export default playSlice.reducer;
