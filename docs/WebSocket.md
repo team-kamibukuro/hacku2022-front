@@ -164,31 +164,33 @@
 {
   "event": "ALL_FINISHED",
 }
-# バック->フロント
+# フロント->バック
 {
   "event": "ALL_FINISHED",
   "playerId": "",
   "name": "",
-  "time": Date
+  "time": "", 差分
 }
 ```
 
 #### 集計 \*3
 
-```
+```JSON
 # バック->フロント
 {
   "event": "RANKING",
-  "rank": [{
+  "users": [{
       "playerId": "",
       "name": "",
-      "time": Date
+      "time": "",
+      "rank": 1,
     },
     {
       "playerId": "",
       "name": "",
-      "time": Date
-    },...] 配列0から順にランク低くなる
+      "time": "",
+      "rank": 1,
+    },...]
 }
 ```
 
