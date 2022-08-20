@@ -22,6 +22,7 @@ export interface AuthRoomResponse {
 export interface RunConsoleRequest {
   code: string;
   language: string;
+  questionId: string;
 }
 export interface RunConsoleResponse {
   isError: boolean;
