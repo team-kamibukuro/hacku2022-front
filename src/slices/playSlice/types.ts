@@ -66,6 +66,11 @@ export interface EditCode {
   code: string;
 }
 
+export interface EditHeart {
+  id: string;
+  heart: number;
+}
+
 export interface InitUser {
   id: string;
   name: string;
