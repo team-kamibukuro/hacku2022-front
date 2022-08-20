@@ -61,7 +61,6 @@ export const Play = () => {
                     {players.map((player, index) => {
                       return (
                         <div key={index} className="h-full">
-                          <p>aaaa</p>
                           <div
                             className={`h-1/3 w-full ${index < 1 && "pb-2"}`}
                             key={index}

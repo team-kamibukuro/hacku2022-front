@@ -26,7 +26,7 @@ const initialState: PlayState = {
   currentUser: {
     id: "",
     name: "",
-    heart: 0,
+    heart: 3,
     isMaster: false,
     finished: false,
     firewall: false,
@@ -39,7 +39,7 @@ const initialState: PlayState = {
     {
       id: "",
       name: "",
-      heart: 0,
+      heart: 3,
       isMaster: false,
       finished: false,
       firewall: false,
@@ -82,7 +82,7 @@ export const playSlice = createSlice({
         return {
           id: player.id,
           name: player.name,
-          heart: 0,
+          heart: 3,
           isMaster: player.isMaster,
           finished: false,
           firewall: false,

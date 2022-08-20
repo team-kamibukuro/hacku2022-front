@@ -15,7 +15,7 @@ export type EventType = typeof Event[keyof typeof Event];
 export const Attack = {
   INDENT_INJECTION: "INDENT_INJECTION",
   COMMENTOUT_INJECTION: "COMMENTOUT_INJECTION",
-  TBC_POISONING2: "TBC_POISONING2",
+  TBC_POISONING: "TBC_POISONING",
 };
 
 export type AttackType = typeof Attack[keyof typeof Attack];
