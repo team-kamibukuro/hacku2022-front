@@ -12,6 +12,7 @@ export interface TestCase {
   isClearTestCase: boolean;
 }
 export interface TestResult {
+  status: number;
   isClearTestCases: boolean;
   testCaseTotal: number;
   testCaseClearTotal: number;
