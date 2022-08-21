@@ -5,15 +5,18 @@ import {
   selectLoading,
   selectQuestion,
   selectRoom,
+  setFinish,
 } from "@/slices/playSlice";
 import {
   fetchAsyncRunConsole,
   fetchAsyncRunTestCase,
 } from "@/slices/playSlice/api";
+import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import useInterval from "use-interval";
+import { Event } from "../types";
 
 const useTerminalWindow = () => {
   const dispatch = useDispatch();
@@ -108,6 +111,14 @@ const useTerminalWindow = () => {
       await sleep(800);
       dispatch(
         editTestResultValue(result + "Congratulations!!!\nALL TESTS CLEAR 🎉")
+      );
+      dispatch(setFinish());
+      dispatch(
+        sendWebsocket({
+          event: Event.FINISHED,
+          playerId: currentUser.id,
+          name: currentUser.name,
+        })
       );
     }
   };
