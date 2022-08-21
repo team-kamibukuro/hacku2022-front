@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CustomCountdown: React.FC<Props> = ({ time }) => {
-  const { renderer, data } = useCustomCountdown(time);
+  const { renderer, data, onComplete } = useCustomCountdown(time);
 
   const { clockRef } = useClock();
 
@@ -27,10 +27,7 @@ const CustomCountdown: React.FC<Props> = ({ time }) => {
               JSON.stringify(data.date + data.delay)
             );
         }}
-        onComplete={() => {
-          if (localStorage.getItem("end_date") != null)
-            localStorage.removeItem("end_date");
-        }}
+        onComplete={onComplete}
       />
     </div>
   );
