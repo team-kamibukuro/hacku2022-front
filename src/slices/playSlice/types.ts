@@ -27,7 +27,11 @@ export interface User {
   name: string;
   heart: number;
   isMaster: boolean;
-  finished: boolean;
+  finish: {
+    finished: boolean;
+    startTime: Date | null;
+    finishTime: Date | null;
+  };
   firewall: boolean;
   language: string;
   code: string;

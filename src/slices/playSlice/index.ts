@@ -39,7 +39,11 @@ const initialState: PlayState = {
     name: "",
     heart: 3,
     isMaster: false,
-    finished: false,
+    finish: {
+      finished: false,
+      startTime: null,
+      finishTime: null,
+    },
     firewall: false,
     language: "",
     code: "",
@@ -111,6 +115,12 @@ export const playSlice = createSlice({
     },
     editTestResultValue(state, action: PayloadAction<string>) {
       state.currentUser.testResultValue = action.payload;
+    },
+    setStartTime(state) {
+      state.currentUser.finish.startTime = new Date();
+    },
+    setFinish(state) {
+      state.currentUser.finish.finished = true;
     },
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
@@ -246,7 +256,9 @@ export const playSlice = createSlice({
       (state, action: PayloadAction<RunTestCaseResponse>) => {
         state.loading.terminal = false;
         state.currentUser.testResult = action.payload;
-        if (!action.payload.isClearTestCases) {
+        if (action.payload.isClearTestCases) {
+          state.currentUser.finish.finishTime = new Date();
+        } else {
           state.currentUser.heart = state.currentUser.heart - 1;
         }
       }
@@ -263,6 +275,8 @@ export const {
   editConsoleResult,
   editConsoleResultValue,
   editTestResultValue,
+  setStartTime,
+  setFinish,
   editRoom,
   editCode,
   editHeart,
