@@ -15,6 +15,7 @@ import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import useInterval from "use-interval";
 import { Event } from "../types";
 
@@ -28,6 +29,7 @@ const useTerminalWindow = () => {
   const callTestRef = useRef(false);
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const notify = (message: string) => toast.dark(message);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTab(e.target.value);
@@ -120,6 +122,7 @@ const useTerminalWindow = () => {
           name: currentUser.name,
         })
       );
+      notify(`Congratulations!!!\nYou FINISHED!!🎉`);
     }
   };
 
