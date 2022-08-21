@@ -2,9 +2,9 @@
 
 ### websocket に connect した時
 
-```
-# フロント->バック
+- フロント->バック
 
+```JSON
 {
   "event": "CONNECT_SUCCESS",
   "playerId": "",
@@ -15,9 +15,9 @@
 
 ### websocket の接続を切った時
 
-```
-# フロント->バック
+- フロント->バック
 
+```JSON
 {
   "event": "DISCONNECT",
   "playerId": "",
@@ -26,9 +26,9 @@
 
 ### ルームに 4 人揃った時
 
-```
-# バック->フロント
+- バック->フロント
 
+```JSON
 {
   "event": "READY",
   "question": {
@@ -48,17 +48,19 @@
 
 ### コード更新
 
-```
-# フロント->バック
+- フロント->バック
 
+```JSON
 {
   "event": "UPDATE_CODE",
   "playerId": "",
   "code": "",
 }
+```
 
-# バック->フロント
+- バック->フロント
 
+```JSON
 {
   "event": "UPDATE_CODE",
   "playerId": "",
@@ -68,17 +70,9 @@
 
 ### ハート更新
 
-```
-# フロント->バック
+- フロント->バック
 
-{
-  "event": "UPDATE_HEART",
-  "playerId": "",
-  "heart": "",
-}
-
-# バック->フロント
-
+```JSON
 {
   "event": "UPDATE_HEART",
   "playerId": "",
@@ -86,24 +80,17 @@
 }
 ```
 
-### テストケースがすべて通った
+- バック->フロント
 
-```
-# フロント->バック
+```JSON
 {
-  "event": "FINISHED",
+  "event": "UPDATE_HEART",
   "playerId": "",
-  "name": ""
-}
-# バック->フロント
-{
-  "event": "FINISHED",
-  "playerId": "",
-  "name": ""
+  "heart": "",
 }
 ```
 
-### 全員が FINISH したとき
+### FINISH
 
 テストケース実行
 
@@ -142,14 +129,19 @@
 
 #### テストケースがすべて通った \*1
 
-```
-# フロント->バック
+- フロント->バック
+
+```JSON
 {
   "event": "FINISHED",
   "playerId": "",
   "name": ""
 }
-# バック->フロント
+```
+
+- バック->フロント
+
+```JSON
 {
   "event": "FINISHED",
   "playerId": "",
@@ -159,12 +151,17 @@
 
 #### 全員が終了した \*2
 
-```
-# バック->フロント
+- バック->フロント
+
+```JSON
 {
   "event": "ALL_FINISHED",
 }
-# フロント->バック
+```
+
+- フロント->バック
+
+```JSON
 {
   "event": "ALL_FINISHED",
   "playerId": "",
@@ -175,8 +172,9 @@
 
 #### 集計 \*3
 
+- バック->フロント
+
 ```JSON
-# バック->フロント
 {
   "event": "RANKING",
   "users": [{
@@ -190,61 +188,131 @@
       "name": "",
       "time": "",
       "rank": 1,
-    },...]
+    },]
 }
 ```
 
 ### 攻撃
 
+- attackTypes
+
 ```
-# フロント->バック
+INDENT_INJECTION // インデントインジェクション
+COMMENTOUT_INJECTION // コメントアウトインジェクション
+TBC_POISONING // TBC ポイズニング
+RANSOMWARE // ランサムウェア
+```
 
-{
-  "event": "ATTACK",
-  "attackType": "",
-  "playerId": "",
-  "name": "",
-  "language": "",
-  "code": "",
-}
-
-# バック->フロント
-
-{
-  "event": "ATTACK",
-  "attackType": "",
-  "playerId": "",
-  "name": "",
-  "language": "",
-  "code": "",
-}
-
-# attackTypes
+attackType が
 
 INDENT_INJECTION // インデントインジェクション
 COMMENTOUT_INJECTION // コメントアウトインジェクション
 TBC_POISONING // TBC ポイズニング
+
+の場合
+
+- フロント->バック
+
+```JSON
+{
+  "event": "ATTACK",
+  "attackType": "",
+  "playerId": "",
+  "name": "",
+  "language": "",
+  "code": "",
+}
+```
+
+- バック->フロント
+
+(※送信したユーザーも含めブロードキャスト)
+
+```JSON
+{
+  "event": "ATTACK",
+  "attackType": "",
+  "playerId": "",
+  "name": "",
+  "language": "",
+  "code": "",
+}
+```
+
+RANSOMWARE // ランサムウェア
+の場合、
+
+- フロント->バック
+
+```JSON
+{
+	"event": "ATTACK",
+	"attackType": "RANSOMWARE",
+	"playerId": "",
+	"name": "",
+　"heart": 2
+}
+```
+
+- バック->フロント
+
+(※送信したユーザーも含めブロードキャスト)
+
+```JSON
+{
+	"event": "ATTACK",
+	"attackType": "RANSOMWARE",
+	"playerId": "",
+	"name": "",
+　"heart": 2
+}
 ```
 
 ### ファイヤーウォール
 
-```
-# フロント->バック
+- フロント->バック
 
+```JSON
 {
   "event": "FIREWALL",
   "status": true,
   "playerId": "",
-  "name": ””,
+  "name": "",
 }
+```
 
-# バック->フロント
+- バック->フロント
 
+```JSON
 {
   "event": "FIREWALL",
   "status": true,
   "playerId": "",
-  "name": ””,
+  "name": "",
+}
+```
+
+# 500 番エラー
+
+- フロント->バック
+
+```JSON
+{
+  "event": "500_ERROR",
+  "status": true,
+  "playerId": "",
+  "name": "",
+}
+```
+
+- バック->フロント
+
+```JSON
+{
+  "event": "500_ERROR",
+  "status": true,
+  "playerId": "",
+  "name": "",
 }
 ```
 
@@ -256,7 +324,7 @@ TBC_POISONING // TBC ポイズニング
 - [ログイン](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/login.md)
 - [ルーム作成](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/create_room.md)
 - [部屋 ID 取得](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/get_room_id.md)
-- マッチングルーム入室
+- [マッチングルーム入室](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/matching_room.md)
 - [コンソール実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/console.md)
 - [テストケース実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/testcase.md)
 - 対戦履歴取得
