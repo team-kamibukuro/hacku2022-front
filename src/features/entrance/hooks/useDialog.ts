@@ -34,6 +34,9 @@ const useDialog = () => {
         name: auth.currentUser.name,
       })
     );
+    if (localStorage.getItem("end_date") != null) {
+      localStorage.removeItem("end_date");
+    }
   }, [dispatch]);
 
   const handleClickClose = useCallback(() => {
