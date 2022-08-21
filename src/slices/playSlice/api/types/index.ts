@@ -19,6 +19,16 @@ export interface AuthRoomResponse {
   masterUserId: string;
 }
 
+export interface MatchingRequest {
+  userId: string;
+}
+
+export interface MatchingResponse {
+  roomId: string;
+  roomName: string;
+  masterUserId: string;
+}
+
 export interface RunConsoleRequest {
   code: string;
   language: string;

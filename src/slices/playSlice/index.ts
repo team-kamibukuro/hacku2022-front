@@ -16,12 +16,14 @@ import { DialogEvent, DialogEventType } from "@/features/play/types";
 import {
   fetchAsyncAuthRoom,
   fetchAsyncCreateRoom,
+  fetchAsyncMatching,
   fetchAsyncRunConsole,
   fetchAsyncRunTestCase,
 } from "./api";
 import {
   AuthRoomResponse,
   CreateRoomResponse,
+  MatchingResponse,
   RunConsoleResponse,
   RunTestCaseResponse,
 } from "./api/types";
@@ -255,6 +257,17 @@ export const playSlice = createSlice({
     builder.addCase(
       fetchAsyncAuthRoom.fulfilled,
       (state, action: PayloadAction<AuthRoomResponse>) => {
+        state.room.id = action.payload.roomId;
+        state.room.name = action.payload.roomName;
+        state.currentUser.isMaster =
+          state.currentUser.id === action.payload.masterUserId;
+
+        window.location.replace("/play");
+      }
+    );
+    builder.addCase(
+      fetchAsyncMatching.fulfilled,
+      (state, action: PayloadAction<MatchingResponse>) => {
         state.room.id = action.payload.roomId;
         state.room.name = action.payload.roomName;
         state.currentUser.isMaster =
