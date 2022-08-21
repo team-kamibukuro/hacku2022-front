@@ -5,15 +5,19 @@ import {
   selectLoading,
   selectQuestion,
   selectRoom,
+  setFinish,
 } from "@/slices/playSlice";
 import {
   fetchAsyncRunConsole,
   fetchAsyncRunTestCase,
 } from "@/slices/playSlice/api";
+import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import useInterval from "use-interval";
+import { Event } from "../types";
 
 const useTerminalWindow = () => {
   const dispatch = useDispatch();
@@ -25,6 +29,7 @@ const useTerminalWindow = () => {
   const callTestRef = useRef(false);
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const notify = (message: string) => toast.dark(message);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTab(e.target.value);
@@ -109,6 +114,15 @@ const useTerminalWindow = () => {
       dispatch(
         editTestResultValue(result + "Congratulations!!!\nALL TESTS CLEAR 🎉")
       );
+      dispatch(setFinish());
+      dispatch(
+        sendWebsocket({
+          event: Event.FINISHED,
+          playerId: currentUser.id,
+          name: currentUser.name,
+        })
+      );
+      notify(`Congratulations!\nYou Finished 🎉`);
     }
   };
 

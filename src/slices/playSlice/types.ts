@@ -27,7 +27,11 @@ export interface User {
   name: string;
   heart: number;
   isMaster: boolean;
-  finished: boolean;
+  finish: {
+    finished: boolean;
+    startTime: number;
+    finishTime: number;
+  };
   firewall: boolean;
   language: string;
   code: string;
@@ -74,6 +78,17 @@ export interface Loading {
   terminal: boolean;
 }
 
+export interface RankingUser {
+  playerId: string;
+  name: string;
+  time: string;
+  rank: number;
+}
+
+export interface Ranking {
+  users: RankingUser[];
+}
+
 export interface PlayState {
   room: Room;
   question: Question;
@@ -83,6 +98,8 @@ export interface PlayState {
   dialog: Dialog;
   attackIsRunning: boolean;
   loading: Loading;
+  ranking: Ranking;
+  allFinished: boolean;
 }
 
 export interface EditCode {
@@ -93,6 +110,10 @@ export interface EditCode {
 export interface EditHeart {
   id: string;
   heart: number;
+}
+
+export interface EditFinished {
+  id: string;
 }
 
 export interface InitUser {

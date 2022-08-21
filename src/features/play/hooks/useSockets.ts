@@ -1,21 +1,38 @@
 import {
   editCode,
   editCurrentUser,
+  editFinished,
   editHeart,
+  selectAllFinished,
+  selectClock,
   selectCurrentUser,
   selectPlayers,
   selectQuestion,
   selectRoom,
   setDialog,
+  setFinish,
   setPlayer,
   setQuestion,
+  setRanking,
+  switchAllFinished,
 } from "@/slices/playSlice";
 import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { Attack, DialogEvent, Event } from "../types";
+import {
+  Attack,
+  ATTACK_DATA,
+  DialogEvent,
+  Event,
+  FINISHED_DATA,
+  ALL_FINISHED_DATA,
+  READY_DATA,
+  UPDATE_CODE_DATA,
+  UPDATE_HEART_DATA,
+  RANKING_DATA,
+} from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
 import UFO from "@/common/icons/ufo_04.svg";
@@ -27,7 +44,10 @@ const useSockets = () => {
   const players = useSelector(selectPlayers);
   const room = useSelector(selectRoom);
   const question = useSelector(selectQuestion);
+  const allFinished = useSelector(selectAllFinished);
   const refFirstRef = useRef(true);
+  const sendAllFinishedRef = useRef(true);
+  const clock = useSelector(selectClock);
 
   const notify = (message: string, icon: any) =>
     toast.dark(message, {
@@ -72,12 +92,20 @@ const useSockets = () => {
         case Event.ATTACK:
           ATTACK(data);
           break;
+        case Event.FINISHED:
+          FINISHED(data);
+          break;
+        case Event.ALL_FINISHED:
+          console.log(currentUser);
+          ALL_FINISHED(data);
+        case Event.RANKING:
+          RANKING(data);
         default:
       }
     });
   }, []);
 
-  const READY = (data) => {
+  const READY = (data: READY_DATA) => {
     dispatch(
       setQuestion({
         id: data.question.id,
@@ -89,15 +117,15 @@ const useSockets = () => {
     dispatch(setDialog(DialogEvent.StartGame));
   };
 
-  const UPDATE_CODE = (data) => {
+  const UPDATE_CODE = (data: UPDATE_CODE_DATA) => {
     dispatch(editCode({ id: data.playerId, code: data.code }));
   };
 
-  const UPDATE_HEART = (data) => {
+  const UPDATE_HEART = (data: UPDATE_HEART_DATA) => {
     dispatch(editHeart({ id: data.playerId, heart: data.heart }));
   };
 
-  const ATTACK = (data) => {
+  const ATTACK = (data: ATTACK_DATA) => {
     if (data.playerId === currentUser.id) {
       dispatch(editCurrentUser({ ...currentUser, code: data.code }));
     } else {
@@ -120,10 +148,24 @@ const useSockets = () => {
     }
   };
 
-  function handleEditorChange(
+  const FINISHED = (data: FINISHED_DATA) => {
+    dispatch(editFinished({ id: data.playerId }));
+    notify(`${data.name} Finished!!`, "🎉");
+  };
+
+  const ALL_FINISHED = (data: ALL_FINISHED_DATA) => {
+    dispatch(switchAllFinished());
+  };
+
+  const RANKING = (data: RANKING_DATA) => {
+    dispatch(setRanking(data.users));
+    dispatch(setDialog(DialogEvent.Finish));
+  };
+
+  const handleEditorChange = (
     value: string,
     event: monaco.editor.IModelContentChangedEvent
-  ) {
+  ) => {
     dispatch(editCurrentUser({ ...currentUser, code: value }));
     dispatch(
       sendWebsocket({
@@ -132,6 +174,26 @@ const useSockets = () => {
         code: value,
       })
     );
+  };
+
+  if (allFinished && sendAllFinishedRef.current) {
+    let diff = 0;
+    if (currentUser.finish.finished) {
+      diff = currentUser.finish.finishTime - currentUser.finish.startTime;
+      clock.pause();
+    } else {
+      dispatch(setFinish());
+      diff = Date.now() - currentUser.finish.startTime;
+    }
+    dispatch(
+      sendWebsocket({
+        event: Event.ALL_FINISHED,
+        playerId: currentUser.id,
+        name: currentUser.name,
+        time: diff.toString(),
+      })
+    );
+    sendAllFinishedRef.current = false;
   }
 
   return { currentUser, players, question, handleEditorChange };

@@ -2,11 +2,13 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import store, { RootState } from "@/store";
 import {
   EditCode,
+  EditFinished,
   EditHeart,
   InitUser,
   NewPlayer,
   PlayState,
   Question,
+  RankingUser,
   Room,
   User,
 } from "./types";
@@ -39,7 +41,11 @@ const initialState: PlayState = {
     name: "",
     heart: 3,
     isMaster: false,
-    finished: false,
+    finish: {
+      finished: false,
+      startTime: 0,
+      finishTime: 0,
+    },
     firewall: false,
     language: "",
     code: "",
@@ -86,9 +92,20 @@ const initialState: PlayState = {
     isNomal: true,
   },
   attackIsRunning: false,
+  ranking: {
+    users: [
+      {
+        playerId: "",
+        name: "",
+        time: "",
+        rank: 0,
+      },
+    ],
+  },
   loading: {
     terminal: false,
   },
+  allFinished: false,
 };
 
 export const playSlice = createSlice({
@@ -112,6 +129,12 @@ export const playSlice = createSlice({
     editTestResultValue(state, action: PayloadAction<string>) {
       state.currentUser.testResultValue = action.payload;
     },
+    setStartTime(state) {
+      state.currentUser.finish.startTime = Date.now();
+    },
+    setFinish(state) {
+      state.currentUser.finish.finished = true;
+    },
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
     },
@@ -123,6 +146,12 @@ export const playSlice = createSlice({
         (player) => player.id === action.payload.id
       );
       state.players[findIndex].code = action.payload.code;
+    },
+    editFinished(state, action: PayloadAction<EditFinished>) {
+      const findIndex = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      state.players[findIndex].finished = true;
     },
     editHeart(state, action: PayloadAction<EditHeart>) {
       const findIndex = state.players.findIndex(
@@ -197,6 +226,12 @@ export const playSlice = createSlice({
     switchAttackIsRunning(state) {
       state.attackIsRunning = !state.attackIsRunning;
     },
+    setRanking(state, action: PayloadAction<RankingUser[]>) {
+      state.ranking.users = action.payload;
+    },
+    switchAllFinished(state) {
+      state.allFinished = !state.allFinished;
+    },
     reset(): PlayState {
       return {
         ...initialState,
@@ -246,7 +281,9 @@ export const playSlice = createSlice({
       (state, action: PayloadAction<RunTestCaseResponse>) => {
         state.loading.terminal = false;
         state.currentUser.testResult = action.payload;
-        if (!action.payload.isClearTestCases) {
+        if (action.payload.isClearTestCases) {
+          state.currentUser.finish.finishTime = Date.now();
+        } else {
           state.currentUser.heart = state.currentUser.heart - 1;
         }
       }
@@ -263,8 +300,11 @@ export const {
   editConsoleResult,
   editConsoleResultValue,
   editTestResultValue,
+  setStartTime,
+  setFinish,
   editRoom,
   editCode,
+  editFinished,
   editHeart,
   setPlayer,
   setQuestion,
@@ -272,6 +312,8 @@ export const {
   setDialog,
   resetDialog,
   switchAttackIsRunning,
+  setRanking,
+  switchAllFinished,
   reset,
 } = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
@@ -283,5 +325,7 @@ export const selectQuestion = (state: RootState) => state.play.question;
 export const selectAttackIsRunning = (state: RootState) =>
   state.play.attackIsRunning;
 export const selectLoading = (state: RootState) => state.play.loading;
+export const selectRanking = (state: RootState) => state.play.ranking;
+export const selectAllFinished = (state: RootState) => state.play.allFinished;
 
 export default playSlice.reducer;

@@ -28,7 +28,11 @@ const OtherEditor: React.FC<Props> = ({ player }) => {
   return (
     <div className="h-full border-solid border-white bg-editor-back border-2 px-3 pt-3 pb-1 flex flex-col">
       <div className="mb-1">
-        <UserInfo name={player.name} heartbeat={player.heart} />
+        <UserInfo
+          name={player.name}
+          heartbeat={player.heart}
+          finished={player.finished}
+        />
       </div>
       <div className="flex-grow">
         <Editor
