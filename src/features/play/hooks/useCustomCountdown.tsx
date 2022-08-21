@@ -1,9 +1,17 @@
+import { selectCurrentUser, setFinish } from "@/slices/playSlice";
+import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Event } from "../types";
 
 const useCustomCountdown = (time) => {
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
+
   const renderer = ({ formatted, completed }) => {
     if (completed) {
-      return null;
+      return <span className="font-dot">00:00:00</span>;
     } else {
       return (
         <span className="font-dot">
@@ -37,7 +45,20 @@ const useCustomCountdown = (time) => {
     }
   }, []);
 
-  return { renderer, data };
+  const onComplete = () => {
+    if (localStorage.getItem("end_date") != null)
+      localStorage.removeItem("end_date");
+
+    dispatch(
+      sendWebsocket({
+        event: Event.FINISHED,
+        playerId: currentUser.id,
+        name: currentUser.name,
+      })
+    );
+  };
+
+  return { renderer, data, onComplete };
 };
 
 export default useCustomCountdown;
