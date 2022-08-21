@@ -3,6 +3,7 @@ import {
   editCurrentUser,
   editFinished,
   editHeart,
+  selectAllFinished,
   selectCurrentUser,
   selectPlayers,
   selectQuestion,
@@ -10,6 +11,8 @@ import {
   setDialog,
   setPlayer,
   setQuestion,
+  setRanking,
+  switchAllFinished,
 } from "@/slices/playSlice";
 import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
@@ -22,9 +25,11 @@ import {
   DialogEvent,
   Event,
   FINISHED_DATA,
+  ALL_FINISHED_DATA,
   READY_DATA,
   UPDATE_CODE_DATA,
   UPDATE_HEART_DATA,
+  RANKING_DATA,
 } from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
@@ -37,7 +42,9 @@ const useSockets = () => {
   const players = useSelector(selectPlayers);
   const room = useSelector(selectRoom);
   const question = useSelector(selectQuestion);
+  const allFinished = useSelector(selectAllFinished);
   const refFirstRef = useRef(true);
+  const sendAllFinishedRef = useRef(true);
 
   const notify = (message: string, icon: any) =>
     toast.dark(message, {
@@ -85,6 +92,11 @@ const useSockets = () => {
         case Event.FINISHED:
           FINISHED(data);
           break;
+        case Event.ALL_FINISHED:
+          console.log(currentUser);
+          ALL_FINISHED(data);
+        case Event.RANKING:
+          RANKING(data);
         default:
       }
     });
@@ -138,6 +150,15 @@ const useSockets = () => {
     notify(`${data.name} FINISHED!!`, "🎉");
   };
 
+  const ALL_FINISHED = (data: ALL_FINISHED_DATA) => {
+    dispatch(switchAllFinished());
+  };
+
+  const RANKING = (data: RANKING_DATA) => {
+    dispatch(setRanking(data.users));
+    dispatch(setDialog(DialogEvent.Finish));
+  };
+
   const handleEditorChange = (
     value: string,
     event: monaco.editor.IModelContentChangedEvent
@@ -151,6 +172,19 @@ const useSockets = () => {
       })
     );
   };
+
+  if (allFinished && sendAllFinishedRef.current) {
+    const diff = currentUser.finish.finishTime - currentUser.finish.startTime;
+    dispatch(
+      sendWebsocket({
+        event: Event.ALL_FINISHED,
+        playerId: currentUser.id,
+        name: currentUser.name,
+        time: diff.toString(),
+      })
+    );
+    sendAllFinishedRef.current = false;
+  }
 
   return { currentUser, players, question, handleEditorChange };
 };
