@@ -5,7 +5,6 @@ import {
   EditHeart,
   InitUser,
   NewPlayer,
-  Player,
   PlayState,
   Question,
   Room,
@@ -44,8 +43,26 @@ const initialState: PlayState = {
     firewall: false,
     language: "",
     code: "",
-    consoleResult: "",
-    testResults: "",
+    consoleResult: {
+      status: 0,
+      result: "",
+    },
+    testResult: {
+      status: 0,
+      isClearTestCases: false,
+      testCaseTotal: 0,
+      testCaseClearTotal: 0,
+      testCases: [
+        {
+          testCaseId: "",
+          isCompileError: false,
+          compilerError: "",
+          isClearTestCase: false,
+        },
+      ],
+    },
+    consoleResultValue: "",
+    testResultValue: "",
   },
   players: [
     {
@@ -69,6 +86,9 @@ const initialState: PlayState = {
     isNomal: true,
   },
   attackIsRunning: false,
+  loading: {
+    terminal: false,
+  },
 };
 
 export const playSlice = createSlice({
@@ -82,6 +102,15 @@ export const playSlice = createSlice({
     },
     editCurrentUser(state, action: PayloadAction<User>) {
       state.currentUser = action.payload;
+    },
+    editConsoleResult(state, action: PayloadAction<string>) {
+      state.currentUser.consoleResult.result = action.payload;
+    },
+    editConsoleResultValue(state, action: PayloadAction<string>) {
+      state.currentUser.consoleResultValue = action.payload;
+    },
+    editTestResultValue(state, action: PayloadAction<string>) {
+      state.currentUser.testResultValue = action.payload;
     },
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
@@ -199,33 +228,41 @@ export const playSlice = createSlice({
     builder.addCase(
       fetchAsyncRunConsole.fulfilled,
       (state, action: PayloadAction<RunConsoleResponse>) => {
-        console.log(action.payload);
+        state.loading.terminal = false;
+        state.currentUser.consoleResult.status = 200;
         if (action.payload.isError) {
-          state.currentUser.consoleResult = action.payload.programError;
+          state.currentUser.consoleResult.result = action.payload.programError;
           state.currentUser.heart = state.currentUser.heart - 1;
         } else {
-          state.currentUser.consoleResult = action.payload.programOutput;
+          state.currentUser.consoleResult.result = action.payload.programOutput;
         }
       }
     );
+    builder.addCase(fetchAsyncRunConsole.pending, (state) => {
+      state.loading.terminal = true;
+    });
     builder.addCase(
       fetchAsyncRunTestCase.fulfilled,
       (state, action: PayloadAction<RunTestCaseResponse>) => {
-        console.log(action.payload);
+        state.loading.terminal = false;
+        state.currentUser.testResult = action.payload;
         if (!action.payload.isClearTestCases) {
           state.currentUser.heart = state.currentUser.heart - 1;
-          state.currentUser.testResults = "error!!";
-        } else {
-          state.currentUser.testResults = "clear!!";
         }
       }
     );
+    builder.addCase(fetchAsyncRunTestCase.pending, (state) => {
+      state.loading.terminal = true;
+    });
   },
 });
 
 export const {
   initCurrentUser,
   editCurrentUser,
+  editConsoleResult,
+  editConsoleResultValue,
+  editTestResultValue,
   editRoom,
   editCode,
   editHeart,
@@ -245,5 +282,6 @@ export const selectDialog = (state: RootState) => state.play.dialog;
 export const selectQuestion = (state: RootState) => state.play.question;
 export const selectAttackIsRunning = (state: RootState) =>
   state.play.attackIsRunning;
+export const selectLoading = (state: RootState) => state.play.loading;
 
 export default playSlice.reducer;

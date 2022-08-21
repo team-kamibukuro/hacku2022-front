@@ -5,6 +5,23 @@ export interface Room {
   name: string;
 }
 
+export interface TestCase {
+  testCaseId: string;
+  isCompileError: boolean;
+  compilerError: string;
+  isClearTestCase: boolean;
+}
+export interface TestResult {
+  status: number;
+  isClearTestCases: boolean;
+  testCaseTotal: number;
+  testCaseClearTotal: number;
+  testCases: TestCase[];
+}
+export interface ConsoleResult {
+  status: number;
+  result: string;
+}
 export interface User {
   id: string;
   name: string;
@@ -14,8 +31,10 @@ export interface User {
   firewall: boolean;
   language: string;
   code: string;
-  consoleResult: string;
-  testResults: string;
+  consoleResult: ConsoleResult;
+  testResult: TestResult;
+  consoleResultValue: string;
+  testResultValue: string;
 }
 
 export interface Player {
@@ -51,6 +70,10 @@ export interface Question {
   context: string;
 }
 
+export interface Loading {
+  terminal: boolean;
+}
+
 export interface PlayState {
   room: Room;
   question: Question;
@@ -59,6 +82,7 @@ export interface PlayState {
   clock: any;
   dialog: Dialog;
   attackIsRunning: boolean;
+  loading: Loading;
 }
 
 export interface EditCode {

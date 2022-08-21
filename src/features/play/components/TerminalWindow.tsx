@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import RadioTab from "@/components/ui-elements/RadioTab";
 import Terminal from "@/features/play/components/Terminal";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
@@ -23,10 +23,10 @@ const TerminalWindow = () => {
       </div>
       <div className="h-4/5 mb-1">
         <Terminal
-          value={
+          result={
             tab === "コンソール"
-              ? currentUser.consoleResult
-              : currentUser.testResults
+              ? currentUser.consoleResultValue
+              : currentUser.testResultValue
           }
         />
       </div>
