@@ -122,7 +122,7 @@ const useTerminalWindow = () => {
           name: currentUser.name,
         })
       );
-      notify(`Congratulations!!!\nYou FINISHED!!🎉`);
+      notify(`Congratulations!\nYou Finished 🎉`);
     }
   };
 
