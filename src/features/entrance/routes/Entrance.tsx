@@ -37,7 +37,7 @@ export const Entrance = () => {
         <div className="p-20 border-white border-solid border-8">
           <div className="flex items-center justify-center ">
             <h2 className="text-white text-[80px] font-press mr-10 border-white border-solid border-b-8">
-              HOGEHOGE
+              INGECTION
             </h2>
             <div className="flex flex-col">
               <Button

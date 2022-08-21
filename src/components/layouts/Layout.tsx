@@ -8,7 +8,7 @@ export default function Layout({ children }: Props) {
   return (
     <div className="w-screen flex justify-center items-center flex-col min-h-screen font-mono bg-black">
       <Head>
-        <title>コードバトル</title>
+        <title>INGECTION</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0"
