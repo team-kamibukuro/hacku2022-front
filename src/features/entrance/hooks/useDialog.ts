@@ -9,6 +9,7 @@ import {
 import {
   fetchAsyncAuthRoom,
   fetchAsyncCreateRoom,
+  fetchAsyncMatching,
 } from "@/slices/playSlice/api";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -76,13 +77,19 @@ const useDialog = () => {
           masterUserId: auth.currentUser.id,
           roomName: room.name,
         };
-        await dispatch(fetchAsyncCreateRoom(createRoomParams));
+        dispatch(fetchAsyncCreateRoom(createRoomParams));
         break;
       case Access.Input:
         const authRoomParams = {
           roomName: room.name,
         };
-        await dispatch(fetchAsyncAuthRoom(authRoomParams));
+        dispatch(fetchAsyncAuthRoom(authRoomParams));
+        break;
+      case Access.Matching:
+        const matchingParams = {
+          userId: currentUser.id,
+        };
+        dispatch(fetchAsyncMatching(matchingParams));
         break;
       default:
     }
