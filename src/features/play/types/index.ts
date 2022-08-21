@@ -6,8 +6,10 @@ export const Event = {
   UPDATE_CODE: "UPDATE_CODE",
   UPDATE_HEART: "UPDATE_HEART",
   FINISHED: "FINISHED",
+  ALL_FINISHED: "ALL_FINISHED",
   ATTACK: "ATTACK",
   FIREWALL: "FIREWALL",
+  RANKING: "RANKING",
 } as const;
 
 export type EventType = typeof Event[keyof typeof Event];
