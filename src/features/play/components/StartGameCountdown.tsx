@@ -4,6 +4,7 @@ import {
   selectClock,
   selectCurrentUser,
   selectDialog,
+  setStartTime,
   switchAttackIsRunning,
 } from "@/slices/playSlice";
 import React, { useEffect, useRef } from "react";
@@ -41,6 +42,7 @@ const StartGameCountdown = () => {
 
   const onComplete = () => {
     dispatch(resetDialog());
+    dispatch(setStartTime());
     currentUser.isMaster && dispatch(switchAttackIsRunning());
     clock.start();
   };
