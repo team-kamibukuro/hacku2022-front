@@ -99,6 +99,10 @@ export interface EditHeart {
   heart: number;
 }
 
+export interface EditFinished {
+  id: string;
+}
+
 export interface InitUser {
   id: string;
   name: string;
