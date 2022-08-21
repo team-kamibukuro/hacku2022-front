@@ -23,6 +23,8 @@ export interface RunConsoleRequest {
   code: string;
   language: string;
   questionId: string;
+  roomId: string;
+  userId: string;
 }
 export interface RunConsoleResponse {
   isError: boolean;
@@ -34,6 +36,8 @@ export interface RunTestCaseRequest {
   code: string;
   testId: string;
   language: string;
+  roomId: string;
+  userId: string;
 }
 
 export interface TestCase {

@@ -4,6 +4,7 @@ import {
   selectCurrentUser,
   selectLoading,
   selectQuestion,
+  selectRoom,
 } from "@/slices/playSlice";
 import {
   fetchAsyncRunConsole,
@@ -18,6 +19,7 @@ const useTerminalWindow = () => {
   const dispatch = useDispatch();
   const [tab, setTab] = useState("コンソール");
   const currentUser = useSelector(selectCurrentUser);
+  const room = useSelector(selectRoom);
   const question = useSelector(selectQuestion);
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
@@ -34,6 +36,8 @@ const useTerminalWindow = () => {
       code: currentUser.code,
       language: currentUser.language,
       questionId: question.id,
+      roomId: room.id,
+      userId: currentUser.id,
     };
     dispatch(fetchAsyncRunConsole(request));
   };
@@ -45,6 +49,8 @@ const useTerminalWindow = () => {
       code: currentUser.code,
       testId: question.id,
       language: currentUser.language,
+      roomId: room.id,
+      userId: currentUser.id,
     };
     dispatch(fetchAsyncRunTestCase(request));
   };
