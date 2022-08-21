@@ -5,6 +5,8 @@ import {
   AuthRoomResponse,
   CreateRoomRequest,
   CreateRoomResponse,
+  MatchingRequest,
+  MatchingResponse,
   RunConsoleRequest,
   RunConsoleResponse,
   RunTestCaseRequest,
@@ -27,6 +29,18 @@ export const fetchAsyncAuthRoom = createAsyncThunk(
   "play/authRoom",
   async (room: AuthRoomRequest) => {
     const res = await client.post<AuthRoomResponse>("/room/get", room, {
+      headers: {
+        Authorization: `${localStorage.localJWT}`,
+      },
+    });
+    return res.data;
+  }
+);
+
+export const fetchAsyncMatching = createAsyncThunk(
+  "play/matching",
+  async (req: MatchingRequest) => {
+    const res = await client.post<MatchingResponse>("/room/matching", req, {
       headers: {
         Authorization: `${localStorage.localJWT}`,
       },

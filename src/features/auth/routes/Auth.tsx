@@ -14,7 +14,7 @@ export const Auth = () => {
         <StainedGlass />
         <div className="flex flex-col justify-center items-center z-50 h-screen w-full">
           <h2 className="text-white text-5xl font-press border-white border-solid border-b-8 mb-5">
-            HOGEHOGE
+            INGECTION
           </h2>
           <div className="nes-container is-rounded is-dark font-press w-[600px]">
             <div className="p-10">
