@@ -4,11 +4,13 @@ import {
   editFinished,
   editHeart,
   selectAllFinished,
+  selectClock,
   selectCurrentUser,
   selectPlayers,
   selectQuestion,
   selectRoom,
   setDialog,
+  setFinish,
   setPlayer,
   setQuestion,
   setRanking,
@@ -45,6 +47,7 @@ const useSockets = () => {
   const allFinished = useSelector(selectAllFinished);
   const refFirstRef = useRef(true);
   const sendAllFinishedRef = useRef(true);
+  const clock = useSelector(selectClock);
 
   const notify = (message: string, icon: any) =>
     toast.dark(message, {
@@ -147,7 +150,7 @@ const useSockets = () => {
 
   const FINISHED = (data: FINISHED_DATA) => {
     dispatch(editFinished({ id: data.playerId }));
-    notify(`${data.name} FINISHED!!`, "🎉");
+    notify(`${data.name} Finished!!`, "🎉");
   };
 
   const ALL_FINISHED = (data: ALL_FINISHED_DATA) => {
@@ -174,7 +177,14 @@ const useSockets = () => {
   };
 
   if (allFinished && sendAllFinishedRef.current) {
-    const diff = currentUser.finish.finishTime - currentUser.finish.startTime;
+    let diff = 0;
+    if (currentUser.finish.finished) {
+      diff = currentUser.finish.finishTime - currentUser.finish.startTime;
+      clock.pause();
+    } else {
+      dispatch(setFinish());
+      diff = Date.now() - currentUser.finish.startTime;
+    }
     dispatch(
       sendWebsocket({
         event: Event.ALL_FINISHED,
