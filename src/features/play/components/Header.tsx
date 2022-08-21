@@ -11,7 +11,7 @@ const Header = () => {
       <header>
         <nav className="navbar navbar-expand-lg py-2 relative flex items-center w-full justify-between border-solid border-white border-b-2 bg-black bg-opacity-75">
           <div className="px-10 w-full flex flex-wrap items-center justify-between">
-            <h2 className="font-press text-gray-300">HOGEHOGE</h2>
+            <h2 className="font-press text-gray-300">INGECTION</h2>
             <div
               className="navbar-collapse collapse grow items-center flex justify-end"
               id="navbarSupportedContentY"
