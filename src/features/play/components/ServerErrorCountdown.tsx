@@ -1,5 +1,6 @@
 import SimpleCountdown from "@/features/play/components/SimpleCountdown";
 import React, { useEffect, useRef } from "react";
+import useServerErrorCountdown from "../hooks/useServerErrorCountdown";
 
 interface Props {
   hours: number;
@@ -9,7 +10,6 @@ interface Props {
 }
 const Renderer: React.FC<Props> = ({ hours, minutes, seconds, completed }) => {
   if (completed) {
-    alert();
     return null;
   } else {
     return <p className="font-press text-4xl">{seconds}</p>;
@@ -17,17 +17,17 @@ const Renderer: React.FC<Props> = ({ hours, minutes, seconds, completed }) => {
 };
 
 const ServerErrorCountdown = () => {
-  const clockRef = useRef();
-  const start = () => clockRef.current.start();
-  const pause = () => clockRef.current.pause();
-
-  useEffect(() => {
-    start();
-  }, []);
+  const { clockRef, onComplete } = useServerErrorCountdown();
 
   return (
     <div>
-      <SimpleCountdown time={20000} renderer={Renderer} ref={clockRef} />
+      <SimpleCountdown
+        time={20000}
+        renderer={Renderer}
+        ref={clockRef}
+        onComplete={onComplete}
+        autoStart={true}
+      />
     </div>
   );
 };

@@ -5,13 +5,14 @@ interface Props {
   time: number;
   renderer: CountdownRendererFn | undefined;
   onComplete?: () => void;
+  autoStart?: boolean;
 }
 interface ChildHandles {
   start: () => void;
   pause: () => void;
 }
 const SimpleCountdown = forwardRef<ChildHandles, Props>(
-  ({ time, renderer, onComplete }, ref) => {
+  ({ time, renderer, onComplete, autoStart = false }, ref) => {
     const clockRef = useRef();
     useImperativeHandle(ref, () => {
       return {
@@ -24,7 +25,7 @@ const SimpleCountdown = forwardRef<ChildHandles, Props>(
         <Countdown
           date={Date.now() + time}
           renderer={renderer}
-          autoStart={false}
+          autoStart={autoStart}
           ref={clockRef}
           onComplete={onComplete}
         />

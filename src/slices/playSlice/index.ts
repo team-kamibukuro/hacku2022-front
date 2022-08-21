@@ -120,6 +120,9 @@ export const playSlice = createSlice({
     editCurrentUser(state, action: PayloadAction<User>) {
       state.currentUser = action.payload;
     },
+    resetHeart(state) {
+      state.currentUser.heart = 3;
+    },
     editConsoleResult(state, action: PayloadAction<string>) {
       state.currentUser.consoleResult.result = action.payload;
     },
@@ -297,6 +300,7 @@ export const playSlice = createSlice({
 export const {
   initCurrentUser,
   editCurrentUser,
+  resetHeart,
   editConsoleResult,
   editConsoleResultValue,
   editTestResultValue,
