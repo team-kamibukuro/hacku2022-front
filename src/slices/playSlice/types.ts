@@ -29,8 +29,8 @@ export interface User {
   isMaster: boolean;
   finish: {
     finished: boolean;
-    startTime: Date | null;
-    finishTime: Date | null;
+    startTime: number;
+    finishTime: number;
   };
   firewall: boolean;
   language: string;
@@ -78,6 +78,17 @@ export interface Loading {
   terminal: boolean;
 }
 
+export interface RankingUser {
+  playerId: string;
+  name: string;
+  time: string;
+  rank: number;
+}
+
+export interface Ranking {
+  users: RankingUser[];
+}
+
 export interface PlayState {
   room: Room;
   question: Question;
@@ -87,6 +98,8 @@ export interface PlayState {
   dialog: Dialog;
   attackIsRunning: boolean;
   loading: Loading;
+  ranking: Ranking;
+  allFinished: boolean;
 }
 
 export interface EditCode {

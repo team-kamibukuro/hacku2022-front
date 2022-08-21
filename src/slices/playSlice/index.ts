@@ -8,6 +8,7 @@ import {
   NewPlayer,
   PlayState,
   Question,
+  RankingUser,
   Room,
   User,
 } from "./types";
@@ -42,8 +43,8 @@ const initialState: PlayState = {
     isMaster: false,
     finish: {
       finished: false,
-      startTime: null,
-      finishTime: null,
+      startTime: 0,
+      finishTime: 0,
     },
     firewall: false,
     language: "",
@@ -91,9 +92,20 @@ const initialState: PlayState = {
     isNomal: true,
   },
   attackIsRunning: false,
+  ranking: {
+    users: [
+      {
+        playerId: "",
+        name: "",
+        time: "",
+        rank: 0,
+      },
+    ],
+  },
   loading: {
     terminal: false,
   },
+  allFinished: false,
 };
 
 export const playSlice = createSlice({
@@ -118,7 +130,7 @@ export const playSlice = createSlice({
       state.currentUser.testResultValue = action.payload;
     },
     setStartTime(state) {
-      state.currentUser.finish.startTime = new Date();
+      state.currentUser.finish.startTime = Date.now();
     },
     setFinish(state) {
       state.currentUser.finish.finished = true;
@@ -214,6 +226,12 @@ export const playSlice = createSlice({
     switchAttackIsRunning(state) {
       state.attackIsRunning = !state.attackIsRunning;
     },
+    setRanking(state, action: PayloadAction<RankingUser[]>) {
+      state.ranking.users = action.payload;
+    },
+    switchAllFinished(state) {
+      state.allFinished = !state.allFinished;
+    },
     reset(): PlayState {
       return {
         ...initialState,
@@ -264,7 +282,7 @@ export const playSlice = createSlice({
         state.loading.terminal = false;
         state.currentUser.testResult = action.payload;
         if (action.payload.isClearTestCases) {
-          state.currentUser.finish.finishTime = new Date();
+          state.currentUser.finish.finishTime = Date.now();
         } else {
           state.currentUser.heart = state.currentUser.heart - 1;
         }
@@ -294,6 +312,8 @@ export const {
   setDialog,
   resetDialog,
   switchAttackIsRunning,
+  setRanking,
+  switchAllFinished,
   reset,
 } = playSlice.actions;
 export const selectCurrentUser = (state: RootState) => state.play.currentUser;
@@ -305,5 +325,7 @@ export const selectQuestion = (state: RootState) => state.play.question;
 export const selectAttackIsRunning = (state: RootState) =>
   state.play.attackIsRunning;
 export const selectLoading = (state: RootState) => state.play.loading;
+export const selectRanking = (state: RootState) => state.play.ranking;
+export const selectAllFinished = (state: RootState) => state.play.allFinished;
 
 export default playSlice.reducer;
