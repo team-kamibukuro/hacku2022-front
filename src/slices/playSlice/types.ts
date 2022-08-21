@@ -18,6 +18,10 @@ export interface TestResult {
   testCaseClearTotal: number;
   testCases: TestCase[];
 }
+export interface ConsoleResult {
+  status: number;
+  result: string;
+}
 export interface User {
   id: string;
   name: string;
@@ -27,8 +31,10 @@ export interface User {
   firewall: boolean;
   language: string;
   code: string;
-  consoleResult: string;
+  consoleResult: ConsoleResult;
   testResult: TestResult;
+  consoleResultValue: string;
+  testResultValue: string;
 }
 
 export interface Player {
@@ -64,6 +70,10 @@ export interface Question {
   context: string;
 }
 
+export interface Loading {
+  terminal: boolean;
+}
+
 export interface PlayState {
   room: Room;
   question: Question;
@@ -72,6 +82,7 @@ export interface PlayState {
   clock: any;
   dialog: Dialog;
   attackIsRunning: boolean;
+  loading: Loading;
 }
 
 export interface EditCode {

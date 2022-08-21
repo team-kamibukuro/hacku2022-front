@@ -43,6 +43,7 @@ export interface TestCase {
   isClearTestCase: boolean;
 }
 export interface RunTestCaseResponse {
+  status: number;
   questionId: string;
   isClearTestCases: boolean;
   testCaseTotal: number;

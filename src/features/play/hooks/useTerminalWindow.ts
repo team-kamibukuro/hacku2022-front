@@ -1,4 +1,10 @@
-import { selectCurrentUser, selectQuestion } from "@/slices/playSlice";
+import {
+  editConsoleResultValue,
+  editTestResultValue,
+  selectCurrentUser,
+  selectLoading,
+  selectQuestion,
+} from "@/slices/playSlice";
 import {
   fetchAsyncRunConsole,
   fetchAsyncRunTestCase,
@@ -6,16 +12,16 @@ import {
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import useInterval from "use-interval";
 
 const useTerminalWindow = () => {
   const dispatch = useDispatch();
   const [tab, setTab] = useState("コンソール");
   const currentUser = useSelector(selectCurrentUser);
   const question = useSelector(selectQuestion);
-  const refFirstRef = useRef(true);
+  const loading = useSelector(selectLoading);
+  const callTestRef = useRef(false);
 
-  const [consoleResult, setConsoleResult] = useState("");
-  const [testResult, setTestResult] = useState("");
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,13 +35,12 @@ const useTerminalWindow = () => {
       language: currentUser.language,
       questionId: question.id,
     };
-    console.log(request);
     dispatch(fetchAsyncRunConsole(request));
-    setConsoleResult(currentUser.consoleResult);
   };
 
   const submitTest = () => {
     setTab("テスト結果");
+    callTestRef.current = true;
     const request = {
       code: currentUser.code,
       testId: question.id,
@@ -44,17 +49,27 @@ const useTerminalWindow = () => {
     dispatch(fetchAsyncRunTestCase(request));
   };
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      if (refFirstRef.current) {
-        refFirstRef.current = false;
-        return;
-      }
-    }
-
-    if (currentUser.testResult.status !== 200) return;
-    runTest();
-  }, [currentUser.testResult]);
+  useInterval(
+    async () => {
+      tab === "コンソール"
+        ? dispatch(editConsoleResultValue("running... |"))
+        : dispatch(editTestResultValue("running... |"));
+      await sleep(300);
+      tab === "コンソール"
+        ? dispatch(editConsoleResultValue("running... /"))
+        : dispatch(editTestResultValue("running... /"));
+      await sleep(300);
+      tab === "コンソール"
+        ? dispatch(editConsoleResultValue("running... -"))
+        : dispatch(editTestResultValue("running... -"));
+      await sleep(300);
+      tab === "コンソール"
+        ? dispatch(editConsoleResultValue("running... \\"))
+        : dispatch(editTestResultValue("running... \\"));
+      await sleep(300);
+    },
+    loading.terminal ? 0 : null
+  );
 
   const runTest = async () => {
     let result = "";
@@ -68,7 +83,7 @@ const useTerminalWindow = () => {
         const text = `-----------------------\nTEST${
           index + 1
         } CLEAR 🚀\n-----------------------\n`;
-        setTestResult(result + text);
+        dispatch(editTestResultValue(result + text));
         result += text;
       } else {
         const text = `-----------------------\nTEST${
@@ -76,7 +91,7 @@ const useTerminalWindow = () => {
         } FAILED 💩\nERROR:\n${
           testCase.compilerError
         }\n-----------------------\n`;
-        setTestResult(result + text);
+        dispatch(editTestResultValue(result + text));
         result += text;
       }
       if (currentUser.testResult.testCases.length === index + 1) {
@@ -85,14 +100,30 @@ const useTerminalWindow = () => {
     }
     if (finished && currentUser.testResult.isClearTestCases) {
       await sleep(800);
-      setTestResult(result + "Congratulations!!!\nALL TESTS CLEAR 🎉");
+      dispatch(
+        editTestResultValue(result + "Congratulations!!!\nALL TESTS CLEAR 🎉")
+      );
     }
   };
 
+  if (!loading.terminal && currentUser.consoleResult.status === 200) {
+    dispatch(editConsoleResultValue(currentUser.consoleResult.result));
+  }
+
+  useEffect(() => {
+    if (
+      !loading.terminal &&
+      callTestRef.current &&
+      currentUser.testResult.status === 200
+    ) {
+      runTest();
+      callTestRef.current = false;
+    }
+  }, [loading.terminal]);
+
   return {
     tab,
-    consoleResult,
-    testResult,
+    currentUser,
     handleChange,
     submitConsole,
     submitTest,
