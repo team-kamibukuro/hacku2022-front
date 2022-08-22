@@ -19,6 +19,7 @@ export const Attack = {
   INDENT_INJECTION: "INDENT_INJECTION",
   COMMENTOUT_INJECTION: "COMMENTOUT_INJECTION",
   TBC_POISONING: "TBC_POISONING",
+  RANSOMWARE: "RANSOMWARE",
 };
 
 export type AttackType = typeof Attack[keyof typeof Attack];
@@ -112,6 +113,14 @@ export interface ATTACK_DATA {
   name: string;
   language: string;
   code: string;
+}
+
+export interface RANSOMWARE_DATA {
+  event: Event.ATTACK;
+  attackType: Attack.RANSOMWARE;
+  playerId: string;
+  name: string;
+  heart: number;
 }
 
 export interface FIREWALL_DATA {

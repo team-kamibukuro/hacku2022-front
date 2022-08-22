@@ -3,14 +3,15 @@ import {
   selectCurrentUser,
   selectPlayers,
 } from "@/slices/playSlice";
-import { selectWebsocket } from "@/slices/websocketSlice";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Attack, Event } from "../types";
 import useInterval from "use-interval";
+import { useDispatch } from "react-redux";
+import { sendWebsocket } from "@/slices/websocketSlice";
 
 const useRandomAttack = () => {
-  const socket = useSelector(selectWebsocket);
+  const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const players = useSelector(selectPlayers);
   const attackIsRunning = useSelector(selectAttackIsRunning);
@@ -31,18 +32,33 @@ const useRandomAttack = () => {
   );
 
   const randomAttack = () => {
-    const attackIndex = Math.floor(Math.random() * 3);
+    // const attackIndex = Math.floor(Math.random() * attackTypes.length);
     const userIndex = Math.floor(Math.random() * users.length);
-    socket.send(
-      JSON.stringify({
-        event: Event.ATTACK,
-        attackType: attackTypes[attackIndex],
-        playerId: users[userIndex].id,
-        name: users[userIndex].name,
-        language: users[userIndex].language,
-        code: users[userIndex].code,
-      })
-    );
+    const attackIndex = 3;
+    if (attackTypes[attackIndex] === Attack.RANSOMWARE) {
+      if (users[userIndex].heart !== 0) {
+        dispatch(
+          sendWebsocket({
+            event: Event.ATTACK,
+            attackType: attackTypes[attackIndex],
+            playerId: users[userIndex].id,
+            name: users[userIndex].name,
+            heart: users[userIndex].heart - 1,
+          })
+        );
+      }
+    } else {
+      dispatch(
+        sendWebsocket({
+          event: Event.ATTACK,
+          attackType: attackTypes[attackIndex],
+          playerId: users[userIndex].id,
+          name: users[userIndex].name,
+          language: users[userIndex].language,
+          code: users[userIndex].code,
+        })
+      );
+    }
   };
 
   return {};

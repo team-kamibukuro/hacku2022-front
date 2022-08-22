@@ -1,5 +1,6 @@
 import SimpleCountdown from "@/features/play/components/SimpleCountdown";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Countdown from "react-countdown";
 import useServerErrorCountdown from "../hooks/useServerErrorCountdown";
 
 interface Props {
@@ -17,16 +18,22 @@ const Renderer: React.FC<Props> = ({ hours, minutes, seconds, completed }) => {
 };
 
 const ServerErrorCountdown = () => {
-  const { clockRef, onComplete } = useServerErrorCountdown();
+  const { data, clockRef, onComplete } = useServerErrorCountdown();
 
   return (
     <div>
-      <SimpleCountdown
-        time={20000}
+      <Countdown
+        date={data.date + data.delay}
         renderer={Renderer}
         ref={clockRef}
+        onStart={(delta) => {
+          if (localStorage.getItem("end_date_serverdown") == null)
+            localStorage.setItem(
+              "end_date_serverdown",
+              JSON.stringify(data.date + data.delay)
+            );
+        }}
         onComplete={onComplete}
-        autoStart={true}
       />
     </div>
   );

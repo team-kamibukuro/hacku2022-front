@@ -148,10 +148,14 @@ export const playSlice = createSlice({
       state.question = action.payload;
     },
     editCode(state, action: PayloadAction<EditCode>) {
-      const findIndex = state.players.findIndex(
-        (player) => player.id === action.payload.id
-      );
-      state.players[findIndex].code = action.payload.code;
+      if (action.payload.id === state.currentUser.id) {
+        state.currentUser.code = action.payload.code;
+      } else {
+        const findIndex = state.players.findIndex(
+          (player) => player.id === action.payload.id
+        );
+        state.players[findIndex].code = action.payload.code;
+      }
     },
     editFinished(state, action: PayloadAction<EditFinished>) {
       const findIndex = state.players.findIndex(
@@ -167,22 +171,23 @@ export const playSlice = createSlice({
         !state.players[findIndex].serverdown;
     },
     editHeart(state, action: PayloadAction<EditHeart>) {
-      const findIndex = state.players.findIndex(
-        (player) => player.id === action.payload.id
-      );
-      state.players[findIndex].heart = action.payload.heart;
+      if (action.payload.id === state.currentUser.id) {
+        state.currentUser.heart = action.payload.heart;
+      } else {
+        const findIndex = state.players.findIndex(
+          (player) => player.id === action.payload.id
+        );
+        state.players[findIndex].heart = action.payload.heart;
+      }
     },
     setPlayer(state, action: PayloadAction<NewPlayer[]>) {
       const users = action.payload.map((player) => {
         return {
+          ...state.players[0],
           id: player.id,
           name: player.name,
-          heart: 3,
           isMaster: player.isMaster,
-          finished: false,
-          firewall: false,
           language: player.language,
-          code: "",
         };
       });
       const players = users.filter((user) => user.id !== state.currentUser.id);
