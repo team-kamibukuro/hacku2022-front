@@ -1,6 +1,5 @@
 import {
   editCode,
-  editCurrentUser,
   editFinished,
   editHeart,
   selectAllFinished,
@@ -34,11 +33,13 @@ import {
   UPDATE_HEART_DATA,
   RANKING_DATA,
   SERVER_ERROR_DATA,
+  RANSOMWARE_DATA,
 } from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
 import UFO from "@/common/icons/ufo_04.svg";
 import Portion from "@/common/icons/portion_purple_01.svg";
+import BrokenHeart from "@/common/icons/mark_heart_broken_red.svg";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -138,26 +139,30 @@ const useSockets = () => {
     }
   };
 
-  const ATTACK = (data: ATTACK_DATA) => {
-    if (data.playerId === currentUser.id) {
-      dispatch(editCurrentUser({ ...currentUser, code: data.code }));
+  const ATTACK = (data: ATTACK_DATA | RANSOMWARE_DATA) => {
+    if (data.attackType === Attack.RANSOMWARE) {
+      notify(`${data.name}がランサムウェア攻撃を受けた!!`, BrokenHeart);
+      dispatch(editHeart({ id: data.playerId, heart: data.heart }));
     } else {
       dispatch(editCode({ id: data.playerId, code: data.code }));
-    }
-    switch (data.attackType) {
-      case Attack.INDENT_INJECTION:
-        notify(`${data.name}がインデントインジェクション攻撃を受けた!!`, Ghost);
-        break;
-      case Attack.COMMENTOUT_INJECTION:
-        notify(
-          `${data.name}がコメントアウトインジェクション攻撃を受けた!!`,
-          UFO
-        );
-        break;
-      case Attack.TBC_POISONING:
-        notify(`${data.name}がTBCポイズニング攻撃を受けた!!`, Portion);
-        break;
-      default:
+      switch (data.attackType) {
+        case Attack.INDENT_INJECTION:
+          notify(
+            `${data.name}がインデントインジェクション攻撃を受けた!!`,
+            Ghost
+          );
+          break;
+        case Attack.COMMENTOUT_INJECTION:
+          notify(
+            `${data.name}がコメントアウトインジェクション攻撃を受けた!!`,
+            UFO
+          );
+          break;
+        case Attack.TBC_POISONING:
+          notify(`${data.name}がTBCポイズニング攻撃を受けた!!`, Portion);
+          break;
+        default:
+      }
     }
   };
 
@@ -179,7 +184,7 @@ const useSockets = () => {
     value: string,
     event: monaco.editor.IModelContentChangedEvent
   ) => {
-    dispatch(editCurrentUser({ ...currentUser, code: value }));
+    dispatch(editCode({ id: currentUser.id, code: value }));
     dispatch(
       sendWebsocket({
         event: Event.UPDATE_CODE,
