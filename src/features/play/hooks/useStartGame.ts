@@ -8,7 +8,7 @@ const useStartGame = () => {
     () => {
       setStartCountdown(true);
     },
-    !startCountdown ? 20000 : null
+    !startCountdown ? 5000 : null
   );
 
   return { startCountdown };
