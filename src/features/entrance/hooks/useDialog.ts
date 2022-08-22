@@ -1,6 +1,5 @@
 import { selectAuth } from "@/slices/authSlice";
 import {
-  editCurrentUser,
   initCurrentUser,
   reset,
   selectCurrentUser,
