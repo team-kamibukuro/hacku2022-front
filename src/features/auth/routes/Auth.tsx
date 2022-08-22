@@ -4,9 +4,11 @@ import React from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
 import useAuth from "../hooks/useAuth";
+import usePurge from "../hooks/usePurge";
 
 export const Auth = () => {
   const { isLoginView, changeMode } = useAuth();
+  usePurge();
 
   return (
     <div>
