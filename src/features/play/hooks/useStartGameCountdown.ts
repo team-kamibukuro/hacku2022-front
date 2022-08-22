@@ -1,3 +1,4 @@
+import usePlayBackGroundSound from "@/hooks/sounds/BackGroundSounds/usePlayBackGroundSound";
 import {
   resetDialog,
   selectClock,
@@ -17,6 +18,7 @@ const useStartGameCountdown = () => {
   const clock = useSelector(selectClock);
   const dialog = useSelector(selectDialog);
   const currentUser = useSelector(selectCurrentUser);
+  const play = usePlayBackGroundSound();
 
   const start = () => clockRef.current.start();
 
@@ -29,6 +31,7 @@ const useStartGameCountdown = () => {
     dispatch(setStartTime());
     currentUser.isMaster && dispatch(switchAttackIsRunning());
     clock.start();
+    play();
   };
   return { clockRef, onComplete };
 };

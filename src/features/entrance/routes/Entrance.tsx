@@ -2,6 +2,7 @@ import Layout from "@/components/layouts/Layout";
 import SimpleDialog from "@/components/layouts/SimpleDialog";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
+import useEntranceBackGroundSound from "@/hooks/sounds/BackGroundSounds/useEntranceBackGroundSound";
 import Link from "next/link";
 import React from "react";
 import CreateRoomForm from "../components/CreateRoomForm";
@@ -29,6 +30,8 @@ export const Entrance = () => {
     2: MatchingForm,
   };
   const Form = formComponents[access];
+
+  useEntranceBackGroundSound();
 
   return (
     <Layout>
