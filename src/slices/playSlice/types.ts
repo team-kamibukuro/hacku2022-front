@@ -48,6 +48,7 @@ export interface Player {
   isMaster: boolean;
   finished: boolean;
   firewall: boolean;
+  serverdown: boolean;
   language: string;
   code: string;
 }
@@ -113,6 +114,10 @@ export interface EditHeart {
 }
 
 export interface EditFinished {
+  id: string;
+}
+
+export interface SwitchServerdown {
   id: string;
 }
 

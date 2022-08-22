@@ -80,6 +80,7 @@ const initialState: PlayState = {
       isMaster: false,
       finished: false,
       firewall: false,
+      serverdown: false,
       language: "",
       code: "",
     },
@@ -157,6 +158,13 @@ export const playSlice = createSlice({
         (player) => player.id === action.payload.id
       );
       state.players[findIndex].finished = true;
+    },
+    switchServerdown(state, action: PayloadAction<SwitchServerdown>) {
+      const findIndex = state.players.findIndex(
+        (player) => player.id === action.payload.id
+      );
+      state.players[findIndex].serverdown =
+        !state.players[findIndex].serverdown;
     },
     editHeart(state, action: PayloadAction<EditHeart>) {
       const findIndex = state.players.findIndex(
@@ -322,6 +330,7 @@ export const {
   editRoom,
   editCode,
   editFinished,
+  switchServerdown,
   editHeart,
   setPlayer,
   setQuestion,
