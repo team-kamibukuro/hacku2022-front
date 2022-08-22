@@ -7,8 +7,6 @@ import Header from "../components/Header";
 import UserInfo from "../components/UserInfo";
 import useTabVal from "../hooks/useTabVal";
 import TerminalWindow from "../components/TerminalWindow";
-import { useSelector } from "react-redux";
-import { selectPlayers, selectQuestion } from "@/slices/playSlice";
 import DontCloseDialog from "@/components/layouts/DontCloseDialog";
 import useDialog from "../hooks/useDialog";
 import MatchingWaiting from "../components/dialogContents/MatchingWaiting";
@@ -19,6 +17,9 @@ import useSockets from "../hooks/useSockets";
 import Toast from "@/components/ui-elements/Toast";
 import OtherEditor from "../components/OtherEditor";
 import useRandomAttack from "../hooks/useRandomAttack";
+import useHeart from "../hooks/useHeart";
+import useCallHelpItem from "../hooks/useCallHelpItem";
+import useFirewall from "../hooks/useFirewall";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
@@ -35,6 +36,9 @@ export const Play = () => {
 
   const { currentUser, players, question, handleEditorChange } = useSockets();
   useRandomAttack();
+  useCallHelpItem();
+  useFirewall();
+  useHeart();
 
   return (
     <Layout>
@@ -80,10 +84,12 @@ export const Play = () => {
           <div className="w-1/2 h-full pr-10 pl-5 py-2">
             <p className="font-dot text-white mb-[0.6em]">あなたのエディタ</p>
             <div className="h-[calc(100%_-_33.5px)] border-solid border-white bg-editor-back border-2 px-3 pt-3 flex flex-col">
-              <div>
+              <div className="mb-1">
                 <UserInfo
                   name={currentUser.name}
                   heartbeat={currentUser.heart}
+                  finished={currentUser.finish.finished}
+                  firewall={currentUser.firewall}
                 />
               </div>
               <div className="h-80">
