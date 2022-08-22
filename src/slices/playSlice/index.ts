@@ -10,6 +10,7 @@ import {
   Question,
   RankingUser,
   Room,
+  SwitchFirewall,
   User,
 } from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
@@ -169,6 +170,16 @@ export const playSlice = createSlice({
       );
       state.players[findIndex].serverdown =
         !state.players[findIndex].serverdown;
+    },
+    switchFirewall(state, action: PayloadAction<SwitchFirewall>) {
+      if (action.payload.id === state.currentUser.id) {
+        state.currentUser.firewall = !state.currentUser.firewall;
+      } else {
+        const findIndex = state.players.findIndex(
+          (player) => player.id === action.payload.id
+        );
+        state.players[findIndex].firewall = !state.players[findIndex].firewall;
+      }
     },
     editHeart(state, action: PayloadAction<EditHeart>) {
       if (action.payload.id === state.currentUser.id) {
@@ -336,6 +347,7 @@ export const {
   editCode,
   editFinished,
   switchServerdown,
+  switchFirewall,
   editHeart,
   setPlayer,
   setQuestion,
