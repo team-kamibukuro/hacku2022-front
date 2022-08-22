@@ -13,8 +13,8 @@ export const entranceSlice = createSlice({
   name: "entrance",
   initialState,
   reducers: {
-    switchLoadingEntrance(state) {
-      state.loading.entrance = !state.loading.entrance;
+    loadedEntrance(state) {
+      state.loading.entrance = false;
     },
     switchTouchStart(state) {
       state.touchStart = !state.touchStart;
@@ -22,8 +22,7 @@ export const entranceSlice = createSlice({
   },
 });
 
-export const { switchLoadingEntrance, switchTouchStart } =
-  entranceSlice.actions;
+export const { loadedEntrance, switchTouchStart } = entranceSlice.actions;
 export const selectLoading = (state: RootState) => state.entrance.loading;
 export const selectTouchStart = (state: RootState) => state.entrance.touchStart;
 

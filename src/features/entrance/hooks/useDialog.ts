@@ -1,4 +1,5 @@
 import { selectAuth } from "@/slices/authSlice";
+import { loadedEntrance } from "@/slices/entranceSlice";
 import {
   initCurrentUser,
   reset,
@@ -37,6 +38,7 @@ const useDialog = () => {
     if (localStorage.getItem("end_date") != null) {
       localStorage.removeItem("end_date");
     }
+    dispatch(loadedEntrance());
   }, [dispatch]);
 
   const handleClickClose = useCallback(() => {
