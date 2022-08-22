@@ -14,6 +14,7 @@ import {
   setQuestion,
   setRanking,
   switchAllFinished,
+  switchFirewall,
   switchServerdown,
 } from "@/slices/playSlice";
 import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
@@ -34,12 +35,14 @@ import {
   RANKING_DATA,
   SERVER_ERROR_DATA,
   RANSOMWARE_DATA,
+  FIREWALL_DATA,
 } from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
 import UFO from "@/common/icons/ufo_04.svg";
 import Portion from "@/common/icons/portion_purple_01.svg";
 import BrokenHeart from "@/common/icons/mark_heart_broken_red.svg";
+import Shield from "@/common/icons/shield_red.svg";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -97,6 +100,9 @@ const useSockets = () => {
           break;
         case Event.ATTACK:
           ATTACK(data);
+          break;
+        case Event.FIREWALL:
+          FIREWALL(data);
           break;
         case Event.FINISHED:
           FINISHED(data);
@@ -163,6 +169,13 @@ const useSockets = () => {
           break;
         default:
       }
+    }
+  };
+
+  const FIREWALL = (data: FIREWALL_DATA) => {
+    dispatch(switchFirewall({ id: data.playerId }));
+    if (data.status) {
+      notify(`${data.name} がファイアーウォールをGetした`, Shield);
     }
   };
 

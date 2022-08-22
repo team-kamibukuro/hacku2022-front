@@ -23,7 +23,7 @@ const useRandomAttack = () => {
       console.log("random attack");
       const n = Math.random();
 
-      if (n < 0.8) {
+      if (n < 0.2) {
         console.log("attack called!");
         randomAttack();
       }
@@ -32,9 +32,9 @@ const useRandomAttack = () => {
   );
 
   const randomAttack = () => {
-    // const attackIndex = Math.floor(Math.random() * attackTypes.length);
+    const attackIndex = Math.floor(Math.random() * attackTypes.length);
     const userIndex = Math.floor(Math.random() * users.length);
-    const attackIndex = 3;
+
     if (attackTypes[attackIndex] === Attack.RANSOMWARE) {
       if (users[userIndex].heart !== 0) {
         dispatch(

@@ -24,6 +24,7 @@ const OtherEditor: React.FC<Props> = ({ player }) => {
           heartbeat={player.heart}
           finished={player.finished}
           serverdown={player.serverdown}
+          firewall={player.firewall}
         />
       </div>
       <div className="flex-grow">
