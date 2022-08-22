@@ -1,16 +1,6 @@
 import SimpleCountdown from "@/features/play/components/SimpleCountdown";
-import {
-  resetDialog,
-  selectClock,
-  selectCurrentUser,
-  selectDialog,
-  setStartTime,
-  switchAttackIsRunning,
-} from "@/slices/playSlice";
-import React, { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import useRandomAttack from "../hooks/useRandomAttack";
+import useStartGameCountdownSound from "@/hooks/sounds/useStartGameCountdownSound";
+import React from "react";
 import useStartGameCountdown from "../hooks/useStartGameCountdown";
 
 interface Props {
@@ -29,11 +19,11 @@ const Renderer: React.FC<Props> = ({ hours, minutes, seconds, completed }) => {
 
 const StartGameCountdown = () => {
   const { clockRef, onComplete } = useStartGameCountdown();
-
+  useStartGameCountdownSound();
   return (
     <div>
       <SimpleCountdown
-        time={5000}
+        time={3000}
         renderer={Renderer}
         ref={clockRef}
         onComplete={onComplete}
