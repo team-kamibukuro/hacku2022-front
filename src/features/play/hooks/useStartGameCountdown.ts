@@ -16,15 +16,8 @@ const useStartGameCountdown = () => {
 
   const dispatch = useDispatch();
   const clock = useSelector(selectClock);
-  const dialog = useSelector(selectDialog);
   const currentUser = useSelector(selectCurrentUser);
   const play = usePlayBackGroundSound();
-
-  const start = () => clockRef.current.start();
-
-  useEffect(() => {
-    start();
-  }, []);
 
   const onComplete = () => {
     dispatch(resetDialog());

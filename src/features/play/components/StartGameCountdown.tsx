@@ -27,6 +27,7 @@ const StartGameCountdown = () => {
         renderer={Renderer}
         ref={clockRef}
         onComplete={onComplete}
+        autoStart={true}
       />
     </div>
   );
