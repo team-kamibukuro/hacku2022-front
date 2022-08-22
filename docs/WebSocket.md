@@ -221,12 +221,11 @@ TBC_POISONING // TBC ポイズニング
   "name": "",
   "language": "",
   "code": "",
+  "firewall": true,
 }
 ```
 
-- バック->フロント
-
-(※送信したユーザーも含めブロードキャスト)
+- バック->フロント(**※送信したユーザーも含めブロードキャスト**)
 
 ```JSON
 {
@@ -236,6 +235,7 @@ TBC_POISONING // TBC ポイズニング
   "name": "",
   "language": "",
   "code": "",
+  "firewall": true,
 }
 ```
 
@@ -246,25 +246,25 @@ RANSOMWARE // ランサムウェア
 
 ```JSON
 {
-	"event": "ATTACK",
-	"attackType": "RANSOMWARE",
-	"playerId": "",
-	"name": "",
-　"heart": 2
+  "event": "ATTACK",
+  "attackType": "RANSOMWARE",
+  "playerId": "",
+  "name": "",
+  "heart": 2,
+  "firewall": true,
 }
 ```
 
-- バック->フロント
-
-(※送信したユーザーも含めブロードキャスト)
+- バック->フロント(**※送信したユーザーも含めブロードキャスト**)
 
 ```JSON
 {
-	"event": "ATTACK",
-	"attackType": "RANSOMWARE",
-	"playerId": "",
-	"name": "",
-　"heart": 2
+  "event": "ATTACK",
+  "attackType": "RANSOMWARE",
+  "playerId": "",
+  "name": "",
+  "heart": 2,
+  "firewall": true,
 }
 ```
 
@@ -282,6 +282,7 @@ RANSOMWARE // ランサムウェア
 ```
 
 - バック->フロント
+  (**※送信したユーザーも含めブロードキャスト**)
 
 ```JSON
 {
@@ -292,7 +293,7 @@ RANSOMWARE // ランサムウェア
 }
 ```
 
-# 500 番エラー
+### 500 番エラー
 
 - フロント->バック
 
