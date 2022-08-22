@@ -1,8 +1,10 @@
+import useVictorySound from "@/hooks/sounds/useVictorySound";
 import React from "react";
 import useFinish from "../../hooks/useFinish";
 
 const Finish = () => {
   const { users } = useFinish();
+  useVictorySound();
 
   return (
     <div>
