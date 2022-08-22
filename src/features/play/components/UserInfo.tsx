@@ -36,12 +36,12 @@ const UserInfo: React.FC<Props> = ({
         )}
       </div>
       {firewall && (
-        <div className="nes-badge m-0">
+        <div className="nes-badge m-0 -mb-1">
           <span className="is-error font-press text-xs">FIREWALL</span>
         </div>
       )}
       {serverdown && (
-        <div className="nes-badge m-0">
+        <div className="nes-badge m-0 -mb-1">
           <span className="is-dark font-press text-xs">500ERROR</span>
         </div>
       )}

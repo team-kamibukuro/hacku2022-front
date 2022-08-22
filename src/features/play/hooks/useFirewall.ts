@@ -1,4 +1,4 @@
-import { selectCurrentUser, switchFirewall } from "@/slices/playSlice";
+import { selectCurrentUser } from "@/slices/playSlice";
 import { sendWebsocket } from "@/slices/websocketSlice";
 import React from "react";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,6 @@ const useFirewall = () => {
 
   useInterval(
     () => {
-      dispatch(switchFirewall({ id: currentUser.id }));
       dispatch(
         sendWebsocket({
           event: Event.FIREWALL,
