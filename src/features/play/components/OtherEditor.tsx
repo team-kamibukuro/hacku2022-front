@@ -1,17 +1,8 @@
 import React, { useRef } from "react";
 import Editor from "@monaco-editor/react";
 import UserInfo from "./UserInfo";
+import { Player } from "@/slices/playSlice/types";
 
-interface Player {
-  id: string;
-  name: string;
-  heart: number;
-  isMaster: boolean;
-  finished: boolean;
-  firewall: boolean;
-  language: string;
-  code: string;
-}
 interface Props {
   player: Player;
 }
@@ -22,7 +13,7 @@ const OtherEditor: React.FC<Props> = ({ player }) => {
   function handleEditorDidMount(editor, monaco) {
     monacoRef.current = monaco;
     editorRef.current = editor;
-    editorRef.current.updateOptions({ readOnly: true });
+    editor.updateOptions({ readOnly: true });
   }
 
   return (
@@ -32,6 +23,7 @@ const OtherEditor: React.FC<Props> = ({ player }) => {
           name={player.name}
           heartbeat={player.heart}
           finished={player.finished}
+          serverdown={player.serverdown}
         />
       </div>
       <div className="flex-grow">

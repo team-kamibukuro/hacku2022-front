@@ -25,7 +25,14 @@ const useHeart = () => {
 
     if (currentUser.heart === 0) {
       dispatch(setDialog(DialogEvent.ServerError));
-      // TODO: dispatch(sendWebsocket({ event: Event.500ERROR }))
+      dispatch(
+        sendWebsocket({
+          event: Event.SERVER_ERROR,
+          status: true,
+          playerId: currentUser.id,
+          name: currentUser.name,
+        })
+      );
     }
     dispatch(
       sendWebsocket({

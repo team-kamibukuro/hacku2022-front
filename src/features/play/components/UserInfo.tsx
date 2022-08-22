@@ -4,9 +4,15 @@ interface Props {
   name: string;
   heartbeat: number;
   finished: boolean;
+  serverdown?: boolean;
 }
 
-const UserInfo: React.FC<Props> = ({ name, heartbeat, finished }) => {
+const UserInfo: React.FC<Props> = ({
+  name,
+  heartbeat,
+  finished,
+  serverdown = false,
+}) => {
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
@@ -27,6 +33,11 @@ const UserInfo: React.FC<Props> = ({ name, heartbeat, finished }) => {
           <Heart isTransparent={false} />
         )}
       </div>
+      {serverdown && (
+        <div href="#" className="nes-badge m-0">
+          <span className="is-dark font-press text-xs">500ERROR</span>
+        </div>
+      )}
       {finished && (
         <div className="bg-white px-1 border-solid border-red-700 border-2">
           <p className="font-press text-sm text-red-500 ml-2">

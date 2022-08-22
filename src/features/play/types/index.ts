@@ -10,6 +10,7 @@ export const Event = {
   ATTACK: "ATTACK",
   FIREWALL: "FIREWALL",
   RANKING: "RANKING",
+  SERVER_ERROR: "500_ERROR",
 } as const;
 
 export type EventType = typeof Event[keyof typeof Event];
@@ -79,6 +80,12 @@ export interface UPDATE_HEART_DATA {
   heart: number;
 }
 
+export interface SERVER_ERROR_DATA {
+  event: Event.SERVER_ERROR;
+  status: boolean;
+  playerId: string;
+  name: string;
+}
 export interface ALL_FINISHED_DATA {
   event: Event.ALL_FINISHED;
   playerId: string;

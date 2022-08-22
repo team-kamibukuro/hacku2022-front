@@ -15,6 +15,7 @@ import {
   setQuestion,
   setRanking,
   switchAllFinished,
+  switchServerdown,
 } from "@/slices/playSlice";
 import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
@@ -32,6 +33,7 @@ import {
   UPDATE_CODE_DATA,
   UPDATE_HEART_DATA,
   RANKING_DATA,
+  SERVER_ERROR_DATA,
 } from "../types";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
@@ -89,6 +91,9 @@ const useSockets = () => {
         case Event.UPDATE_HEART:
           UPDATE_HEART(data);
           break;
+        case Event.SERVER_ERROR:
+          SERVER_ERROR(data);
+          break;
         case Event.ATTACK:
           ATTACK(data);
           break;
@@ -96,10 +101,11 @@ const useSockets = () => {
           FINISHED(data);
           break;
         case Event.ALL_FINISHED:
-          console.log(currentUser);
           ALL_FINISHED(data);
+          break;
         case Event.RANKING:
           RANKING(data);
+          break;
         default:
       }
     });
@@ -123,6 +129,13 @@ const useSockets = () => {
 
   const UPDATE_HEART = (data: UPDATE_HEART_DATA) => {
     dispatch(editHeart({ id: data.playerId, heart: data.heart }));
+  };
+
+  const SERVER_ERROR = (data: SERVER_ERROR_DATA) => {
+    dispatch(switchServerdown({ id: data.playerId }));
+    if (data.status) {
+      notify(`${data.name}のサーバーがダウンした!!`, "☠️");
+    }
   };
 
   const ATTACK = (data: ATTACK_DATA) => {
