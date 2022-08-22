@@ -7,11 +7,7 @@ const useEntranceBackGroundSound = () => {
     volume: 0.1,
   });
 
-  useEffect(() => {
-    play();
-  }, [play]);
-
-  return null;
+  return play;
 };
 
 export default useEntranceBackGroundSound;
