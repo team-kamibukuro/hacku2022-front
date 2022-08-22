@@ -2,6 +2,8 @@ import React from "react";
 import { PacmanLoader } from "react-spinners";
 
 const MatchingWaiting = () => {
+  // useMatchingWaitingBackGroundSound();
+
   return (
     <div>
       <div className="text-center px-10 w-80 flex flex-col items-center">
