@@ -22,16 +22,17 @@ export interface ConsoleResult {
   status: number;
   result: string;
 }
+export interface Finish {
+  finished: boolean;
+  startTime: number;
+  finishTime: number;
+}
 export interface User {
   id: string;
   name: string;
   heart: number;
   isMaster: boolean;
-  finish: {
-    finished: boolean;
-    startTime: number;
-    finishTime: number;
-  };
+  finish: Finish;
   firewall: boolean;
   language: string;
   code: string;
@@ -118,6 +119,10 @@ export interface EditFinished {
 }
 
 export interface SwitchServerdown {
+  id: string;
+}
+
+export interface SwitchFirewall {
   id: string;
 }
 
