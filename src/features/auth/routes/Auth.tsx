@@ -8,7 +8,7 @@ import usePurge from "../hooks/usePurge";
 
 export const Auth = () => {
   const { isLoginView, changeMode } = useAuth();
-  usePurge();
+  // usePurge();
 
   return (
     <div>
