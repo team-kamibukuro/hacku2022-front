@@ -4,7 +4,6 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Event } from "../types";
-import * as monaco from "monaco-editor";
 import { Monaco } from "@monaco-editor/react";
 
 const useOwnEditor = () => {
@@ -19,18 +18,12 @@ const useOwnEditor = () => {
     }
   }, [currentUser.finish.finished]);
 
-  const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor,
-    monaco: Monaco
-  ) => {
+  const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     monacoRef.current = monaco;
     editorRef.current = editor;
   };
 
-  const handleEditorChange = (
-    value: string | undefined,
-    event: monaco.editor.IModelContentChangedEvent
-  ) => {
+  const handleEditorChange = (value: string | undefined, event: any) => {
     if (currentUser.finish.finished) return;
     if (value === undefined) return;
 
