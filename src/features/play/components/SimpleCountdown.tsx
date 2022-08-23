@@ -11,6 +11,7 @@ interface ChildHandles {
   start: () => void;
   pause: () => void;
 }
+// eslint-disable-next-line react/display-name
 const SimpleCountdown = forwardRef<ChildHandles, Props>(
   ({ time, renderer, onComplete, autoStart = false }, ref) => {
     const clockRef = useRef();
