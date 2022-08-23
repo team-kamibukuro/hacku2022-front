@@ -80,6 +80,8 @@ const useDialog = () => {
         const createRoomParams = {
           masterUserId: auth.currentUser.id,
           roomName: room.name,
+          isDemo: room.isDemo,
+          maxPlayer: room.maxPlayer,
         };
         dispatch(fetchAsyncCreateRoom(createRoomParams));
         break;
