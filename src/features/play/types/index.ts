@@ -113,6 +113,7 @@ export interface ATTACK_DATA {
   name: string;
   language: string;
   code: string;
+  firewall: boolean;
 }
 
 export interface RANSOMWARE_DATA {
@@ -121,6 +122,7 @@ export interface RANSOMWARE_DATA {
   playerId: string;
   name: string;
   heart: number;
+  firewall: boolean;
 }
 
 export interface FIREWALL_DATA {

@@ -148,9 +148,12 @@ const useSockets = () => {
   const ATTACK = (data: ATTACK_DATA | RANSOMWARE_DATA) => {
     if (data.attackType === Attack.RANSOMWARE) {
       notify(`${data.name}がランサムウェア攻撃を受けた!!`, BrokenHeart);
-      dispatch(editHeart({ id: data.playerId, heart: data.heart }));
+      if (data.firewall) {
+        notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
+      } else {
+        dispatch(editHeart({ id: data.playerId, heart: data.heart }));
+      }
     } else {
-      dispatch(editCode({ id: data.playerId, code: data.code }));
       switch (data.attackType) {
         case Attack.INDENT_INJECTION:
           notify(
@@ -169,13 +172,18 @@ const useSockets = () => {
           break;
         default:
       }
+      if (data.firewall) {
+        notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
+      } else {
+        dispatch(editCode({ id: data.playerId, code: data.code }));
+      }
     }
   };
 
   const FIREWALL = (data: FIREWALL_DATA) => {
     dispatch(switchFirewall({ id: data.playerId }));
     if (data.status) {
-      notify(`${data.name} がファイアーウォールをGetした`, Shield);
+      notify(`${data.name} がファイアーウォールをGetした`, "❤️‍🔥");
     }
   };
 

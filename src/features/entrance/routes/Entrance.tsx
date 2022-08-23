@@ -100,13 +100,13 @@ export const Entrance = () => {
               <Link href="/mypage">
                 <div className="flex mt-10 group">
                   <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
-                    Mypage
+                    Mypage &gt;&gt;
                   </span>
                 </div>
               </Link>
               <div className="flex mt-10 group">
                 <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
-                  Logout
+                  Logout &gt;&gt;
                 </span>
               </div>
             </div>
