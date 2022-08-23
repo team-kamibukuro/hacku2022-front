@@ -76,7 +76,7 @@ export const Play = () => {
                       return (
                         <div
                           key={index}
-                          className={`h-1/3 ${index < 1 && "pb-2"}`}
+                          className={`h-1/3 ${index < 2 && "pb-2"}`}
                         >
                           <OtherEditor player={player} />
                         </div>
