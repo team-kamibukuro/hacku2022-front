@@ -38,6 +38,9 @@ const useDialog = () => {
     if (localStorage.getItem("end_date") != null) {
       localStorage.removeItem("end_date");
     }
+    if (localStorage.getItem("end_date_serverdown") != null) {
+      localStorage.removeItem("end_date_serverdown");
+    }
     dispatch(loadedEntrance());
   }, [dispatch]);
 
