@@ -10,7 +10,7 @@ const TerminalWindow = () => {
   const tabValue = ["コンソール", "テスト結果"];
 
   return (
-    <div className="h-full relative">
+    <div className="h-full flex flex-col">
       <div className="flex">
         <div className="mr-3">
           <RadioTab
@@ -21,7 +21,7 @@ const TerminalWindow = () => {
           />
         </div>
       </div>
-      <div className="h-4/5 mb-1">
+      <div className="flex-grow mb-2">
         <Terminal
           result={
             tab === "コンソール"
@@ -30,7 +30,7 @@ const TerminalWindow = () => {
           }
         />
       </div>
-      <div className="absolute right-0 flex">
+      <div className="justify-end flex">
         <div className="mr-5">
           <Button
             onClick={submitConsole}
