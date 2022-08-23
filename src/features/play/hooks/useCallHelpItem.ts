@@ -23,7 +23,7 @@ const useCallHelpItem = () => {
       console.log("random help item");
       const n = Math.random();
 
-      if (n < 0.2) {
+      if (n < 0.4) {
         randomHelpItem();
       }
     },
@@ -32,6 +32,11 @@ const useCallHelpItem = () => {
 
   const randomHelpItem = () => {
     const userIndex = Math.floor(Math.random() * users.length);
+    if (users[userIndex].id === currentUser.id) {
+      if (currentUser.finish.finished) return;
+    } else {
+      if (users[userIndex].finished) return;
+    }
     if (!users[userIndex].firewall) {
       dispatch(
         sendWebsocket({

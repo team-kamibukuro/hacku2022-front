@@ -35,6 +35,12 @@ const useRandomAttack = () => {
     const attackIndex = Math.floor(Math.random() * attackTypes.length);
     const userIndex = Math.floor(Math.random() * users.length);
 
+    if (users[userIndex].id === currentUser.id) {
+      if (currentUser.finish.finished) return;
+    } else {
+      if (users[userIndex].finished) return;
+    }
+
     if (attackTypes[attackIndex] === Attack.RANSOMWARE) {
       if (users[userIndex].heart !== 0) {
         dispatch(
