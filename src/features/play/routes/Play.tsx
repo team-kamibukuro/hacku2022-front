@@ -100,10 +100,10 @@ export const Play = () => {
                   firewall={currentUser.firewall}
                 />
               </div>
-              <div className="h-80">
+              <div className="h-1/2">
                 <OwnEditor />
               </div>
-              <div className="flex-grow py-5">
+              <div className="h-1/2 py-3">
                 <TerminalWindow></TerminalWindow>
               </div>
             </div>
