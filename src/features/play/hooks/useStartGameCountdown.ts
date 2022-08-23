@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const useStartGameCountdown = () => {
-  const clockRef = useRef();
+  const clockRef = useRef<any>();
 
   const dispatch = useDispatch();
   const clock = useSelector(selectClock);

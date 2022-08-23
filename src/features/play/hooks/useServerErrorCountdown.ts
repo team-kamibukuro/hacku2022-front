@@ -6,25 +6,25 @@ import { useDispatch } from "react-redux";
 import { Event } from "../types";
 
 const useServerErrorCountdown = () => {
-  const clockRef = useRef();
+  const clockRef = useRef(null);
   const currentUser = useSelector(selectCurrentUser);
 
   const dispatch = useDispatch();
 
   const [data, setData] = useState({ date: Date.now(), delay: 20000 });
   const wantedDelay = 20000;
-  const getLocalStorageValue = (s) => localStorage.getItem(s);
+  const getLocalStorageValue = (s: string) => localStorage.getItem(s);
 
   useEffect(() => {
     const savedDate = getLocalStorageValue("end_date_serverdown");
-    if (savedDate != null && !isNaN(savedDate)) {
+    if (savedDate != null && !isNaN(Number(savedDate))) {
       const currentTime = Date.now();
       const delta = parseInt(savedDate, 10) - currentTime;
 
       if (delta > wantedDelay) {
         if (
           getLocalStorageValue("end_date_serverdown") !== null &&
-          localStorage.getItem("end_date_serverdown").length > 0
+          getLocalStorageValue("end_date_serverdown")!.length > 0
         )
           localStorage.removeItem("end_date_serverdown");
       } else {

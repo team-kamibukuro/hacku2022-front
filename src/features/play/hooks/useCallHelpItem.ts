@@ -32,18 +32,19 @@ const useCallHelpItem = () => {
 
   const randomHelpItem = () => {
     const userIndex = Math.floor(Math.random() * users.length);
-    if (users[userIndex].id === currentUser.id) {
+    const user = users[userIndex];
+    if (user.type === "currentUser") {
       if (currentUser.finish.finished) return;
     } else {
-      if (users[userIndex].finished) return;
+      if (user.finished) return;
     }
-    if (!users[userIndex].firewall) {
+    if (!user.firewall) {
       dispatch(
         sendWebsocket({
           event: Event.FIREWALL,
           status: true,
-          playerId: users[userIndex].id,
-          name: users[userIndex].name,
+          playerId: user.id,
+          name: user.name,
         })
       );
     }

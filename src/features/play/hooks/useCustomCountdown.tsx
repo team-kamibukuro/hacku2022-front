@@ -5,11 +5,20 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Event } from "../types";
 
-const useCustomCountdown = (time) => {
+interface Props {
+  formatted: {
+    days: string;
+    hours: string;
+    minutes: string;
+    seconds: string;
+  };
+  completed: boolean;
+}
+const useCustomCountdown = (time: number) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
 
-  const renderer = ({ formatted, completed }) => {
+  const renderer = ({ formatted, completed }: Props) => {
     if (completed) {
       return <span className="font-dot">00:00:00</span>;
     } else {

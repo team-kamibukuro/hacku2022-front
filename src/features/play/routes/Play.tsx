@@ -24,12 +24,18 @@ import ConnectionError from "../components/dialogContents/ConnectionError";
 import None from "../components/dialogContents/None";
 import useCatchConnectionError from "../hooks/useCatchConnectionError";
 import OwnEditor from "../components/OwnEditor";
+import { Player } from "@/slices/playSlice/types";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
 
   const { dialog, handleClick } = useDialog();
-  const contentComponents = {
+
+  interface ContentComponents {
+    [key: string]: () => JSX.Element;
+  }
+
+  const contentComponents: ContentComponents = {
     0: MatchingWaiting,
     1: StartGame,
     2: ServerError,
@@ -72,7 +78,7 @@ export const Play = () => {
                   </div>
                 ) : (
                   <div className="h-full w-full">
-                    {players.map((player, index) => {
+                    {players.map((player: Player, index: number) => {
                       return (
                         <div
                           key={index}

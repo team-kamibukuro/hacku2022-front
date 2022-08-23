@@ -1,4 +1,5 @@
 import useVictorySound from "@/hooks/sounds/useVictorySound";
+import { RankingUser } from "@/slices/playSlice/types";
 import React from "react";
 import useFinish from "../../hooks/useFinish";
 
@@ -13,7 +14,7 @@ const Finish = () => {
           <i className="nes-icon trophy is-large"></i>
         </div>
         <div className="text-left">
-          {users?.map((user) => {
+          {users?.map((user: RankingUser) => {
             return (
               <div key={user.playerId} className="flex justify-between">
                 <p className="font-dot text-base">

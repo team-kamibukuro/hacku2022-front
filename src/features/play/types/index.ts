@@ -36,25 +36,25 @@ export const DialogEvent = {
 export type DialogEventType = typeof DialogEvent[keyof typeof DialogEvent];
 
 export interface FINISHED_DATA {
-  event: Event.FINISHED;
+  event: "FINISHED";
   playerId: string;
   name: string;
 }
 
 export interface CONNECT_SUCCESS_DATA {
-  event: Event.CONNECT_SUCCESS;
+  event: "CONNECT_SUCCESS";
   playerId: string;
   name: string;
   language: string;
 }
 
 export interface DISCONNECT_DATA {
-  event: Event.DISCONNECT;
+  event: "DISCONNECT";
   playerId: string;
 }
 
 export interface READY_DATA {
-  event: Event.READY;
+  event: "READY";
   question: {
     id: string;
     name: string;
@@ -71,32 +71,32 @@ export interface READY_DATA {
 }
 
 export interface UPDATE_CODE_DATA {
-  event: Event.UPDATE_CODE;
+  event: "UPDATE_CODE";
   playerId: string;
   code: string;
 }
 
 export interface UPDATE_HEART_DATA {
-  event: Event.UPDATE_HEART;
+  event: "UPDATE_HEART";
   playerId: string;
   heart: number;
 }
 
 export interface SERVER_ERROR_DATA {
-  event: Event.SERVER_ERROR;
+  event: "SERVER_ERROR";
   status: boolean;
   playerId: string;
   name: string;
 }
 export interface ALL_FINISHED_DATA {
-  event: Event.ALL_FINISHED;
+  event: "ALL_FINISHED";
   playerId: string;
   name: string;
   time: string;
 }
 
 export interface RANKING_DATA {
-  event: Event.RANKING;
+  event: "RANKING";
   users: [
     {
       playerId: string;
@@ -108,8 +108,8 @@ export interface RANKING_DATA {
 }
 
 export interface ATTACK_DATA {
-  event: Event.ATTACK;
-  attackType: string;
+  event: "ATTACK";
+  attackType: "INDENT_INJECTION" | "COMMENTOUT_INJECTION" | "TBC_POISONING";
   playerId: string;
   name: string;
   language: string;
@@ -118,8 +118,8 @@ export interface ATTACK_DATA {
 }
 
 export interface RANSOMWARE_DATA {
-  event: Event.ATTACK;
-  attackType: Attack.RANSOMWARE;
+  event: "ATTACK";
+  attackType: "RANSOMWARE";
   playerId: string;
   name: string;
   heart: number;
@@ -127,7 +127,7 @@ export interface RANSOMWARE_DATA {
 }
 
 export interface FIREWALL_DATA {
-  event: Event.FIREWALL;
+  event: "FIREWALL";
   status: boolean;
   playerId: string;
   name: string;
