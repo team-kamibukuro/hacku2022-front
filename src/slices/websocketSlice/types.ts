@@ -3,3 +3,7 @@ export interface WebsocketState {
   abend: boolean;
   normalend: boolean;
 }
+
+export interface CloseWebsocket {
+  id: string;
+}

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
-import { WebsocketState } from "./types";
+import { CloseWebsocket, WebsocketState } from "./types";
+import { Event } from "@/features/play/types";
 
 const initialState: WebsocketState = {
   socket: null,
@@ -27,7 +28,10 @@ export const websocketSlice = createSlice({
     catchError(state) {
       state.abend = true;
     },
-    closeWebsocket(state) {
+    closeWebsocket(state, action: PayloadAction<CloseWebsocket>) {
+      state.socket.send(
+        JSON.stringify({ event: Event.DISCONNECT, playerId: action.payload.id })
+      );
       state.socket.close();
       state.normalend = true;
     },
