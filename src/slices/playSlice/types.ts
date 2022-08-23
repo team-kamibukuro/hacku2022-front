@@ -30,6 +30,7 @@ export interface Finish {
   finishTime: number;
 }
 export interface User {
+  type: "currentUser";
   id: string;
   name: string;
   heart: number;
@@ -45,6 +46,7 @@ export interface User {
 }
 
 export interface Player {
+  type: "player";
   id: string;
   name: string;
   heart: number;
