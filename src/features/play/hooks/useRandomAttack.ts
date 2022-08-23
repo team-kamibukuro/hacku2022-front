@@ -23,7 +23,7 @@ const useRandomAttack = () => {
       console.log("random attack");
       const n = Math.random();
 
-      if (n < 0.2) {
+      if (n < 0.5) {
         console.log("attack called!");
         randomAttack();
       }
@@ -44,6 +44,7 @@ const useRandomAttack = () => {
             playerId: users[userIndex].id,
             name: users[userIndex].name,
             heart: users[userIndex].heart - 1,
+            firewall: users[userIndex].firewall,
           })
         );
       }
@@ -56,6 +57,7 @@ const useRandomAttack = () => {
           name: users[userIndex].name,
           language: users[userIndex].language,
           code: users[userIndex].code,
+          firewall: users[userIndex].firewall,
         })
       );
     }

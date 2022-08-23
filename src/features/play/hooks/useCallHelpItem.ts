@@ -23,11 +23,11 @@ const useCallHelpItem = () => {
       console.log("random help item");
       const n = Math.random();
 
-      if (n < 0.1) {
+      if (n < 0.2) {
         randomHelpItem();
       }
     },
-    attackIsRunning ? 30000 : null
+    attackIsRunning ? 20000 : null
   );
 
   const randomHelpItem = () => {
