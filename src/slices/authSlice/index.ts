@@ -27,6 +27,7 @@ export const fetchAsyncRegister = createAsyncThunk(
 );
 
 const initialState: AuthState = {
+  isAuth: false,
   isAuthChecking: true,
   isLoginView: true,
   currentUser: {
@@ -42,6 +43,10 @@ export const authSlice = createSlice({
     switchIsLoginView(state) {
       state.isLoginView = !state.isLoginView;
     },
+    revokeAuth(state) {
+      state.isAuth = false;
+      localStorage.removeItem("localJWT");
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -51,6 +56,7 @@ export const authSlice = createSlice({
           "localJWT",
           action.payload.headers["authorization"]
         );
+        state.isAuth = true;
         state.isAuthChecking = false;
         state.currentUser.id = action.payload.data.userId;
         state.currentUser.name = action.payload.data.userName;
@@ -68,6 +74,7 @@ export const authSlice = createSlice({
           "localJWT",
           action.payload.headers["authorization"]
         );
+        state.isAuth = true;
         state.isAuthChecking = false;
         state.currentUser.id = action.payload.data.userId;
         state.currentUser.name = action.payload.data.userName;
@@ -81,7 +88,7 @@ export const authSlice = createSlice({
   },
 });
 
-export const { switchIsLoginView } = authSlice.actions;
+export const { switchIsLoginView, revokeAuth } = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default authSlice.reducer;
