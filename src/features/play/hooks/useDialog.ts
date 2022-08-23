@@ -1,4 +1,4 @@
-import { selectDialog } from "@/slices/playSlice";
+import { selectCurrentUser, selectDialog } from "@/slices/playSlice";
 import { closeWebsocket } from "@/slices/websocketSlice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -8,15 +8,16 @@ import { DialogEvent } from "../types";
 const useDialog = () => {
   const dispatch = useDispatch();
   const dialog = useSelector(selectDialog);
+  const currentUser = useSelector(selectCurrentUser);
 
   const handleClick = () => {
     switch (dialog.event) {
       case DialogEvent.MatchingWaiting:
-        dispatch(closeWebsocket());
+        dispatch(closeWebsocket({ id: currentUser.id }));
         window.location.replace("/entrance");
         break;
       case DialogEvent.Finish:
-        dispatch(closeWebsocket());
+        dispatch(closeWebsocket({ id: currentUser.id }));
         window.location.replace("/entrance");
         break;
       case DialogEvent.ConnectionError:
