@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import store, { RootState } from "@/store";
+import { RootState } from "@/store";
 import {
   EditCode,
   EditFinished,
   EditHeart,
+  EditRoomMaxPlayer,
+  EditRoomName,
   InitUser,
   NewPlayer,
   PlayState,
@@ -33,6 +35,8 @@ const initialState: PlayState = {
   room: {
     id: "",
     name: "",
+    isDemo: false,
+    maxPlayer: 0,
   },
   question: {
     id: "",
@@ -144,6 +148,15 @@ export const playSlice = createSlice({
     },
     editRoom(state, action: PayloadAction<Room>) {
       state.room = action.payload;
+    },
+    editRoomName(state, action: PayloadAction<EditRoomName>) {
+      state.room.name = action.payload.name;
+    },
+    editRoomMaxPlayer(state, action: PayloadAction<EditRoomMaxPlayer>) {
+      state.room.maxPlayer = action.payload.maxPlayer;
+    },
+    switchRoomDemo(state) {
+      state.room.isDemo = !state.room.isDemo;
     },
     setQuestion(state, action: PayloadAction<Question>) {
       state.question = action.payload;
@@ -350,6 +363,9 @@ export const {
   setStartTime,
   setFinish,
   editRoom,
+  editRoomName,
+  editRoomMaxPlayer,
+  switchRoomDemo,
   editCode,
   editFinished,
   switchServerdown,
