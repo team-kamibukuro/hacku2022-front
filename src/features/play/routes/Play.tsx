@@ -21,6 +21,9 @@ import useHeart from "../hooks/useHeart";
 import useCallHelpItem from "../hooks/useCallHelpItem";
 import useFirewall from "../hooks/useFirewall";
 import useRequireAuth from "@/hooks/useRequireAuth";
+import ConnectionError from "../components/dialogContents/ConnectionError";
+import None from "../components/dialogContents/None";
+import useCatchConnectionError from "../hooks/useCatchConnectionError";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
@@ -31,13 +34,15 @@ export const Play = () => {
     1: StartGame,
     2: ServerError,
     3: Finish,
-    4: MatchingWaiting,
+    4: None,
+    5: ConnectionError,
   };
   const Content = contentComponents[dialog.event];
 
   const { currentUser, players, question, handleEditorChange } = useSockets();
 
   useRequireAuth();
+  useCatchConnectionError();
   useRandomAttack();
   useCallHelpItem();
   useFirewall();
