@@ -73,7 +73,9 @@ const useSockets = () => {
     }
 
     console.log("Connectinng..");
-    const socket = new WebSocket(`ws://localhost:8099/play/${room.id}`);
+    const socket = new WebSocket(
+      process.env.NEXT_PUBLIC_WEBSOCKET_URL + room.id
+    );
     dispatch(setWebsocket(socket));
     socket.onopen = () =>
       socket.send(
