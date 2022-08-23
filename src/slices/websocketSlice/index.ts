@@ -4,6 +4,7 @@ import { WebsocketState } from "./types";
 
 const initialState: WebsocketState = {
   socket: null,
+  open: true,
 };
 
 export const websocketSlice = createSlice({
@@ -16,15 +17,12 @@ export const websocketSlice = createSlice({
       state.socket.addEventListener("open", () => {
         console.log("connected");
       });
-      state.socket.addEventListener("close", () => {
-        console.log("disconnecting...");
-      });
-      state.socket.addEventListener("error", (err) => {
-        console.log("connection error:", err);
-      });
     },
     sendWebsocket(state, action: PayloadAction<Object>) {
-      state.socket.send(JSON.stringify(action.payload));
+      state.open && state.socket.send(JSON.stringify(action.payload));
+    },
+    catchError(state) {
+      state.open = false;
     },
     closeWebsocket(state) {
       state.socket.close();
@@ -32,8 +30,9 @@ export const websocketSlice = createSlice({
   },
 });
 
-export const { setWebsocket, sendWebsocket, closeWebsocket } =
+export const { setWebsocket, sendWebsocket, closeWebsocket, catchError } =
   websocketSlice.actions;
 export const selectWebsocket = (state: RootState) => state.websocket.socket;
+export const selectWebsocketOpen = (state: RootState) => state.websocket.open;
 
 export default websocketSlice.reducer;
