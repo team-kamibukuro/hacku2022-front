@@ -1,6 +1,6 @@
 export const LANGUAGES = [
   "c",
-  "charp",
+  "csharp",
   "cpp",
   "go",
   "java",

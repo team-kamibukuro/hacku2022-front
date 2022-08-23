@@ -14,7 +14,10 @@ const useIsDisabled = (access: AccessType) => {
       isDisabled = room.name.length === 0 || currentUser.language.length === 0;
       break;
     case Access.Create:
-      isDisabled = room.name.length === 0 || currentUser.language.length === 0;
+      isDisabled =
+        room.name.length === 0 ||
+        currentUser.language.length === 0 ||
+        room.maxPlayer === 0;
       break;
     case Access.Matching:
       isDisabled = currentUser.language.length === 0;
