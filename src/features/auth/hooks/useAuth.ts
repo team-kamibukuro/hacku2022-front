@@ -1,6 +1,7 @@
 import {
   fetchAsyncLogin,
   fetchAsyncRegister,
+  revokeAuth,
   selectAuth,
   switchIsLoginView,
 } from "@/slices/authSlice";
@@ -21,7 +22,7 @@ const useAuth = () => {
   });
 
   useEffect(() => {
-    localStorage.removeItem("localJWT");
+    dispatch(revokeAuth());
   }, []);
 
   const changeMode = useCallback(() => {
