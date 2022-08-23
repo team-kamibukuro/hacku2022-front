@@ -293,6 +293,7 @@ export const playSlice = createSlice({
         state.currentUser.isMaster = true;
         state.room.id = action.payload.id;
         state.room.name = action.payload.roomName;
+        state.room.isDemo = action.payload.isDemo;
 
         window.location.replace("/play");
       }
@@ -304,6 +305,7 @@ export const playSlice = createSlice({
         state.room.name = action.payload.roomName;
         state.currentUser.isMaster =
           state.currentUser.id === action.payload.masterUserId;
+        state.room.isDemo = action.payload.isDemo;
 
         window.location.replace("/play");
       }

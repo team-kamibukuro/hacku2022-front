@@ -20,6 +20,7 @@ export interface AuthRoomResponse {
   roomId: string;
   roomName: string;
   masterUserId: string;
+  isDemo: boolean;
 }
 
 export interface MatchingRequest {
