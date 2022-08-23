@@ -235,6 +235,12 @@ export const playSlice = createSlice({
           state.dialog.button = true;
           state.dialog.isNomal = true;
           break;
+        case DialogEvent.ConnectionError:
+          state.dialog.title = "Oops!!";
+          state.dialog.submitTitle = "OK";
+          state.dialog.button = true;
+          state.dialog.isNomal = true;
+          break;
         default:
           state.dialog.open = false;
           state.dialog.event = DialogEvent.None;

@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
-import { WebsocketState } from "./types";
+import { CloseWebsocket, WebsocketState } from "./types";
+import { Event } from "@/features/play/types";
 
 const initialState: WebsocketState = {
   socket: null,
+  abend: false,
+  normalend: false,
 };
 
 export const websocketSlice = createSlice({
@@ -16,24 +19,30 @@ export const websocketSlice = createSlice({
       state.socket.addEventListener("open", () => {
         console.log("connected");
       });
-      state.socket.addEventListener("close", () => {
-        console.log("disconnecting...");
-      });
-      state.socket.addEventListener("error", (err) => {
-        console.log("connection error:", err);
-      });
     },
     sendWebsocket(state, action: PayloadAction<Object>) {
-      state.socket.send(JSON.stringify(action.payload));
+      !state.abend &&
+        !state.normalend &&
+        state.socket.send(JSON.stringify(action.payload));
     },
-    closeWebsocket(state) {
+    catchError(state) {
+      state.abend = true;
+    },
+    closeWebsocket(state, action: PayloadAction<CloseWebsocket>) {
+      state.socket.send(
+        JSON.stringify({ event: Event.DISCONNECT, playerId: action.payload.id })
+      );
       state.socket.close();
+      state.normalend = true;
     },
   },
 });
 
-export const { setWebsocket, sendWebsocket, closeWebsocket } =
+export const { setWebsocket, sendWebsocket, closeWebsocket, catchError } =
   websocketSlice.actions;
 export const selectWebsocket = (state: RootState) => state.websocket.socket;
+export const selectWebsocketAbend = (state: RootState) => state.websocket.abend;
+export const selectWebsocketNormalend = (state: RootState) =>
+  state.websocket.normalend;
 
 export default websocketSlice.reducer;

@@ -17,7 +17,11 @@ import {
   switchFirewall,
   switchServerdown,
 } from "@/slices/playSlice";
-import { sendWebsocket, setWebsocket } from "@/slices/websocketSlice";
+import {
+  catchError,
+  sendWebsocket,
+  setWebsocket,
+} from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -80,6 +84,14 @@ const useSockets = () => {
           language: currentUser.language,
         })
       );
+    socket.addEventListener("close", () => {
+      console.log("disconnecting...");
+      dispatch(catchError());
+    });
+    socket.addEventListener("error", (err) => {
+      console.log("connection error:", err);
+      dispatch(catchError());
+    });
     socket.addEventListener("message", function (e) {
       const data = JSON.parse(e.data);
       console.log("Message from server ", data);
