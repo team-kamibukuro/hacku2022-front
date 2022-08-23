@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 const useClock = () => {
   const dispatch = useDispatch();
-  const clockRef = (node) => {
+  const clockRef = (node: any) => {
     if (node !== null) {
       dispatch(setClock(node.api));
     }

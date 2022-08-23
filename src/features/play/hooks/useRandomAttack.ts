@@ -34,23 +34,24 @@ const useRandomAttack = () => {
   const randomAttack = () => {
     const attackIndex = Math.floor(Math.random() * attackTypes.length);
     const userIndex = Math.floor(Math.random() * users.length);
+    const user = users[userIndex];
 
-    if (users[userIndex].id === currentUser.id) {
+    if (user.type === "currentUser") {
       if (currentUser.finish.finished) return;
     } else {
-      if (users[userIndex].finished) return;
+      if (user.finished) return;
     }
 
     if (attackTypes[attackIndex] === Attack.RANSOMWARE) {
-      if (users[userIndex].heart !== 0) {
+      if (user.heart !== 0) {
         dispatch(
           sendWebsocket({
             event: Event.ATTACK,
             attackType: attackTypes[attackIndex],
-            playerId: users[userIndex].id,
-            name: users[userIndex].name,
-            heart: users[userIndex].heart - 1,
-            firewall: users[userIndex].firewall,
+            playerId: user.id,
+            name: user.name,
+            heart: user.heart - 1,
+            firewall: user.firewall,
           })
         );
       }

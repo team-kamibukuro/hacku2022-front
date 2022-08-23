@@ -160,7 +160,7 @@ const useSockets = () => {
   };
 
   const ATTACK = (data: ATTACK_DATA | RANSOMWARE_DATA) => {
-    if (data.attackType === Attack.RANSOMWARE) {
+    if (data.attackType === "RANSOMWARE") {
       notify(`${data.name}がランサムウェア攻撃を受けた!!`, BrokenHeart);
       if (data.firewall) {
         notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);

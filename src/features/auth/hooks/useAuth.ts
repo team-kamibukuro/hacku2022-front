@@ -5,12 +5,13 @@ import {
   selectAuth,
   switchIsLoginView,
 } from "@/slices/authSlice";
+import { TypedDispatch } from "@/store";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const useAuth = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const auth = useSelector(selectAuth);
   const isLoginView = auth.isLoginView;
@@ -43,7 +44,7 @@ const useAuth = () => {
         userPassword: credential.password,
       };
       console.log(params);
-      await dispatch(fetchAsyncLogin(params));
+      dispatch(fetchAsyncLogin(params));
     } else {
       const params = {
         userEmail: credential.email,
@@ -51,7 +52,7 @@ const useAuth = () => {
         userName: credential.nickname,
       };
       console.log(params);
-      await dispatch(fetchAsyncRegister(params));
+      dispatch(fetchAsyncRegister(params));
     }
   };
 

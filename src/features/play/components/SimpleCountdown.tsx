@@ -14,11 +14,11 @@ interface ChildHandles {
 // eslint-disable-next-line react/display-name
 const SimpleCountdown = forwardRef<ChildHandles, Props>(
   ({ time, renderer, onComplete, autoStart = false }, ref) => {
-    const clockRef = useRef();
+    const clockRef = useRef<any>();
     useImperativeHandle(ref, () => {
       return {
-        start: () => clockRef.current.start(),
-        pause: () => clockRef.current.pause(),
+        start: () => clockRef.current?.start(),
+        pause: () => clockRef.current?.pause(),
       };
     });
     return (

@@ -13,6 +13,7 @@ import {
   RankingUser,
   Room,
   SwitchFirewall,
+  SwitchServerdown,
   User,
 } from "./types";
 import { DialogEvent, DialogEventType } from "@/features/play/types";
@@ -44,6 +45,7 @@ const initialState: PlayState = {
     context: "",
   },
   currentUser: {
+    type: "currentUser",
     id: "",
     name: "",
     heart: 3,
@@ -79,6 +81,7 @@ const initialState: PlayState = {
   },
   players: [
     {
+      type: "player",
       id: "",
       name: "",
       heart: 3,
