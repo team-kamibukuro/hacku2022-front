@@ -1,4 +1,4 @@
-import { editRoom, selectRoom } from "@/slices/playSlice";
+import { editRoom, editRoomName, selectRoom } from "@/slices/playSlice";
 import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -9,10 +9,10 @@ const useRoomHandleChange = () => {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    dispatch(editRoom({ ...room, name: value }));
+    dispatch(editRoomName({ name: value }));
   }, []);
 
-  return { handleChange };
+  return { room, handleChange };
 };
 
 export default useRoomHandleChange;
