@@ -2,20 +2,15 @@ import React, { useRef } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import UserInfo from "./UserInfo";
 import { Player } from "@/slices/playSlice/types";
-import * as monaco from "monaco-editor";
 
 interface Props {
   player: Player;
 }
 
 const OtherEditor: React.FC<Props> = ({ player }) => {
-  const editorRef =
-    useRef() as React.MutableRefObject<null | monaco.editor.IStandaloneCodeEditor>;
+  const editorRef = useRef() as React.MutableRefObject<any>;
 
-  const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor,
-    monaco: Monaco
-  ) => {
+  const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor;
     editor.updateOptions({ readOnly: true });
   };
