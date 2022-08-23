@@ -3,6 +3,8 @@ import { DialogEventType } from "@/features/play/types";
 export interface Room {
   id: string;
   name: string;
+  isDemo: boolean;
+  maxPlayer: number;
 }
 
 export interface TestCase {
@@ -129,4 +131,12 @@ export interface SwitchFirewall {
 export interface InitUser {
   id: string;
   name: string;
+}
+
+export interface EditRoomName {
+  name: string;
+}
+
+export interface EditRoomMaxPlayer {
+  maxPlayer: number;
 }
