@@ -71,20 +71,18 @@ export const Play = () => {
                     <p className="font-dot text-white">{question.context}</p>
                   </div>
                 ) : (
-                  <>
+                  <div className="h-full w-full">
                     {players.map((player, index) => {
                       return (
-                        <div key={index} className="h-full">
-                          <div
-                            className={`h-1/3 w-full ${index < 1 && "pb-2"}`}
-                            key={index}
-                          >
-                            <OtherEditor player={player} />
-                          </div>
+                        <div
+                          key={index}
+                          className={`h-1/3 ${index < 1 && "pb-2"}`}
+                        >
+                          <OtherEditor player={player} />
                         </div>
                       );
                     })}
-                  </>
+                  </div>
                 )}
               </div>
             </div>
