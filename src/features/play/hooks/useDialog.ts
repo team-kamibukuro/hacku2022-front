@@ -1,4 +1,5 @@
 import { selectDialog } from "@/slices/playSlice";
+import { closeWebsocket } from "@/slices/websocketSlice";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -11,11 +12,11 @@ const useDialog = () => {
   const handleClick = () => {
     switch (dialog.event) {
       case DialogEvent.MatchingWaiting:
-        // TODO: Websocketの接続を切る
+        dispatch(closeWebsocket());
         window.location.replace("/entrance");
         break;
       case DialogEvent.Finish:
-        // TODO: Websocketの接続を切る
+        dispatch(closeWebsocket());
         window.location.replace("/entrance");
         break;
       case DialogEvent.ConnectionError:
