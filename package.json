@@ -2,7 +2,6 @@
   "name": "hacku2022-front",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://0.0.0.0:8099/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
