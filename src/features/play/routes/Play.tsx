@@ -20,6 +20,7 @@ import useRandomAttack from "../hooks/useRandomAttack";
 import useHeart from "../hooks/useHeart";
 import useCallHelpItem from "../hooks/useCallHelpItem";
 import useFirewall from "../hooks/useFirewall";
+import useRequireAuth from "@/hooks/useRequireAuth";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
@@ -35,6 +36,8 @@ export const Play = () => {
   const Content = contentComponents[dialog.event];
 
   const { currentUser, players, question, handleEditorChange } = useSockets();
+
+  useRequireAuth();
   useRandomAttack();
   useCallHelpItem();
   useFirewall();

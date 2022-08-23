@@ -4,6 +4,7 @@ export interface User {
 }
 
 export interface AuthState {
+  isAuth: boolean;
   isAuthChecking: boolean;
   currentUser: User;
   isLoginView: boolean;
