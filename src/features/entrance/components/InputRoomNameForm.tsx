@@ -5,12 +5,16 @@ import useRoomHandleChange from "../hooks/useRoomHandleChange";
 import SelectLanguageForm from "./SelectLanguageForm";
 
 const InputRoomNameForm = () => {
-  const { handleChange } = useRoomHandleChange();
+  const { room, handleChange } = useRoomHandleChange();
 
   return (
     <div>
       <div className="mt-6">
-        <InputForm label={"RoomName"} handleChange={handleChange} />
+        <InputForm
+          label={"RoomName"}
+          handleChange={handleChange}
+          value={room.name}
+        />
       </div>
       <div className="my-6">
         <SelectLanguageForm />
