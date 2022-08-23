@@ -213,20 +213,6 @@ const useSockets = () => {
     dispatch(setDialog(DialogEvent.Finish));
   };
 
-  const handleEditorChange = (
-    value: string,
-    event: monaco.editor.IModelContentChangedEvent
-  ) => {
-    dispatch(editCode({ id: currentUser.id, code: value }));
-    dispatch(
-      sendWebsocket({
-        event: Event.UPDATE_CODE,
-        playerId: currentUser.id,
-        code: value,
-      })
-    );
-  };
-
   if (allFinished && sendAllFinishedRef.current) {
     let diff = 0;
     if (currentUser.finish.finished) {
@@ -247,7 +233,7 @@ const useSockets = () => {
     sendAllFinishedRef.current = false;
   }
 
-  return { currentUser, players, question, handleEditorChange };
+  return { currentUser, players, question };
 };
 
 export default useSockets;
