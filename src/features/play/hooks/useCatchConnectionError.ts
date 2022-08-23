@@ -1,5 +1,8 @@
 import { setDialog } from "@/slices/playSlice";
-import { selectWebsocketOpen } from "@/slices/websocketSlice";
+import {
+  selectWebsocketAbend,
+  selectWebsocketNormalend,
+} from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -7,7 +10,8 @@ import { DialogEvent } from "../types";
 
 const useCatchConnectionError = () => {
   const dispatch = useDispatch();
-  const websocketOpen = useSelector(selectWebsocketOpen);
+  const websocketAbend = useSelector(selectWebsocketAbend);
+  const websocketNomalend = useSelector(selectWebsocketNormalend);
   const firstLoadRef = useRef(true);
 
   useEffect(() => {
@@ -16,10 +20,10 @@ const useCatchConnectionError = () => {
       return;
     }
 
-    if (!websocketOpen) {
+    if (websocketAbend && !websocketNomalend) {
       dispatch(setDialog(DialogEvent.ConnectionError));
     }
-  }, [websocketOpen]);
+  }, [websocketAbend]);
   return {};
 };
 
