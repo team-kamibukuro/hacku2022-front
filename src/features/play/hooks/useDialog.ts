@@ -18,6 +18,8 @@ const useDialog = () => {
         // TODO: Websocketの接続を切る
         window.location.replace("/entrance");
         break;
+      case DialogEvent.ConnectionError:
+        window.location.replace("/entrance");
       default:
     }
   };
