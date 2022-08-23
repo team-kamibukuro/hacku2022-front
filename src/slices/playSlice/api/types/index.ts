@@ -1,12 +1,15 @@
 export interface CreateRoomRequest {
   masterUserId: string;
   roomName: string;
+  isDemo: boolean;
+  maxPlayer: number;
 }
 
 export interface CreateRoomResponse {
   id: string;
   masterUserId: string;
   roomName: string;
+  isDemo: boolean;
 }
 
 export interface AuthRoomRequest {
