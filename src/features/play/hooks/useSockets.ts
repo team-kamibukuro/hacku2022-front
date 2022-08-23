@@ -41,7 +41,6 @@ import {
   RANSOMWARE_DATA,
   FIREWALL_DATA,
 } from "../types";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import Ghost from "@/common/icons/yurei_01.svg";
 import UFO from "@/common/icons/ufo_04.svg";
 import Portion from "@/common/icons/portion_purple_01.svg";
