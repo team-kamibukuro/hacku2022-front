@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import UserInfo from "./UserInfo";
 import { Player } from "@/slices/playSlice/types";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 
 interface Props {
   player: Player;

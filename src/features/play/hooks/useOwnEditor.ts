@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Event } from "../types";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from "monaco-editor";
 import { Monaco } from "@monaco-editor/react";
 
 const useOwnEditor = () => {

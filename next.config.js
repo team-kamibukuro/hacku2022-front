@@ -6,6 +6,11 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/,
       use: ["@svgr/webpack"],
+      resolve: {
+        alias: {
+          "monaco-editor": "monaco-editor/esm/vs/editor/editor.api.js",
+        },
+      },
     });
     return config;
   },
