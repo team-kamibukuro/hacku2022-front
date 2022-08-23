@@ -1,4 +1,5 @@
 export interface WebsocketState {
   socket: any;
-  open: boolean;
+  abend: boolean;
+  normalend: boolean;
 }
