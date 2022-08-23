@@ -1,4 +1,3 @@
-import OwnEditor from "@monaco-editor/react";
 import Layout from "@/components/layouts/Layout";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import RadioTab from "@/components/ui-elements/RadioTab";
@@ -24,6 +23,7 @@ import useRequireAuth from "@/hooks/useRequireAuth";
 import ConnectionError from "../components/dialogContents/ConnectionError";
 import None from "../components/dialogContents/None";
 import useCatchConnectionError from "../hooks/useCatchConnectionError";
+import OwnEditor from "../components/OwnEditor";
 
 export const Play = () => {
   const [tabVal, handleTabChange] = useTabVal();
@@ -39,7 +39,7 @@ export const Play = () => {
   };
   const Content = contentComponents[dialog.event];
 
-  const { currentUser, players, question, handleEditorChange } = useSockets();
+  const { currentUser, players, question } = useSockets();
 
   useRequireAuth();
   useCatchConnectionError();
@@ -101,13 +101,7 @@ export const Play = () => {
                 />
               </div>
               <div className="h-80">
-                <OwnEditor
-                  height="100%"
-                  theme="hc-black"
-                  language={currentUser.language}
-                  value={currentUser.code}
-                  onChange={handleEditorChange}
-                />
+                <OwnEditor />
               </div>
               <div className="flex-grow py-5">
                 <TerminalWindow></TerminalWindow>
