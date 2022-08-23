@@ -11,13 +11,14 @@ import {
   fetchAsyncCreateRoom,
   fetchAsyncMatching,
 } from "@/slices/playSlice/api";
+import { TypedDispatch } from "@/store";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Access, AccessType } from "../types";
 
 const useDialog = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
 
   const currentUser = useSelector(selectCurrentUser);
   const auth = useSelector(selectAuth);
@@ -74,7 +75,7 @@ const useDialog = () => {
     setdialogTitle("Matching");
   }, []);
 
-  const handleClick = async () => {
+  const handleClick = () => {
     switch (access) {
       case Access.Create:
         const createRoomParams = {

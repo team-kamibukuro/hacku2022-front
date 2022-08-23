@@ -12,6 +12,7 @@ import {
   fetchAsyncRunTestCase,
 } from "@/slices/playSlice/api";
 import { sendWebsocket } from "@/slices/websocketSlice";
+import { TypedDispatch } from "@/store";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -20,7 +21,7 @@ import useInterval from "use-interval";
 import { Event } from "../types";
 
 const useTerminalWindow = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<TypedDispatch>();
   const [tab, setTab] = useState("コンソール");
   const currentUser = useSelector(selectCurrentUser);
   const room = useSelector(selectRoom);
@@ -28,7 +29,8 @@ const useTerminalWindow = () => {
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
 
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const sleep = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
   const notify = (message: string) => toast.dark(message);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
