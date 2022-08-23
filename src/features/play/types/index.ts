@@ -30,6 +30,7 @@ export const DialogEvent = {
   ServerError: 2,
   Finish: 3,
   None: 4,
+  ConnectionError: 5,
 } as const;
 
 export type DialogEventType = typeof DialogEvent[keyof typeof DialogEvent];
