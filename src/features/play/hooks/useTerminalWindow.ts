@@ -1,3 +1,4 @@
+import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
 import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import {
   editConsoleResultValue,
@@ -29,19 +30,22 @@ const useTerminalWindow = () => {
   const question = useSelector(selectQuestion);
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
-  const [play] = useTabSound();
+  const callConsoleRef = useRef(false);
+  const [playTab] = useTabSound();
+  const [playBeep] = useBeepSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   const notify = (message: string) => toast.dark(message);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTab(e.target.value);
-    play();
-  }, []);
+    playTab();
+  };
 
   const submitConsole = async () => {
     setTab("コンソール");
+    callConsoleRef.current = true;
     const request = {
       code: currentUser.code,
       language: currentUser.language,
@@ -108,6 +112,7 @@ const useTerminalWindow = () => {
           testCase.compilerError
         }\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
+        playBeep();
         result += text;
       }
       if (currentUser.testResult.testCases.length === index + 1) {
@@ -136,6 +141,15 @@ const useTerminalWindow = () => {
   }
 
   useEffect(() => {
+    if (
+      !loading.terminal &&
+      callConsoleRef.current &&
+      currentUser.consoleResult.status === 200
+    ) {
+      if (currentUser.consoleResult.isCompileError) {
+        playBeep();
+      }
+    }
     if (
       !loading.terminal &&
       callTestRef.current &&
