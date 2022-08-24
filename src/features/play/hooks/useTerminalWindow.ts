@@ -1,4 +1,5 @@
 import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
+import useClearSound from "@/hooks/sounds/SoundEffects/useClearSound";
 import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import {
   editConsoleResultValue,
@@ -33,6 +34,7 @@ const useTerminalWindow = () => {
   const callConsoleRef = useRef(false);
   const [playTab] = useTabSound();
   const [playBeep] = useBeepSound();
+  const [playClear] = useClearSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -104,6 +106,7 @@ const useTerminalWindow = () => {
           index + 1
         } CLEAR 🚀\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
+        playClear();
         result += text;
       } else {
         const text = `-----------------------\nTEST${
@@ -148,7 +151,10 @@ const useTerminalWindow = () => {
     ) {
       if (currentUser.consoleResult.isCompileError) {
         playBeep();
+      } else {
+        playClear();
       }
+      callConsoleRef.current = false;
     }
     if (
       !loading.terminal &&
