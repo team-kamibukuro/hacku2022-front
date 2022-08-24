@@ -6,7 +6,7 @@ const useTabVal = (): [
   (e: React.ChangeEvent<HTMLInputElement>) => void
 ] => {
   const [tabVal, setTabVal] = useState("問題");
-  const { play } = useTabSound();
+  const [play] = useTabSound();
 
   const handleTabChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTabVal(e.target.value);

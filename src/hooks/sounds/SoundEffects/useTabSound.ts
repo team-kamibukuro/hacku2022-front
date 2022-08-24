@@ -6,7 +6,7 @@ const useTabSound = () => {
     volume: 1,
   });
 
-  return { play };
+  return [play];
 };
 
 export default useTabSound;

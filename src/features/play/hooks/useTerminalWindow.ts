@@ -1,3 +1,4 @@
+import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import {
   editConsoleResultValue,
   editTestResultValue,
@@ -28,6 +29,7 @@ const useTerminalWindow = () => {
   const question = useSelector(selectQuestion);
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
+  const [play] = useTabSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -35,6 +37,7 @@ const useTerminalWindow = () => {
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTab(e.target.value);
+    play();
   }, []);
 
   const submitConsole = async () => {
