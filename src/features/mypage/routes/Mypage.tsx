@@ -5,10 +5,20 @@ import { Avatar } from "@mui/material";
 import Jewelry from "@/common/icons/jewelry/jewelry_round_purple.svg";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import SubPage from "@/components/layouts/SubPage";
+import useMypage from "../hooks/useMypage";
+import RankBadge from "@/components/ui-elements/RankBadge";
 
 export const Mypage = () => {
-  const name = "めい";
-  const score = "300";
+  const { data, currentUser } = useMypage();
+  const rankBadgeTitle = [
+    "Gord Red",
+    "Gord Blue",
+    "Silver Red",
+    "Silver Blue",
+    "Bronze Red",
+    "Bronze Blue",
+  ];
+
   return (
     <Layout>
       <StainedGlass />
@@ -19,13 +29,18 @@ export const Mypage = () => {
               <div className="flex justify-start items-start mb-6">
                 <Avatar sx={{ width: 80, height: 80 }} className="mr-4" />
                 <div>
-                  <p className="font-dot text-xl my-3 font-medium">{name}</p>
+                  <p className="font-dot text-xl my-3 font-medium">
+                    {currentUser.name}
+                  </p>
                   <div className="flex items-center justify-center mb-2">
-                    {/* Todo: 条件分岐  */}
-                    <Jewelry className="w-10 mr-2" />
-                    <p className="font-dot">Purple DIAMOND</p>
+                    <div className="w-10 mr-2">
+                      <RankBadge rank={data.rankBadge} />
+                    </div>
+                    <p className="font-dot">
+                      {rankBadgeTitle[data.rankBadge - 1]}
+                    </p>
                   </div>
-                  <p className="font-dot">SCORE: {score}</p>
+                  <p className="font-dot">SCORE: {data.score}</p>
                 </div>
               </div>
               <div className="flex flex-col">
