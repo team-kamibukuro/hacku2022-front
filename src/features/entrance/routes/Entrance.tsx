@@ -4,7 +4,6 @@ import StainedGlass from "@/components/layouts/StainedGlass";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import useEntranceBackGroundSound from "@/hooks/sounds/BackGroundSounds/useEntranceBackGroundSound";
 import useRequireAuth from "@/hooks/useRequireAuth";
-import Link from "next/link";
 import React from "react";
 import CreateRoomForm from "../components/CreateRoomForm";
 import InputRoomNameForm from "../components/InputRoomNameForm";
@@ -101,13 +100,11 @@ export const Entrance = () => {
                   </SimpleDialog>
                 </div>
               </div>
-              <Link href="/mypage">
-                <div className="flex mt-10 group">
-                  <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
-                    Mypage &gt;&gt;
-                  </span>
-                </div>
-              </Link>
+              <div className="flex mt-10 group">
+                <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
+                  Mypage &gt;&gt;
+                </span>
+              </div>
               <div className="flex mt-10" onClick={logout}>
                 <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
                   Logout &gt;&gt;
