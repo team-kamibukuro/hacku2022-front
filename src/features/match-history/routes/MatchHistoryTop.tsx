@@ -3,34 +3,11 @@ import StainedGlass from "@/components/layouts/StainedGlass";
 import SubPage from "@/components/layouts/SubPage";
 import Radio from "@/components/ui-elements/Radio";
 import React from "react";
+import useMatchHistory from "../hooks/useMatchHistory";
 
 export const MatchHistoryTop = () => {
-  const historys = [
-    {
-      value: "1",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-    {
-      value: "2",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-    {
-      value: "3",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-    {
-      value: "4",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-    {
-      value: "5",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-    {
-      value: "6",
-      label: "2022/8/24 13:00 mei vs kazuki vs 空飛ぶ農家 vs はまだ",
-    },
-  ];
+  const { historys, value, handleChange } = useMatchHistory();
+
   return (
     <div>
       <Layout>
@@ -40,9 +17,9 @@ export const MatchHistoryTop = () => {
             <div className="flex flex-col">
               <Radio
                 name={"history"}
-                state={"1"}
+                state={value}
                 items={historys}
-                onChange={() => {}}
+                onChange={handleChange}
               />
             </div>
           </div>
