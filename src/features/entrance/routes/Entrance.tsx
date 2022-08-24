@@ -49,7 +49,7 @@ export const Entrance = () => {
             className="h-screen flex flex-col items-center justify-center z-50"
           >
             <h2 className="text-white text-2xl font-press border-white border-solid border-b-4 mb-10">
-              INGECTION
+              INJECTION
             </h2>
             <p className="text-white text-5xl font-press text-center mb-20 leading-normal">
               TOUCH HERE
@@ -63,7 +63,7 @@ export const Entrance = () => {
             <div className="p-20 border-white border-solid border-8">
               <div className="flex items-center justify-center ">
                 <h2 className="text-white text-[80px] font-press mr-10 border-white border-solid border-b-8">
-                  INGECTION
+                  INJECTION
                 </h2>
                 <div className="flex flex-col">
                   <Button
