@@ -1,20 +1,27 @@
 import Layout from "@/components/layouts/Layout";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import RadioTab from "@/components/ui-elements/RadioTab";
-import Editor from "@monaco-editor/react";
+import { selectTargetIndex } from "@/slices/mypageSlice";
+import { selectCurrentUser } from "@/slices/playSlice";
 import React from "react";
+import { useSelector } from "react-redux";
+import Content from "../components/Content";
 import Header from "../components/Header";
-import Info from "../components/Info";
 import MonacoEditor from "../components/MonacoEditor";
 import Terminal from "../components/Terminal";
+import useMatchHistoryDetail from "../hooks/useMatchHistoryDetail";
+import useTab from "../hooks/useTab";
 
 export const MatchHistory = () => {
-  const name = "ななし";
-  const time = "13:24";
+  const { tab, tabs, handleTabChange } = useTab();
+  const { data } = useMatchHistoryDetail();
+  const currentUser = useSelector(selectCurrentUser);
+  const targetIndex = useSelector(selectTargetIndex);
+
   return (
     <div>
       <Layout>
-        {/* <StainedGlass /> */}
+        <StainedGlass />
         <div className="flex flex-col z-50 h-screen w-full">
           <Header />
           <div className="flex h-[calc(100%_-_68px)]">
@@ -23,29 +30,38 @@ export const MatchHistory = () => {
                 <div className="flex">
                   <RadioTab
                     name={"match-history-tab"}
-                    state={"情報"}
-                    value={["情報", "問題", "履歴"]}
-                    onChange={() => {}}
+                    state={tab}
+                    value={tabs}
+                    onChange={handleTabChange}
                   />
                 </div>
                 <div className="h-[calc(100%_-_33.5px)] border-solid border-white bg-editor-back border-2 px-3 pt-3 flex flex-col font-dot">
-                  <Info />
+                  <Content tab={tab} />
                 </div>
               </div>
             </div>
             <div className="w-1/2 h-full pr-10 pl-5 py-2">
-              <p className="font-dot text-white mb-[0.6em]">{name}</p>
+              <p className="font-dot text-white mb-[0.6em]">
+                {currentUser.name}
+              </p>
               <div className="h-[calc(100%_-_33.5px)] border-solid border-white bg-editor-back border-2 px-3 pt-3 flex flex-col">
                 <div className="mb-1">
-                  <p className="font-dot">{time}</p>
+                  <p className="font-dot">
+                    {data.histories[targetIndex].debugTime}
+                  </p>
                 </div>
                 <div className="flex-grow mb-4">
                   <MonacoEditor />
                 </div>
                 <div className="h-2/5 flex flex-col">
-                  <p className="font-dot">テスト結果</p>
+                  <p className="font-dot">
+                    {" "}
+                    {data.histories[targetIndex].isExecuteTest
+                      ? "テスト実行結果"
+                      : "コンソール実行結果"}
+                  </p>
                   <div className="flex-grow py-3">
-                    <Terminal result={"test1 clear"} />
+                    <Terminal />
                   </div>
                 </div>
               </div>

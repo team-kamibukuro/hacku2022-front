@@ -1,45 +1,30 @@
+import RankBadge from "@/components/ui-elements/RankBadge";
 import { RankingUser } from "@/slices/playSlice/types";
 import React from "react";
+import useMatchHistoryDetail from "../hooks/useMatchHistoryDetail";
+import { GameResult } from "../types";
 
 const Info = () => {
-  const users = [
-    {
-      playerId: "123",
-      name: "太郎",
-      time: "12:34",
-      rank: 1,
-    },
-    {
-      playerId: "3",
-      name: "太郎",
-      time: "12:34",
-      rank: 2,
-    },
-    {
-      playerId: "13",
-      name: "太郎",
-      time: "12:34",
-      rank: 3,
-    },
-    {
-      playerId: "12",
-      name: "太郎",
-      time: "12:34",
-      rank: 4,
-    },
-  ];
+  const { data } = useMatchHistoryDetail();
   return (
-    <div>
-      <p>日時: 8/24 13:07</p>
+    <div className="font-dot">
+      <h3 className="text-xl font-medium mb-2">Start</h3>
+      <p>{data.startTime}</p>
 
+      <h3 className="text-xl font-medium mt-4 mb-2">Ranking</h3>
       <div className="text-left">
-        {users?.map((user: RankingUser) => {
+        {data.gameResult?.map((result: GameResult, index) => {
           return (
-            <div key={user.playerId} className="flex justify-between">
-              <p className="font-dot text-base">
-                {user.rank}位 {user.name}
-              </p>
-              <p className="font-dot text-base">time: {user.time}</p>
+            <div key={index} className="flex justify-between w-9/12 mb-2">
+              <div className="flex items-center">
+                <p className="font-dot text-base mr-2">
+                  {result.ranking}位 {result.userName}
+                </p>
+                <div className="w-6 mt-0.5">
+                  <RankBadge rank={result.rankBadge} />
+                </div>
+              </div>
+              <p className="font-dot text-base">time: {result.scoreTime}</p>
             </div>
           );
         })}

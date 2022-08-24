@@ -100,7 +100,12 @@ export const Entrance = () => {
                   </SimpleDialog>
                 </div>
               </div>
-              <div className="flex mt-10" onClick={() => {}}>
+              <div
+                className="flex mt-10"
+                onClick={() => {
+                  window.location.href = "/mypage";
+                }}
+              >
                 <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
                   Mypage &gt;&gt;
                 </span>
