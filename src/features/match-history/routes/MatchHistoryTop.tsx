@@ -46,7 +46,11 @@ export const MatchHistoryTop = () => {
               />
             </div>
           </div>
-          <div className="flex mt-10 group text-center">
+          <div
+            onClick={() => {
+              window.location.href = "/mypage";
+            }}
+          >
             <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
               &lt;&lt; Back
             </span>

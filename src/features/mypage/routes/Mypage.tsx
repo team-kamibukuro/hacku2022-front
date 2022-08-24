@@ -8,6 +8,7 @@ import SubPage from "@/components/layouts/SubPage";
 
 export const Mypage = () => {
   const name = "めい";
+  const score = "300";
   return (
     <Layout>
       <StainedGlass />
@@ -20,16 +21,19 @@ export const Mypage = () => {
                 <div>
                   <p className="font-dot text-xl my-3 font-medium">{name}</p>
                   <div className="flex items-center justify-center mb-2">
+                    {/* Todo: 条件分岐  */}
                     <Jewelry className="w-10 mr-2" />
                     <p className="font-dot">Purple DIAMOND</p>
                   </div>
-                  <p className="font-dot">SCORE: 300</p>
+                  <p className="font-dot">SCORE: {score}</p>
                 </div>
               </div>
               <div className="flex flex-col">
                 <div></div>
                 <Button
-                  onClick={() => {}}
+                  onClick={() => {
+                    window.location.href = "/mypage/match-history/";
+                  }}
                   buttonStyle={ButtonStyle.isPrimary}
                   font={"press"}
                 >
@@ -55,7 +59,11 @@ export const Mypage = () => {
             </div>
           </div>
         </div>
-        <div className="flex mt-10 group text-center">
+        <div
+          onClick={() => {
+            window.location.href = "/entrance/";
+          }}
+        >
           <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
             &lt;&lt; Back
           </span>

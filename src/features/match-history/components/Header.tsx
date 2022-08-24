@@ -1,5 +1,4 @@
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
-import CustomCountdown from "@/features/play/components/CustomCountdown";
 import React from "react";
 
 const Header = () => {
@@ -13,7 +12,12 @@ const Header = () => {
               className="navbar-collapse collapse grow items-center flex justify-end"
               id="navbarSupportedContentY"
             >
-              <Button onClick={() => {}} buttonStyle={ButtonStyle.isError}>
+              <Button
+                onClick={() => {
+                  window.location.href = "/mypage/match-history";
+                }}
+                buttonStyle={ButtonStyle.isError}
+              >
                 Back
               </Button>
             </div>
