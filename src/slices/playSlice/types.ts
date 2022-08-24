@@ -142,3 +142,7 @@ export interface EditRoomName {
 export interface EditRoomMaxPlayer {
   maxPlayer: number;
 }
+
+export interface EditCurrentUserLanguage {
+  language: string;
+}

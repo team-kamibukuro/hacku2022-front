@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
 import {
   EditCode,
+  EditCurrentUserLanguage,
   EditFinished,
   EditHeart,
   EditRoomMaxPlayer,
@@ -31,6 +32,7 @@ import {
   RunConsoleResponse,
   RunTestCaseResponse,
 } from "./api/types";
+import { TEMPLATE } from "@/common/constants";
 
 const initialState: PlayState = {
   room: {
@@ -131,6 +133,18 @@ export const playSlice = createSlice({
     editCurrentUser(state, action: PayloadAction<User>) {
       state.currentUser = action.payload;
     },
+    editCurrentUserLanguage(
+      state,
+      action: PayloadAction<EditCurrentUserLanguage>
+    ) {
+      state.currentUser.language = action.payload.language;
+      const template = TEMPLATE.find(
+        (template) => template.language === action.payload.language
+      );
+      const defaultCode = template === undefined ? "" : template.template;
+      console.log(defaultCode);
+      state.currentUser.code = defaultCode;
+    },
     resetHeart(state) {
       state.currentUser.heart = 3;
     },
@@ -209,12 +223,17 @@ export const playSlice = createSlice({
     },
     setPlayer(state, action: PayloadAction<NewPlayer[]>) {
       const users = action.payload.map((player) => {
+        const template = TEMPLATE.find(
+          (template) => template.language === player.language
+        );
+        const defaultCode = template === undefined ? "" : template.template;
         return {
           ...state.players[0],
           id: player.id,
           name: player.name,
           isMaster: player.isMaster,
           language: player.language,
+          code: defaultCode,
         };
       });
       const players = users.filter((user) => user.id !== state.currentUser.id);
@@ -361,6 +380,7 @@ export const playSlice = createSlice({
 export const {
   initCurrentUser,
   editCurrentUser,
+  editCurrentUserLanguage,
   resetHeart,
   editConsoleResult,
   editConsoleResultValue,
