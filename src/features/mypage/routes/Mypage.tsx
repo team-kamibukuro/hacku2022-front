@@ -49,7 +49,7 @@ export const Mypage = () => {
                   buttonStyle={ButtonStyle.isNomal}
                   font={"press"}
                 >
-                  Gyide
+                  Guide
                 </Button>
               </div>
             </div>
