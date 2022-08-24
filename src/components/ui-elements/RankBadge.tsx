@@ -13,22 +13,16 @@ const RankBadge: React.FC<Props> = ({ rank }) => {
   switch (rank) {
     case 1:
       return <CrownGordRed />;
-      break;
-    case 1:
+    case 2:
       return <CrownGordBlue />;
-      break;
     case 3:
       return <CrownSilverRed />;
-      break;
     case 4:
       return <CrownSilverBlue />;
-      break;
     case 5:
       return <CrownBronzeRed />;
-      break;
     case 6:
       return <CrownBronzeBlue />;
-      break;
     default:
       return <CrownBronzeBlue />;
   }
