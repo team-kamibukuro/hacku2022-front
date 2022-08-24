@@ -35,3 +35,15 @@ export interface Error {
   status: number;
   message: string;
 }
+
+export interface Room {
+  roomId: string;
+  roomName: string;
+  startTime: string;
+  playerCount: number;
+  players: Array<string>;
+}
+export interface MatchHistoryResponse {
+  status: number;
+  rooms: Room[];
+}
