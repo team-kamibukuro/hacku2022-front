@@ -8,3 +8,8 @@
 .Toastify__toast {
   border: solid 3px #fff;
 }
+
+body {
+  color: #fff;
+  background-color: #000;
+}
