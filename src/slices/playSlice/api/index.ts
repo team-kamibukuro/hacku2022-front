@@ -69,7 +69,6 @@ export const fetchAsyncRunTestCase = createAsyncThunk(
         Authorization: `${localStorage.localJWT}`,
       },
     });
-    console.log(res.data);
     return res.data;
   }
 );

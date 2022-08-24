@@ -1,10 +1,10 @@
 import React from "react";
 import Editor from "@monaco-editor/react";
 import useOwnEditor from "../hooks/useOwnEditor";
-
 const OwnEditor = () => {
   const { currentUser, handleEditorChange, handleEditorDidMount } =
     useOwnEditor();
+
   return (
     <Editor
       height="100%"
