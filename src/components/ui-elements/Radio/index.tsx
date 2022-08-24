@@ -2,14 +2,14 @@ import React, { ReactNode } from "react";
 import styles from "./style.module.css";
 
 interface Item {
-  value: string;
+  value: string | number;
   label: string;
 }
 
 interface Props {
   name: string;
   items: Item[];
-  state: string;
+  state: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
