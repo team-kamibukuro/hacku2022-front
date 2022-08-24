@@ -1,11 +1,8 @@
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import CustomCountdown from "@/features/play/components/CustomCountdown";
 import React from "react";
-import useExit from "../hooks/useExit";
 
 const Header = () => {
-  const { exit } = useExit();
-
   return (
     <div>
       <header>
@@ -16,18 +13,8 @@ const Header = () => {
               className="navbar-collapse collapse grow items-center flex justify-end"
               id="navbarSupportedContentY"
             >
-              <div>
-                <p className="font-dot text-white mr-10 flex">
-                  制限時間 残り
-                  <CustomCountdown time={1200000} />
-                </p>
-              </div>
-              <Button
-                onClick={exit}
-                buttonStyle={ButtonStyle.isError}
-                font={"dot"}
-              >
-                退出する
+              <Button onClick={() => {}} buttonStyle={ButtonStyle.isError}>
+                Back
               </Button>
             </div>
           </div>

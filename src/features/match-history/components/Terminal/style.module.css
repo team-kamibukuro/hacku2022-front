@@ -1,0 +1,17 @@
+.terminal__textarea {
+  font-family: "Courier Prime";
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  display: block;
+  border: none;
+  resize: none;
+  background-color: black;
+  color: #4caf50;
+  font-size: 12pt;
+  line-height: 1.4em;
+  padding: 20px;
+}
+.terminal__textarea:focus {
+  outline: none;
+}

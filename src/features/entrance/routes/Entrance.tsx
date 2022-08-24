@@ -4,7 +4,6 @@ import StainedGlass from "@/components/layouts/StainedGlass";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import useEntranceBackGroundSound from "@/hooks/sounds/BackGroundSounds/useEntranceBackGroundSound";
 import useRequireAuth from "@/hooks/useRequireAuth";
-import Link from "next/link";
 import React from "react";
 import CreateRoomForm from "../components/CreateRoomForm";
 import InputRoomNameForm from "../components/InputRoomNameForm";
@@ -49,7 +48,7 @@ export const Entrance = () => {
             className="h-screen flex flex-col items-center justify-center z-50"
           >
             <h2 className="text-white text-2xl font-press border-white border-solid border-b-4 mb-10">
-              INGECTION
+              INJECTION
             </h2>
             <p className="text-white text-5xl font-press text-center mb-20 leading-normal">
               TOUCH HERE
@@ -63,7 +62,7 @@ export const Entrance = () => {
             <div className="p-20 border-white border-solid border-8">
               <div className="flex items-center justify-center ">
                 <h2 className="text-white text-[80px] font-press mr-10 border-white border-solid border-b-8">
-                  INGECTION
+                  INJECTION
                 </h2>
                 <div className="flex flex-col">
                   <Button
@@ -101,13 +100,11 @@ export const Entrance = () => {
                   </SimpleDialog>
                 </div>
               </div>
-              <Link href="/mypage">
-                <div className="flex mt-10 group">
-                  <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
-                    Mypage &gt;&gt;
-                  </span>
-                </div>
-              </Link>
+              <div className="flex mt-10" onClick={() => {}}>
+                <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
+                  Mypage &gt;&gt;
+                </span>
+              </div>
               <div className="flex mt-10" onClick={logout}>
                 <span className="font-press text-lg -mt-0.5 text-white hover:text-yellow-400">
                   Logout &gt;&gt;

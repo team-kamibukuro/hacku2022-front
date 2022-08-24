@@ -8,3 +8,12 @@
 .Toastify__toast {
   border: solid 3px #fff;
 }
+
+body {
+  color: #fff;
+  background-color: #000;
+}
+
+.nes-list.is-disc li::before {
+  color: #fff;
+}
