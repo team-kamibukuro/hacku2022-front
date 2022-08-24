@@ -10,6 +10,7 @@ import { playSlice } from "@/slices/playSlice";
 import { authSlice } from "@/slices/authSlice";
 import { websocketSlice } from "@/slices/websocketSlice";
 import { entranceSlice } from "@/slices/entranceSlice";
+import { mypageSlice } from "@/slices/mypageSlice";
 import { useDispatch } from "react-redux";
 import thunk, { ThunkAction, ThunkDispatch } from "redux-thunk";
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authSlice.reducer,
   websocket: websocketSlice.reducer,
   entrance: entranceSlice.reducer,
+  mypage: mypageSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
@@ -26,7 +28,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["websocket", "entrance"],
+  blacklist: ["websocket", "entrance", "mypage"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
