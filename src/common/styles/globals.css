@@ -13,3 +13,7 @@ body {
   color: #fff;
   background-color: #000;
 }
+
+.nes-list.is-disc li::before {
+  color: #fff;
+}
