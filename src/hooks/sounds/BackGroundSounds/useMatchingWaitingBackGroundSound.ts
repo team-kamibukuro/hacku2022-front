@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import useSound from "use-sound";
 
 const useMatchingWaitingBackGroundSound = () => {
-  const [play] = useSound("/sounds/8bit-act02_select.mp3", {
+  const [play, { stop }] = useSound("/sounds/mokkin.mp3", {
     loop: true,
-    volume: 0.1,
+    volume: 0.8,
   });
 
   useEffect(() => {
     play();
+
+    return () => {
+      stop();
+    };
   }, [play]);
 
-  return null;
+  return {};
 };
 
 export default useMatchingWaitingBackGroundSound;
