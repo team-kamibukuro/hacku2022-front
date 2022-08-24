@@ -142,7 +142,6 @@ export const playSlice = createSlice({
         (template) => template.language === action.payload.language
       );
       const defaultCode = template === undefined ? "" : template.template;
-      console.log(defaultCode);
       state.currentUser.code = defaultCode;
     },
     resetHeart(state) {
