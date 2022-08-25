@@ -35,23 +35,25 @@ const UserInfo: React.FC<Props> = ({
           <Heart isTransparent={false} />
         )}
       </div>
-      {firewall && (
-        <div className="nes-badge m-0 -mb-1">
-          <span className="is-error font-press text-xs">FIREWALL</span>
-        </div>
-      )}
-      {serverdown && (
-        <div className="nes-badge m-0 -mb-1">
-          <span className="is-dark font-press text-xs">500ERROR</span>
-        </div>
-      )}
-      {finished && (
-        <div className="bg-white px-1 border-solid border-red-700 border-2">
-          <p className="font-press text-sm text-red-500 ml-2">
-            FNISHED!!<span className="text-lg">🎉</span>
-          </p>
-        </div>
-      )}
+      <div className="flex items-center">
+        {firewall && (
+          <div className="nes-badge m-0 -mb-1">
+            <span className="is-error font-press text-xs">FIREWALL</span>
+          </div>
+        )}
+        {serverdown && (
+          <div className="nes-badge m-0 -mb-1 ml-6">
+            <span className="is-dark font-press text-xs">500ERROR</span>
+          </div>
+        )}
+        {finished && (
+          <div className="bg-white px-1 border-solid border-red-700 border-2 ml-6 -mt-2">
+            <p className="font-press text-sm text-red-500 ml-2">
+              FNISHED!!<span className="text-lg">🎉</span>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
