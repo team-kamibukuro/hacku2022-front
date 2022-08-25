@@ -2,11 +2,13 @@ import Layout from "@/components/layouts/Layout";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import SubPage from "@/components/layouts/SubPage";
 import Radio from "@/components/ui-elements/Radio";
+import useLinkButtonSound from "@/hooks/sounds/ButtonSounds/useLinkButtonSound";
 import React from "react";
 import useMatchHistory from "../hooks/useMatchHistory";
 
 export const MatchHistoryTop = () => {
   const { historys, value, handleChange } = useMatchHistory();
+  const [playLinkButton] = useLinkButtonSound();
 
   return (
     <div>
@@ -25,6 +27,7 @@ export const MatchHistoryTop = () => {
           </div>
           <div
             onClick={() => {
+              playLinkButton();
               window.location.href = "/mypage";
             }}
           >
