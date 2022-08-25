@@ -28,7 +28,7 @@ export const Mypage = () => {
     <Layout>
       <StainedGlass />
       <SubPage title={"Mypage"}>
-        <div className="w-full">
+        <div className="w-full flex-grow mt-10">
           <div className="m-auto" style={{ width: "fit-content" }}>
             <div className="nes-container is-dark text-left w-[470px]">
               <div className="flex justify-start items-start mb-6">
@@ -83,6 +83,7 @@ export const Mypage = () => {
               </div>
             </div>
           </div>
+          <div className="w-[390px]"></div>
         </div>
         <div
           onClick={() => {
