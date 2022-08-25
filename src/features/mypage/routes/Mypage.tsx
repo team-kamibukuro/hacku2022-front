@@ -83,6 +83,7 @@ export const Mypage = () => {
               </div>
             </div>
           </div>
+          <div className="w-[390px]"></div>
         </div>
         <div
           onClick={() => {
