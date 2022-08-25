@@ -23,9 +23,9 @@ const useMatchHistory = () => {
 
   const [value, setValue] = useState(data?.rooms[0].roomId);
 
-  useEffect(() => {
-    data && setValue(data?.rooms[0].roomId);
-  }, [data]);
+  // useEffect(() => {
+  //   data && setValue(data?.rooms[0].roomId);
+  // }, [data]);
 
   const historys = data?.rooms.map((room: Room) => {
     let vsPlayersText = "";
@@ -38,7 +38,7 @@ const useMatchHistory = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    window.location.href = `/mypage/match-history/${value}`;
+    window.location.href = `/mypage/match-history/${e.target.value}`;
 
     playTab();
   };
