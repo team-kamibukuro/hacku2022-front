@@ -1,3 +1,4 @@
+import useRecoverySound from "@/hooks/sounds/SoundEffects/useRecoverySound";
 import { resetDialog, resetHeart, selectCurrentUser } from "@/slices/playSlice";
 import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef, useState } from "react";
@@ -8,6 +9,7 @@ import { Event } from "../types";
 const useServerErrorCountdown = () => {
   const clockRef = useRef(null);
   const currentUser = useSelector(selectCurrentUser);
+  const [playRecovery] = useRecoverySound();
 
   const dispatch = useDispatch();
 
@@ -38,6 +40,7 @@ const useServerErrorCountdown = () => {
       localStorage.removeItem("end_date_serverdown");
     }
 
+    playRecovery();
     dispatch(resetDialog());
     dispatch(resetHeart());
     dispatch(

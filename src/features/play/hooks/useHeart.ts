@@ -1,3 +1,4 @@
+import useServerdownSound from "@/hooks/sounds/SoundEffects/useServerdownSound";
 import { selectCurrentUser, setDialog } from "@/slices/playSlice";
 import { sendWebsocket } from "@/slices/websocketSlice";
 import React, { useEffect, useRef } from "react";
@@ -10,6 +11,7 @@ const useHeart = () => {
   const currentUser = useSelector(selectCurrentUser);
   const refFirstRef = useRef(true);
   const firstLoadRef = useRef(true);
+  const [playServerdown] = useServerdownSound();
 
   useEffect(() => {
     if (process.env.NODE_ENV === "development") {
@@ -33,6 +35,7 @@ const useHeart = () => {
           name: currentUser.name,
         })
       );
+      playServerdown();
     }
     dispatch(
       sendWebsocket({
