@@ -1,3 +1,4 @@
+import useAllClearSound from "@/hooks/sounds/SoundEffects/useAllClearSound";
 import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
 import useClearSound from "@/hooks/sounds/SoundEffects/useClearSound";
 import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
@@ -32,9 +33,11 @@ const useTerminalWindow = () => {
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
   const callConsoleRef = useRef(false);
+  const allFinishedRef = useRef(false);
   const [playTab] = useTabSound();
   const [playBeep] = useBeepSound();
   const [playClear] = useClearSound();
+  const [playAllClear] = useAllClearSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -136,6 +139,7 @@ const useTerminalWindow = () => {
         })
       );
       notify(`Congratulations!\nYou Finished 🎉`);
+      allFinishedRef.current = true;
     }
   };
 
@@ -165,6 +169,11 @@ const useTerminalWindow = () => {
       callTestRef.current = false;
     }
   }, [loading.terminal]);
+
+  if (allFinishedRef.current) {
+    playAllClear();
+    allFinishedRef.current = false;
+  }
 
   return {
     tab,
