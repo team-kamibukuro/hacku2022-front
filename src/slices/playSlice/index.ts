@@ -354,6 +354,7 @@ export const playSlice = createSlice({
             action.payload.isError;
           state.currentUser.heart = state.currentUser.heart - 1;
         } else {
+          state.currentUser.consoleResult.isCompileError = false;
           state.currentUser.consoleResult.result = action.payload.programOutput;
         }
       }
