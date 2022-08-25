@@ -14,14 +14,18 @@ import useDiffCheckBox from "../hooks/useDiffCheckBox";
 import useMatchHistoryDetail from "../hooks/useMatchHistoryDetail";
 import useTab from "../hooks/useTab";
 import Checkbox from "../components/Checkbox";
+import Loding from "@/components/Loding";
+import Error from "@/components/Error";
 
 export const MatchHistory = () => {
   const { tab, tabs, handleTabChange } = useTab();
   const { isDiff, handleChange } = useDiffCheckBox();
-  const { data } = useMatchHistoryDetail();
+  const { data, isLoading, isError } = useMatchHistoryDetail();
   const currentUser = useSelector(selectCurrentUser);
   const targetIndex = useSelector(selectTargetIndex);
 
+  if (isLoading) return <Loding />;
+  if (isError) return <Error />;
   return (
     <div>
       <Layout>

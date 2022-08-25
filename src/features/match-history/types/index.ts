@@ -20,6 +20,8 @@ export interface History {
 
 export interface MatchHistoryDetailResponse {
   status: number;
+  roomId: string;
+  roomName: string;
   userId: string;
   userName: string;
   startTime: string;

@@ -8,12 +8,14 @@ const Info = () => {
   const { data } = useMatchHistoryDetail();
   return (
     <div className="font-dot">
-      <h3 className="text-xl font-medium mb-2">Start</h3>
-      <p>{data.startTime}</p>
+      <h3 className="text-xl font-medium mb-1">Room name</h3>
+      <p className="text-xl font-medium mb-8">{data.roomName}</p>
+      <h3 className="text-xl font-medium mb-1">Start</h3>
+      <p className="text-xl font-medium mb-8">{data.startTime}</p>
 
       <h3 className="text-xl font-medium mt-4 mb-2">Ranking</h3>
       <div className="text-left">
-        {data.gameResult?.map((result: GameResult, index) => {
+        {data.gameResult?.map((result: GameResult, index: number) => {
           return (
             <div key={index} className="flex justify-between w-9/12 mb-2">
               <div className="flex items-center">
