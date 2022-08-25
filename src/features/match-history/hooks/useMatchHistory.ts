@@ -1,3 +1,4 @@
+import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import { selectCurrentUser } from "@/slices/playSlice";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
@@ -13,6 +14,8 @@ const useMatchHistory = () => {
   //   `/match-history/${currentUser.id}`,
   //   fetcher
   // );
+
+  const [playTab] = useTabSound();
 
   const data: MatchHistoryResponse = {
     status: 200,
@@ -52,6 +55,8 @@ const useMatchHistory = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     window.location.href = `/mypage/match-history/${value}`;
+
+    playTab();
   };
 
   return { historys, value, handleChange };

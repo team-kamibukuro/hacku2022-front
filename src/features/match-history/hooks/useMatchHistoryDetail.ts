@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { Error, MatchHistoryDetailResponse } from "../types";
 import { useDispatch } from "react-redux";
 import { editMatchHistory, selectTargetIndex } from "@/slices/mypageSlice";
+import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 
 const fetcher = (url: string): Promise<any> =>
   fetch(url).then((res) => res.json());
@@ -20,6 +21,8 @@ const useMatchHistoryDetail = () => {
   //   `/match-history/${currentUser.id}/${id}`,
   //   fetcher
   // );
+
+  const [playTab] = useTabSound();
 
   const data: MatchHistoryDetailResponse = {
     status: 200,
@@ -90,8 +93,6 @@ const useMatchHistoryDetail = () => {
     ],
   };
 
-  // const initCode = data.histories.length === 0 ? "" : data.histories[0].code;
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const beforeCode =
       Number(e.target.value) === 0
@@ -103,6 +104,7 @@ const useMatchHistoryDetail = () => {
       beforeCode: beforeCode,
     };
     dispatch(editMatchHistory(matchHistory));
+    playTab();
   };
 
   const formatedItems = data.histories.map((history, index) => {
