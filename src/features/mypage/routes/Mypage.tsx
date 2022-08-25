@@ -9,9 +9,11 @@ import useMypage from "../hooks/useMypage";
 import RankBadge from "@/components/ui-elements/RankBadge";
 import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
 import useLinkButtonSound from "@/hooks/sounds/ButtonSounds/useLinkButtonSound";
+import Loding from "@/components/Loding";
+import Error from "@/components/Error";
 
 export const Mypage = () => {
-  const { data, currentUser } = useMypage();
+  const { data, isLoading, isError, currentUser } = useMypage();
   const rankBadgeTitle = [
     "Gord Red",
     "Gord Blue",
@@ -24,6 +26,8 @@ export const Mypage = () => {
   const [playBasicButton] = useBasicButtonSound();
   const [playLinkButton] = useLinkButtonSound();
 
+  if (isLoading) return <Loding />;
+  if (isError) return <Error />;
   return (
     <Layout>
       <StainedGlass />
