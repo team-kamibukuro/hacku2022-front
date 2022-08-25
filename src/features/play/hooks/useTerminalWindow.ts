@@ -1,3 +1,4 @@
+import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
 import useAllClearSound from "@/hooks/sounds/SoundEffects/useAllClearSound";
 import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
 import useClearSound from "@/hooks/sounds/SoundEffects/useClearSound";
@@ -38,6 +39,7 @@ const useTerminalWindow = () => {
   const [playBeep] = useBeepSound();
   const [playClear] = useClearSound();
   const [playAllClear] = useAllClearSound();
+  const [playBasicSound] = useBasicButtonSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -48,7 +50,7 @@ const useTerminalWindow = () => {
     playTab();
   };
 
-  const submitConsole = async () => {
+  const submitConsole = () => {
     setTab("コンソール");
     callConsoleRef.current = true;
     const request = {
@@ -59,6 +61,7 @@ const useTerminalWindow = () => {
       userId: currentUser.id,
     };
     dispatch(fetchAsyncRunConsole(request));
+    playBasicSound();
   };
 
   const submitTest = () => {
@@ -72,6 +75,7 @@ const useTerminalWindow = () => {
       userId: currentUser.id,
     };
     dispatch(fetchAsyncRunTestCase(request));
+    playBasicSound();
   };
 
   useInterval(
