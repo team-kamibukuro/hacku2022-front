@@ -95,14 +95,23 @@ const useDialog = () => {
           isDemo: room.isDemo,
           maxPlayer: room.maxPlayer,
         };
-        dispatch(fetchAsyncCreateRoom(createRoomParams));
+        dispatch(fetchAsyncCreateRoom(createRoomParams))
+          .unwrap()
+          .then(() => {})
+          .catch((e) => {
+            console.log(e);
+          });
         playEnterButton();
         break;
       case Access.Input:
         const authRoomParams = {
           roomName: room.name,
         };
-        dispatch(fetchAsyncAuthRoom(authRoomParams));
+        dispatch(fetchAsyncAuthRoom(authRoomParams))
+          .unwrap()
+          .catch((error) => {
+            console.log(error.response);
+          });
         playEnterButton();
         break;
       case Access.Matching:
