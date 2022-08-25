@@ -11,7 +11,7 @@ const SubPage: React.FC<Props> = ({ children, title }) => {
         <div className="border-white border-solid border-b-4 w-full mb-5">
           <h2 className="text-white text-2xl font-press">INJECTION</h2>
         </div>
-        <h3 className="text-white text-4xl font-press mb-5 leading-normal">
+        <h3 className="text-white text-4xl font-press leading-normal">
           {title}
         </h3>
       </div>
