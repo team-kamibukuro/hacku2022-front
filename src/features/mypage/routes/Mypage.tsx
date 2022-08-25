@@ -7,6 +7,8 @@ import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import SubPage from "@/components/layouts/SubPage";
 import useMypage from "../hooks/useMypage";
 import RankBadge from "@/components/ui-elements/RankBadge";
+import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
+import useLinkButtonSound from "@/hooks/sounds/ButtonSounds/useLinkButtonSound";
 
 export const Mypage = () => {
   const { data, currentUser } = useMypage();
@@ -18,6 +20,9 @@ export const Mypage = () => {
     "Bronze Red",
     "Bronze Blue",
   ];
+
+  const [playBasicButton] = useBasicButtonSound();
+  const [playLinkButton] = useLinkButtonSound();
 
   return (
     <Layout>
@@ -47,6 +52,7 @@ export const Mypage = () => {
                 <div></div>
                 <Button
                   onClick={() => {
+                    playBasicButton();
                     window.location.href = "/mypage/match-history/";
                   }}
                   buttonStyle={ButtonStyle.isPrimary}
@@ -56,7 +62,9 @@ export const Mypage = () => {
                 </Button>
                 <div className="my-1"></div>
                 <Button
-                  onClick={() => {}}
+                  onClick={() => {
+                    playBasicButton();
+                  }}
                   buttonStyle={ButtonStyle.isNomal}
                   font={"press"}
                 >
@@ -64,7 +72,9 @@ export const Mypage = () => {
                 </Button>
                 <div className="my-1"></div>
                 <Button
-                  onClick={() => {}}
+                  onClick={() => {
+                    playBasicButton();
+                  }}
                   buttonStyle={ButtonStyle.isNomal}
                   font={"press"}
                 >
@@ -76,6 +86,7 @@ export const Mypage = () => {
         </div>
         <div
           onClick={() => {
+            playLinkButton();
             window.location.href = "/entrance/";
           }}
         >

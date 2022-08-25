@@ -1,7 +1,10 @@
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
+import useCancelButtonSound from "@/hooks/sounds/ButtonSounds/useCancelButtonSound";
 import React from "react";
 
 const Header = () => {
+  const [playCancelButton] = useCancelButtonSound();
+
   return (
     <div>
       <header>
@@ -14,11 +17,13 @@ const Header = () => {
             >
               <Button
                 onClick={() => {
+                  playCancelButton();
                   window.location.href = "/mypage/match-history";
                 }}
-                buttonStyle={ButtonStyle.isError}
+                buttonStyle={ButtonStyle.isNomal}
+                font={"dot"}
               >
-                Back
+                戻る
               </Button>
             </div>
           </div>
