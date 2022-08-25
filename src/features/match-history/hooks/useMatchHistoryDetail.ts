@@ -57,19 +57,25 @@ const useMatchHistoryDetail = () => {
       {
         historyId: "hd-004",
         debugTime: "2022/08/26 15:07:14",
-        code: 'print("Hello")',
-        isExecuteTest: false,
+        code: `inputNum = input()
+        for i in range(int(inputNum)+1):
+            if i % 2 == 0:
+                print(i, end=' ')`,
+        isExecuteTest: true,
         isProgramError: false,
-        programOutput: "Hello",
+        programOutput: "Hello, Hello",
         programError: "",
-        isClearTestCases: false,
-        testCaseTotal: 0,
-        testCaseClearTotal: 0,
+        isClearTestCases: true,
+        testCaseTotal: 5,
+        testCaseClearTotal: 5,
       },
       {
         historyId: "hd-006",
         debugTime: "2022/08/26 15:08:53",
-        code: 'print("Hello)',
+        code: `inputNum = input()
+        for i in range(int(inputNum)):
+            if i % 2 == 0:
+                print(i, end=' ')`,
         isExecuteTest: false,
         isProgramError: true,
         programOutput: "",
@@ -95,9 +101,9 @@ const useMatchHistoryDetail = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const beforeCode =
-      Number(e.target.value) === 0
+      Number(e.target.value) + 1 >= data.histories.length
         ? ""
-        : data.histories[Number(e.target.value) - 1].code;
+        : data.histories[Number(e.target.value) + 1].code;
     const matchHistory = {
       targetHistoryIndex: Number(e.target.value),
       currentCode: data.histories[Number(e.target.value)].code,
