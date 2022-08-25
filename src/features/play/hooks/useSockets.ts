@@ -47,6 +47,8 @@ import Portion from "@/common/icons/portion_purple_01.svg";
 import BrokenHeart from "@/common/icons/mark_heart_broken_red.svg";
 import Shield from "@/common/icons/shield_red.svg";
 import useDamageSound from "@/hooks/sounds/SoundEffects/useDamageSound";
+import useGetItemSound from "@/hooks/sounds/SoundEffects/useGetItemSound";
+import useGuardSound from "@/hooks/sounds/SoundEffects/useGuardSound";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -58,8 +60,12 @@ const useSockets = () => {
   const refFirstRef = useRef(true);
   const sendAllFinishedRef = useRef(true);
   const clock = useSelector(selectClock);
-  let damagedRef = useRef(false);
+  const damagedRef = useRef(false);
+  const guardRef = useRef(false);
+  const getItemRef = useRef(false);
   const [playDamage] = useDamageSound();
+  const [playGetItem] = useGetItemSound();
+  const [playGuard] = useGuardSound();
 
   const notify = (message: string, icon: any) =>
     toast.dark(message, {
@@ -165,6 +171,9 @@ const useSockets = () => {
     if (data.attackType === "RANSOMWARE") {
       notify(`${data.name}がランサムウェア攻撃を受けた!!`, BrokenHeart);
       if (data.firewall) {
+        if (data.playerId === currentUser.id) {
+          guardRef.current = true;
+        }
         notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
       } else {
         if (data.playerId === currentUser.id) {
@@ -192,6 +201,9 @@ const useSockets = () => {
         default:
       }
       if (data.firewall) {
+        if (data.playerId === currentUser.id) {
+          guardRef.current = true;
+        }
         notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
       } else {
         if (data.playerId === currentUser.id) {
@@ -206,6 +218,10 @@ const useSockets = () => {
     dispatch(switchFirewall({ id: data.playerId }));
     if (data.status) {
       notify(`${data.name} がファイアーウォールをGetした`, "❤️‍🔥");
+
+      if (data.playerId === currentUser.id) {
+        getItemRef.current = true;
+      }
     }
   };
 
@@ -246,6 +262,16 @@ const useSockets = () => {
   if (damagedRef.current) {
     damagedRef.current = false;
     playDamage();
+  }
+
+  if (getItemRef.current) {
+    getItemRef.current = false;
+    playGetItem();
+  }
+
+  if (guardRef.current) {
+    guardRef.current = false;
+    playGuard();
   }
 
   return { currentUser, players, question };
