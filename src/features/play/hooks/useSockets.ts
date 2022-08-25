@@ -46,6 +46,7 @@ import UFO from "@/common/icons/ufo_04.svg";
 import Portion from "@/common/icons/portion_purple_01.svg";
 import BrokenHeart from "@/common/icons/mark_heart_broken_red.svg";
 import Shield from "@/common/icons/shield_red.svg";
+import useDamageSound from "@/hooks/sounds/SoundEffects/useDamageSound";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -57,6 +58,8 @@ const useSockets = () => {
   const refFirstRef = useRef(true);
   const sendAllFinishedRef = useRef(true);
   const clock = useSelector(selectClock);
+  let damagedRef = useRef(false);
+  const [playDamage] = useDamageSound();
 
   const notify = (message: string, icon: any) =>
     toast.dark(message, {
@@ -164,6 +167,9 @@ const useSockets = () => {
       if (data.firewall) {
         notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
       } else {
+        if (data.playerId === currentUser.id) {
+          damagedRef.current = true;
+        }
         dispatch(editHeart({ id: data.playerId, heart: data.heart }));
       }
     } else {
@@ -188,6 +194,9 @@ const useSockets = () => {
       if (data.firewall) {
         notify(`${data.name}のファイヤーウォールが攻撃をバリアした!!`, Shield);
       } else {
+        if (data.playerId === currentUser.id) {
+          damagedRef.current = true;
+        }
         dispatch(editCode({ id: data.playerId, code: data.code }));
       }
     }
@@ -232,6 +241,11 @@ const useSockets = () => {
       })
     );
     sendAllFinishedRef.current = false;
+  }
+
+  if (damagedRef.current) {
+    damagedRef.current = false;
+    playDamage();
   }
 
   return { currentUser, players, question };
