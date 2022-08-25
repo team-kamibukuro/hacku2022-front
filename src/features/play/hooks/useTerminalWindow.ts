@@ -154,18 +154,6 @@ const useTerminalWindow = () => {
   useEffect(() => {
     if (
       !loading.terminal &&
-      callConsoleRef.current &&
-      currentUser.consoleResult.status === 200
-    ) {
-      if (currentUser.consoleResult.isCompileError) {
-        playBeep();
-      } else {
-        playClear();
-      }
-      callConsoleRef.current = false;
-    }
-    if (
-      !loading.terminal &&
       callTestRef.current &&
       currentUser.testResult.status === 200
     ) {
@@ -177,6 +165,19 @@ const useTerminalWindow = () => {
   if (allFinishedRef.current) {
     playAllClear();
     allFinishedRef.current = false;
+  }
+
+  if (
+    !loading.terminal &&
+    callConsoleRef.current &&
+    currentUser.consoleResult.status === 200
+  ) {
+    if (currentUser.consoleResult.isCompileError) {
+      playBeep();
+    } else {
+      playClear();
+    }
+    callConsoleRef.current = false;
   }
 
   return {
