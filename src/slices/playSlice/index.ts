@@ -62,6 +62,7 @@ const initialState: PlayState = {
     code: "",
     consoleResult: {
       status: 0,
+      isCompileError: false,
       result: "",
     },
     testResult: {
@@ -142,7 +143,6 @@ export const playSlice = createSlice({
         (template) => template.language === action.payload.language
       );
       const defaultCode = template === undefined ? "" : template.template;
-      console.log(defaultCode);
       state.currentUser.code = defaultCode;
     },
     resetHeart(state) {
@@ -350,6 +350,8 @@ export const playSlice = createSlice({
         state.currentUser.consoleResult.status = 200;
         if (action.payload.isError) {
           state.currentUser.consoleResult.result = action.payload.programError;
+          state.currentUser.consoleResult.isCompileError =
+            action.payload.isError;
           state.currentUser.heart = state.currentUser.heart - 1;
         } else {
           state.currentUser.consoleResult.result = action.payload.programOutput;

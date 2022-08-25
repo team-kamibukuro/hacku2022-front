@@ -3,7 +3,6 @@ import useSound from "use-sound";
 
 const useVictorySound = () => {
   const [play] = useSound("/sounds/8bit-ME_Victory01.mp3", {
-    loop: true,
     volume: 0.3,
   });
 

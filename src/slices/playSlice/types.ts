@@ -23,6 +23,7 @@ export interface TestResult {
 export interface ConsoleResult {
   status: number;
   result: string;
+  isCompileError: boolean;
 }
 export interface Finish {
   finished: boolean;

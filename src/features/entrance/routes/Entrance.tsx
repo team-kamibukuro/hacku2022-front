@@ -3,6 +3,8 @@ import SimpleDialog from "@/components/layouts/SimpleDialog";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
 import useEntranceBackGroundSound from "@/hooks/sounds/BackGroundSounds/useEntranceBackGroundSound";
+import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
+import useLinkButtonSound from "@/hooks/sounds/ButtonSounds/useLinkButtonSound";
 import useRequireAuth from "@/hooks/useRequireAuth";
 import React from "react";
 import CreateRoomForm from "../components/CreateRoomForm";
@@ -27,6 +29,8 @@ export const Entrance = () => {
   const { isDisabled } = useIsDisabled(access);
   const { touchStart, touch } = useTouchStart();
   const { logout } = useLogout();
+  const [playBasicButton] = useBasicButtonSound();
+  const [playLinkButton] = useLinkButtonSound();
 
   const formComponents = {
     0: InputRoomNameForm,
@@ -103,6 +107,7 @@ export const Entrance = () => {
               <div
                 className="flex mt-10"
                 onClick={() => {
+                  playLinkButton();
                   window.location.href = "/mypage";
                 }}
               >

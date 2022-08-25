@@ -1,3 +1,6 @@
+import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
+import useCancelButtonSound from "@/hooks/sounds/ButtonSounds/useCancelButtonSound";
+import useEnterButtonSound from "@/hooks/sounds/ButtonSounds/useEnterButtonSound";
 import { selectAuth } from "@/slices/authSlice";
 import { loadedEntrance } from "@/slices/entranceSlice";
 import {
@@ -28,6 +31,10 @@ const useDialog = () => {
   const [access, setAccess] = useState<AccessType>(Access.Input);
   const [dialogTitle, setdialogTitle] = useState("");
 
+  const [playBasicButton] = useBasicButtonSound();
+  const [playEnterButton] = useEnterButtonSound();
+  const [playCancelButton] = useCancelButtonSound();
+
   useEffect(() => {
     dispatch(reset());
     dispatch(
@@ -45,9 +52,10 @@ const useDialog = () => {
     dispatch(loadedEntrance());
   }, [dispatch]);
 
-  const handleClickClose = useCallback(() => {
+  const handleClickClose = () => {
     setOpen(false);
     dispatch(reset());
+    playCancelButton();
 
     dispatch(
       initCurrentUser({
@@ -55,25 +63,28 @@ const useDialog = () => {
         name: auth.currentUser.name,
       })
     );
-  }, [dispatch]);
+  };
 
-  const input = useCallback(() => {
+  const input = () => {
     setOpen(true);
     setAccess(Access.Input);
     setdialogTitle("Input Room Name");
-  }, []);
+    playBasicButton();
+  };
 
-  const create = useCallback(() => {
+  const create = () => {
     setOpen(true);
     setAccess(Access.Create);
     setdialogTitle("Create Room");
-  }, []);
+    playBasicButton();
+  };
 
-  const matching = useCallback(() => {
+  const matching = () => {
     setOpen(true);
     setAccess(Access.Matching);
     setdialogTitle("Matching");
-  }, []);
+    playBasicButton();
+  };
 
   const handleClick = () => {
     switch (access) {
@@ -85,18 +96,21 @@ const useDialog = () => {
           maxPlayer: room.maxPlayer,
         };
         dispatch(fetchAsyncCreateRoom(createRoomParams));
+        playEnterButton();
         break;
       case Access.Input:
         const authRoomParams = {
           roomName: room.name,
         };
         dispatch(fetchAsyncAuthRoom(authRoomParams));
+        playEnterButton();
         break;
       case Access.Matching:
         const matchingParams = {
           userId: currentUser.id,
         };
         dispatch(fetchAsyncMatching(matchingParams));
+        playEnterButton();
         break;
       default:
     }

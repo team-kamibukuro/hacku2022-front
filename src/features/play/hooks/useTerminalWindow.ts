@@ -1,3 +1,8 @@
+import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
+import useAllClearSound from "@/hooks/sounds/SoundEffects/useAllClearSound";
+import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
+import useClearSound from "@/hooks/sounds/SoundEffects/useClearSound";
+import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import {
   editConsoleResultValue,
   editTestResultValue,
@@ -28,17 +33,26 @@ const useTerminalWindow = () => {
   const question = useSelector(selectQuestion);
   const loading = useSelector(selectLoading);
   const callTestRef = useRef(false);
+  const callConsoleRef = useRef(false);
+  const allFinishedRef = useRef(false);
+  const [playTab] = useTabSound();
+  const [playBeep] = useBeepSound();
+  const [playClear] = useClearSound();
+  const [playAllClear] = useAllClearSound();
+  const [playBasicSound] = useBasicButtonSound();
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
   const notify = (message: string) => toast.dark(message);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTab(e.target.value);
-  }, []);
+    playTab();
+  };
 
-  const submitConsole = async () => {
+  const submitConsole = () => {
     setTab("コンソール");
+    callConsoleRef.current = true;
     const request = {
       code: currentUser.code,
       language: currentUser.language,
@@ -47,6 +61,7 @@ const useTerminalWindow = () => {
       userId: currentUser.id,
     };
     dispatch(fetchAsyncRunConsole(request));
+    playBasicSound();
   };
 
   const submitTest = () => {
@@ -60,6 +75,7 @@ const useTerminalWindow = () => {
       userId: currentUser.id,
     };
     dispatch(fetchAsyncRunTestCase(request));
+    playBasicSound();
   };
 
   useInterval(
@@ -97,6 +113,7 @@ const useTerminalWindow = () => {
           index + 1
         } CLEAR 🚀\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
+        playClear();
         result += text;
       } else {
         const text = `-----------------------\nTEST${
@@ -105,6 +122,7 @@ const useTerminalWindow = () => {
           testCase.compilerError
         }\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
+        playBeep();
         result += text;
       }
       if (currentUser.testResult.testCases.length === index + 1) {
@@ -125,6 +143,7 @@ const useTerminalWindow = () => {
         })
       );
       notify(`Congratulations!\nYou Finished 🎉`);
+      allFinishedRef.current = true;
     }
   };
 
@@ -135,6 +154,18 @@ const useTerminalWindow = () => {
   useEffect(() => {
     if (
       !loading.terminal &&
+      callConsoleRef.current &&
+      currentUser.consoleResult.status === 200
+    ) {
+      if (currentUser.consoleResult.isCompileError) {
+        playBeep();
+      } else {
+        playClear();
+      }
+      callConsoleRef.current = false;
+    }
+    if (
+      !loading.terminal &&
       callTestRef.current &&
       currentUser.testResult.status === 200
     ) {
@@ -142,6 +173,11 @@ const useTerminalWindow = () => {
       callTestRef.current = false;
     }
   }, [loading.terminal]);
+
+  if (allFinishedRef.current) {
+    playAllClear();
+    allFinishedRef.current = false;
+  }
 
   return {
     tab,
