@@ -21,7 +21,7 @@ export const MatchHistoryTop = () => {
         <StainedGlass />
         <SubPage title={"Match History"}>
           <div className="flex-grow">
-            <div className="flex flex-col">
+            <div className="flex flex-col mt-5">
               <HistoryRadioList
                 name={"history"}
                 state={value}
