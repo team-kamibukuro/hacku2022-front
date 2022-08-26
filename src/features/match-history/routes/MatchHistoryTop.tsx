@@ -20,8 +20,8 @@ export const MatchHistoryTop = () => {
       <Layout>
         <StainedGlass />
         <SubPage title={"Match History"}>
-          <div className="flex-grow">
-            <div className="flex flex-col mt-5">
+          <div className="flex-grow overflow-scroll my-8">
+            <div className="flex flex-col">
               <HistoryRadioList
                 name={"history"}
                 state={value}
