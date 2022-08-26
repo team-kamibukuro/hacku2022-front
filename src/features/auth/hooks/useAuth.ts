@@ -18,9 +18,7 @@ const useAuth = () => {
   const isLoginView = auth.isLoginView;
 
   const notify = (message: string) => {
-    toast.dark(message, {
-      icon: "😲",
-    });
+    toast.dark(message);
   };
 
   const [credential, setCredential] = useState({
