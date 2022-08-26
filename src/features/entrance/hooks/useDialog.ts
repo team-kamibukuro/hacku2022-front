@@ -39,9 +39,7 @@ const useDialog = () => {
   const [playBeep] = useBeepSound();
 
   const notify = (message: string) => {
-    toast.dark(message, {
-      icon: "😲",
-    });
+    toast.dark(message);
   };
 
   useEffect(() => {
