@@ -7,10 +7,10 @@ const Terminal = () => {
   let result = "";
   if (data.histories[targetIndex].isExecuteTest) {
     if (data.histories[targetIndex].isClearTestCases) {
-      result = `${data.histories[targetIndex].testCaseClearTotal}/${data.histories[targetIndex].testCaseTotal} CLEAR 🚀`;
-      result += "\nCongratulations!!!\nALL TESTS CLEAR 🎉";
+      result = `${data.histories[targetIndex].testCaseClearTotal}/${data.histories[targetIndex].testCaseTotal} CLEAR!`;
+      result += "\nCongratulations!!!\nALL TESTS CLEAR!!";
     } else {
-      result = `${data.histories[targetIndex].testCaseClearTotal}/${data.histories[targetIndex].testCaseTotal} CLEAR 🚀`;
+      result = `${data.histories[targetIndex].testCaseClearTotal}/${data.histories[targetIndex].testCaseTotal} CLEAR!`;
     }
   } else {
     if (data.histories[targetIndex].isProgramError) {
