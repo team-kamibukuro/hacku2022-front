@@ -45,6 +45,7 @@ const useMatchHistory = () => {
   const onClick = () => {
     if (value === data?.rooms[0].roomId) {
       window.location.href = `/mypage/match-history/${value}`;
+      playTab();
     }
   };
 
