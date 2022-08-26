@@ -5,7 +5,6 @@ const ConnectionError = () => {
     <div>
       <div className="text-center w-80">
         <div className="text-center">
-          <p className="text-6xl mb-6">🤯</p>
           <p className="font-dot">
             接続が切断されました。
             <br />
