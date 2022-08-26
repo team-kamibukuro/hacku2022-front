@@ -1,5 +1,6 @@
 import Heart from "@/features/play/components/Heart";
 import React from "react";
+import twemoji from "twemoji";
 interface Props {
   name: string;
   heartbeat: number;
@@ -15,6 +16,8 @@ const UserInfo: React.FC<Props> = ({
   serverdown = false,
   firewall,
 }) => {
+  const emoji = "🎉";
+  const twemojified = twemoji.parse(emoji);
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">
@@ -47,10 +50,8 @@ const UserInfo: React.FC<Props> = ({
           </div>
         )}
         {finished && (
-          <div className="bg-white px-1 border-solid border-red-700 border-2 ml-6 -mt-2">
-            <p className="font-press text-sm text-red-500 ml-2">
-              FNISHED!!<span className="text-lg">🎉</span>
-            </p>
+          <div className="bg-white px-1 border-solid border-red-700 border-2 ml-6 -mt-2 p-2">
+            <p className="font-press text-sm text-red-500 ml-2">FNISHED!!</p>
           </div>
         )}
       </div>

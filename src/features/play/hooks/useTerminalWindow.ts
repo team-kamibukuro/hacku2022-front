@@ -111,16 +111,14 @@ const useTerminalWindow = () => {
       if (testCase.isClearTestCase) {
         const text = `-----------------------\nTEST${
           index + 1
-        } CLEAR 🚀\n-----------------------\n`;
+        } CLEAR!\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
         playClear();
         result += text;
       } else {
         const text = `-----------------------\nTEST${
           index + 1
-        } FAILED 💩\nERROR:\n${
-          testCase.compilerError
-        }\n-----------------------\n`;
+        } FAILED\nERROR:\n${testCase.compilerError}\n-----------------------\n`;
         dispatch(editTestResultValue(result + text));
         playBeep();
         result += text;
@@ -132,7 +130,7 @@ const useTerminalWindow = () => {
     if (finished && currentUser.testResult.isClearTestCases) {
       await sleep(800);
       dispatch(
-        editTestResultValue(result + "Congratulations!!!\nALL TESTS CLEAR 🎉")
+        editTestResultValue(result + `Congratulations!!!\nALL TESTS CLEAR!`)
       );
       dispatch(setFinish());
       dispatch(
@@ -142,7 +140,8 @@ const useTerminalWindow = () => {
           name: currentUser.name,
         })
       );
-      notify(`Congratulations!\nYou Finished 🎉`);
+
+      notify(`Congratulations!\nYou Finished!!!`);
       allFinishedRef.current = true;
     }
   };

@@ -24,6 +24,7 @@
     "react-toastify": "^9.0.8",
     "redux-persist": "^6.0.0",
     "swr": "^1.3.0",
+    "twemoji": "^14.0.2",
     "use-interval": "^1.4.0",
     "use-sound": "^4.0.1"
   },
