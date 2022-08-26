@@ -31,15 +31,13 @@ export const MatchHistoryTop = () => {
             {isEmpty ? (
               <p className="font-dot">履歴がありません。</p>
             ) : (
-              <div className="flex flex-col">
-                <HistoryRadioList
-                  name={"history"}
-                  state={value}
-                  items={historys}
-                  onChange={handleChange}
-                  onClick={onClick}
-                />
-              </div>
+              <HistoryRadioList
+                name={"history"}
+                state={value}
+                items={historys}
+                onChange={handleChange}
+                onClick={onClick}
+              />
             )}
           </div>
           <div
