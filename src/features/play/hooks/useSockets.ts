@@ -46,9 +46,11 @@ import UFO from "@/common/icons/ufo_04.svg";
 import Portion from "@/common/icons/portion_purple_01.svg";
 import BrokenHeart from "@/common/icons/mark_heart_broken_red.svg";
 import Shield from "@/common/icons/shield_red.svg";
+import Utyujin from "@/common/icons/grey_purple.svg";
 import useDamageSound from "@/hooks/sounds/SoundEffects/useDamageSound";
 import useGetItemSound from "@/hooks/sounds/SoundEffects/useGetItemSound";
 import useGuardSound from "@/hooks/sounds/SoundEffects/useGuardSound";
+import twemoji from "twemoji";
 
 const useSockets = () => {
   const dispatch = useDispatch();
@@ -163,7 +165,7 @@ const useSockets = () => {
   const SERVER_ERROR = (data: SERVER_ERROR_DATA) => {
     dispatch(switchServerdown({ id: data.playerId }));
     if (data.status) {
-      notify(`${data.name}のサーバーがダウンした!!`, "☠️");
+      notify(`${data.name}のサーバーがダウンした!!`, Utyujin);
     }
   };
 
@@ -217,7 +219,7 @@ const useSockets = () => {
   const FIREWALL = (data: FIREWALL_DATA) => {
     dispatch(switchFirewall({ id: data.playerId }));
     if (data.status) {
-      notify(`${data.name} がファイアーウォールをGetした`, "❤️‍🔥");
+      notify(`${data.name} がファイアーウォールをGetした`, Shield);
 
       if (data.playerId === currentUser.id) {
         getItemRef.current = true;
@@ -227,7 +229,9 @@ const useSockets = () => {
 
   const FINISHED = (data: FINISHED_DATA) => {
     dispatch(editFinished({ id: data.playerId }));
-    notify(`${data.name} Finished!!`, "🎉");
+    const emoji = "🎉";
+    const twemojified = twemoji.parse(emoji);
+    notify(`${data.name} Finished!!`, twemojified);
   };
 
   const ALL_FINISHED = (data: ALL_FINISHED_DATA) => {
