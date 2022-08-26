@@ -1,6 +1,6 @@
 import useTabSound from "@/hooks/sounds/SoundEffects/useTabSound";
 import { selectCurrentUser } from "@/slices/playSlice";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import useSWR from "swr";
 import { Error, MatchHistoryResponse, Room } from "../types";
@@ -18,13 +18,18 @@ const useMatchHistory = () => {
     `${process.env.NEXT_PUBLIC_API_URI}/match-history/${currentUser.id}`,
     fetcher
   );
+  const isEmpty = useRef(false);
 
   const [playTab] = useTabSound();
 
-  const [value, setValue] = useState(data?.rooms[0].roomId);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    data && setValue(data?.rooms[0].roomId);
+    if (data && data.rooms.length) {
+      setValue(data.rooms[0].roomId);
+    } else {
+      isEmpty.current = true;
+    }
   }, [data]);
 
   const historys = data?.rooms.map((room: Room) => {
@@ -53,6 +58,7 @@ const useMatchHistory = () => {
     historys,
     isLoading: !error && !data,
     isError: error,
+    isEmpty: isEmpty.current,
     value,
     handleChange,
     onClick,
