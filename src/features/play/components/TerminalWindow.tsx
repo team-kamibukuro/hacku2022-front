@@ -36,6 +36,7 @@ const TerminalWindow = () => {
             onClick={submitConsole}
             buttonStyle={ButtonStyle.isNomal}
             font={"dot"}
+            disabled={currentUser.finish.finished}
           >
             実行
           </Button>
@@ -44,6 +45,7 @@ const TerminalWindow = () => {
           onClick={submitTest}
           buttonStyle={ButtonStyle.isPrimary}
           font={"dot"}
+          disabled={currentUser.finish.finished}
         >
           テストを実行
         </Button>
