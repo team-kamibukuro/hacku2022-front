@@ -229,9 +229,7 @@ const useSockets = () => {
 
   const FINISHED = (data: FINISHED_DATA) => {
     dispatch(editFinished({ id: data.playerId }));
-    const emoji = "🎉";
-    const twemojified = twemoji.parse(emoji);
-    notify(`${data.name} Finished!!`, twemojified);
+    toast.dark(`${data.name} Finished!!`);
   };
 
   const ALL_FINISHED = (data: ALL_FINISHED_DATA) => {
