@@ -27,7 +27,7 @@ const useMatchHistory = () => {
   useEffect(() => {
     if (data && data.rooms.length) {
       setValue(data.rooms[0].roomId);
-    } else {
+    } else if (data && !data.rooms.length) {
       isEmpty.current = true;
     }
   }, [data]);
