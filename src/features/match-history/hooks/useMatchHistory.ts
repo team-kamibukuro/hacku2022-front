@@ -28,19 +28,25 @@ const useMatchHistory = () => {
   }, [data]);
 
   const historys = data?.rooms.map((room: Room) => {
-    let vsPlayersText = "";
-    room.players.forEach((player) => (vsPlayersText += player + "vs"));
     return {
       value: room.roomId,
-      label: `${room.startTime} ${room.roomName} ${vsPlayersText}`,
+      roomName: room.roomName,
+      players: room.players,
+      datetime: room.startTime,
     };
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-    window.location.href = `/mypage/match-history/${value}`;
-
+    window.location.href = `/mypage/match-history/${e.target.value}`;
     playTab();
+  };
+
+  const onClick = () => {
+    if (value === data?.rooms[0].roomId) {
+      window.location.href = `/mypage/match-history/${value}`;
+      playTab();
+    }
   };
 
   return {
@@ -49,6 +55,7 @@ const useMatchHistory = () => {
     isError: error,
     value,
     handleChange,
+    onClick,
   };
 };
 

@@ -2,6 +2,7 @@ import Layout from "@/components/layouts/Layout";
 import SimpleDialog from "@/components/layouts/SimpleDialog";
 import StainedGlass from "@/components/layouts/StainedGlass";
 import Button, { ButtonStyle } from "@/components/ui-elements/Button";
+import Toast from "@/components/ui-elements/Toast";
 import useEntranceBackGroundSound from "@/hooks/sounds/BackGroundSounds/useEntranceBackGroundSound";
 import useBasicButtonSound from "@/hooks/sounds/ButtonSounds/useBasicButtonSound";
 import useLinkButtonSound from "@/hooks/sounds/ButtonSounds/useLinkButtonSound";
@@ -100,6 +101,9 @@ export const Entrance = () => {
                     submitTitle={"Enter"}
                     isDisabled={isDisabled}
                   >
+                    <div className="z-100">
+                      <Toast />
+                    </div>
                     <Form />
                   </SimpleDialog>
                 </div>

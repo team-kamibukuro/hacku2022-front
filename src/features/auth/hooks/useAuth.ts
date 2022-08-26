@@ -9,12 +9,19 @@ import { TypedDispatch } from "@/store";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const useAuth = () => {
   const dispatch = useDispatch<TypedDispatch>();
 
   const auth = useSelector(selectAuth);
   const isLoginView = auth.isLoginView;
+
+  const notify = (message: string) => {
+    toast.dark(message, {
+      icon: "😲",
+    });
+  };
 
   const [credential, setCredential] = useState({
     nickname: "",
@@ -44,7 +51,13 @@ const useAuth = () => {
         userPassword: credential.password,
       };
       console.log(params);
-      dispatch(fetchAsyncLogin(params));
+      dispatch(fetchAsyncLogin(params))
+        .unwrap()
+        .then(() => {})
+        .catch((e) => {
+          console.log(e);
+          notify("emailとpasswordが間違っています。");
+        });
     } else {
       const params = {
         userEmail: credential.email,
@@ -52,7 +65,13 @@ const useAuth = () => {
         userName: credential.nickname,
       };
       console.log(params);
-      dispatch(fetchAsyncRegister(params));
+      dispatch(fetchAsyncRegister(params))
+        .unwrap()
+        .then(() => {})
+        .catch((e) => {
+          console.log(e);
+          notify("このmailアドレスはすでに存在しています。");
+        });
     }
   };
 

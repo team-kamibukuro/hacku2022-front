@@ -1,7 +1,7 @@
 import React from "react";
 
 const Loding = () => {
-  return <div>Loding</div>;
+  return <div></div>;
 };
 
 export default Loding;

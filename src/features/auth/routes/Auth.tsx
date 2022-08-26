@@ -1,5 +1,6 @@
 import Layout from "@/components/layouts/Layout";
 import StainedGlass from "@/components/layouts/StainedGlass";
+import Toast from "@/components/ui-elements/Toast";
 import React from "react";
 import LoginForm from "../components/LoginForm";
 import RegisterForm from "../components/RegisterForm";
@@ -15,6 +16,7 @@ export const Auth = () => {
       <Layout>
         <StainedGlass />
         <div className="flex flex-col justify-center items-center z-50 h-screen w-full">
+          <Toast />
           <h2 className="text-white text-5xl font-press border-white border-solid border-b-8 mb-5">
             INJECTION
           </h2>
