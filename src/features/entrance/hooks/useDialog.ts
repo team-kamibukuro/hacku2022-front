@@ -19,6 +19,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { Access, AccessType } from "../types";
+import { toast } from "react-toastify";
+import useBeepSound from "@/hooks/sounds/SoundEffects/useBeepSound";
 
 const useDialog = () => {
   const dispatch = useDispatch<TypedDispatch>();
@@ -34,6 +36,13 @@ const useDialog = () => {
   const [playBasicButton] = useBasicButtonSound();
   const [playEnterButton] = useEnterButtonSound();
   const [playCancelButton] = useCancelButtonSound();
+  const [playBeep] = useBeepSound();
+
+  const notify = (message: string) => {
+    toast.dark(message, {
+      icon: "😲",
+    });
+  };
 
   useEffect(() => {
     dispatch(reset());
@@ -97,11 +106,16 @@ const useDialog = () => {
         };
         dispatch(fetchAsyncCreateRoom(createRoomParams))
           .unwrap()
-          .then(() => {})
+          .then(() => {
+            playEnterButton();
+          })
           .catch((e) => {
             console.log(e);
+            notify(
+              "このルームはすでに作られています。別のルーム名を入力してください。"
+            );
+            playBeep();
           });
-        playEnterButton();
         break;
       case Access.Input:
         const authRoomParams = {
@@ -109,10 +123,14 @@ const useDialog = () => {
         };
         dispatch(fetchAsyncAuthRoom(authRoomParams))
           .unwrap()
-          .catch((error) => {
-            console.log(error.response);
+          .then(() => {
+            playEnterButton();
+          })
+          .catch((e) => {
+            console.log(e);
+            notify("ルームが存在しません。ルーム名を確認してください。");
+            playBeep();
           });
-        playEnterButton();
         break;
       case Access.Matching:
         const matchingParams = {
