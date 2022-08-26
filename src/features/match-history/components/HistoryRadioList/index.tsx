@@ -19,7 +19,7 @@ interface Props {
 const HistoryRadioList: React.FC<Props> = (props) => {
   const { name, items, state, onChange, onClick } = props;
   return (
-    <div>
+    <div className="flex flex-col">
       {items.map((item, index) => (
         <label key={index} htmlFor={String(index)} className="mb-4">
           <input
