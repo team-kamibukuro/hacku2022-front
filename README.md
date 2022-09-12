@@ -151,6 +151,7 @@ INJECTION ではゲームの順位に応じてスコアが加算され、その�
 - TypeScript
 - Redux
 - @monaco-editor/react
+- Docker
 
 Deploy on Vercel
 
@@ -164,24 +165,69 @@ Deploy on Vercel
 Deploy on Microsoft Azure
 
 - Azure App Service
-- Azure Database for PostgreSQL
 
 #### database
 
 - PostgreSQL
+- Docker
+- Terraform
+
+Deploy on Microsoft Azure
+
+- Azure Database for PostgreSQL
 
 #### API
 
 - Wandbox
 
-### Other
-
 ## Getting Started
 
+### Setup
+
+#### Operating Environment
+
+OS: MacOS BigSur 11.0.1 docker-compose version 1.29.2, build 5becea4c
+
+#### Command
+
 ```bash
-npm run dev
-# or
-yarn dev
+cd hacku2022-backend
+docker-compose build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```bash
+cd hacku2022-front
+docker-compose build
+```
+
+### Usage
+
+Exec backend container and run server.
+
+```bash
+cd hacku2022-backend
+docker-compose up -d --build
+docker-compose exec hack-u-backend bash
+uvicorn app:app --host 0.0.0.0 --port 8099
+```
+
+Exec frontend run INJECTION.
+
+```bash
+cd hacku2022-front
+docker-compose up
+```
+
+Open browser and access [http://localhost:3000](http://localhost:3000) to start INJECTION
+
+## Documentation
+
+- [API 設計書](https://github.com/team-kamibukuro/hacku2022-backend/tree/main/document/HTTP)
+
+* [WebSocket 設計書](https://github.com/team-kamibukuro/hacku2022-front/blob/main/docs/webSocket.md)
+
+## License
+
+Copyright (c) 2022 team kamibukuro
+Released under the MIT license
+https://opensource.org/licenses/mit-license.php
