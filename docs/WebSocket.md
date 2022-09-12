@@ -317,17 +317,26 @@ RANSOMWARE // ランサムウェア
 }
 ```
 
-### API
+## API 設計書
 
-#### [API 設計書](https://github.com/team-kamibukuro/hacku2022-backend/tree/main/document/HTTP)
+- [API 設計書一覧](https://github.com/team-kamibukuro/hacku2022-backend/tree/main/document/HTTP)
 
-- [新規会員登録](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/siginup.md)
-- [ログイン](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/login.md)
-- [ルーム作成](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/create_room.md)
-- [部屋 ID 取得](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/get_room_id.md)
-- [マッチングルーム入室](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/matching_room.md)
-- [コンソール実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/console.md)
-- [テストケース実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/testcase.md)
-- 対戦履歴取得
-- コード履歴取得
-- スコア取得
+* [新規会員登録](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/siginup.md)
+
+* [ログイン](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/login.md)
+
+* [ルーム作成](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/create_room.md)
+
+* [部屋 ID 取得](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/get_room_id.md)
+
+* [マッチングルーム入室](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/matching_room.md)
+
+* [コンソール実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/console.md)
+
+* [テストケース実行](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/testcase.md)
+
+* [MyPageTop](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/mypage1.md)
+
+* [MatchHistory](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/mypage2.md)
+
+* [MatchHistoryDetail](https://github.com/team-kamibukuro/hacku2022-backend/blob/main/document/HTTP/mypage3.md)
