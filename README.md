@@ -234,7 +234,7 @@ Open browser and access [http://localhost:3000](http://localhost:3000) to start 
 
 - [API 設計書](https://github.com/team-kamibukuro/hacku2022-backend/tree/main/document/HTTP)
 
-* [WebSocket 設計書](https://github.com/team-kamibukuro/hacku2022-front/blob/main/docs/webSocket.md)
+* [WebSocket 設計書](https://github.com/team-kamibukuro/hacku2022-front/blob/main/docs/WebSocket.md)
 
 ## License
 
