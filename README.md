@@ -188,6 +188,9 @@ Deploy on **Microsoft Azure**
 - Wandbox
 
 ## Getting Started
+### Repository
+- [frontend](https://github.com/team-kamibukuro/hacku2022-front)
+- [backend](https://github.com/team-kamibukuro/hacku2022-backend)
 
 ### Setup
 
