@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  hack-u-frontend:
+    build: .
+    container_name: "hack-u-frontend"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./:/usr/src/hacku2022-front
+    command: sh -c 'npm install && npm run dev'
+    ports:
+      - "3000:3000"
+    tty: true
